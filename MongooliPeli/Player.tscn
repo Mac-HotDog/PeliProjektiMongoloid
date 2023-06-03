@@ -1,18 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://hxa8722sb5es"]
 
-[ext_resource path="res://modelit/PlayerVoodooModel/Voodoo-Dool.fbx" type="PackedScene" id=1]
-[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource type="PackedScene" uid="uid://dkub18xaiuy5g" path="res://18-voodoo-dool_fbx/Voodoo-Dool.fbx" id="1_aifgh"]
+[ext_resource type="Script" path="res://CharacterBody3D.gd" id="1_pcrob"]
 
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.51476
-height = 0.002
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nxcm"]
 
-[node name="Player" type="KinematicBody"]
-script = ExtResource( 2 )
+[node name="Node3D" type="Node3D"]
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.126816, 0.461959, 0.00393438 )
-shape = SubResource( 1 )
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_pcrob")
 
-[node name="Voodoo-Dool" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.598127, 0, 0, 0, 0.291045, 0, 0, 0, 0.623514, 0, 0, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.933326, 0)
+shape = SubResource("CapsuleShape3D_3nxcm")
+
+[node name="Node3D" type="Node3D" parent="CharacterBody3D"]
+
+[node name="Voodoo-Dool" parent="CharacterBody3D/Node3D" instance=ExtResource("1_aifgh")]
+transform = Transform3D(0.489375, 0, 0, 0, 0.494879, 0, 0, 0, 0.48138, 0, 0, 0)
