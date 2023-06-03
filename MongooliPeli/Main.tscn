@@ -31,3 +31,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07183, 4.63566, 10.7691)
 
 [node name="Node3D" parent="." instance=ExtResource("2_p5awj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26701, 0.818032, 0.477747)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "pisteet
+"
