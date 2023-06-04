@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nxcm"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Player" type="Node3D"]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 script = ExtResource("1_pcrob")

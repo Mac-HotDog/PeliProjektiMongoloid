@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://4dawxxuw0710"]
+[gd_scene load_steps=7 format=3 uid="uid://4dawxxuw0710"]
 
 [ext_resource type="Texture2D" uid="uid://bahw1pfik6w3t" path="res://green.png" id="1_d2hpl"]
+[ext_resource type="Script" path="res://Camera3D.gd" id="2_lpcql"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Player.tscn" id="2_p5awj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q68sb"]
@@ -25,6 +26,7 @@ shape = SubResource("BoxShape3D_bkcwl")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.907777, 0.419452, 0, -0.419452, 0.907777, 0.218579, 3.71427, 7.79137)
+script = ExtResource("2_lpcql")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07183, 4.63566, 10.7691)
