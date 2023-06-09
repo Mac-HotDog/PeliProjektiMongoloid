@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://4dawxxuw0710"]
+[gd_scene load_steps=10 format=3 uid="uid://4dawxxuw0710"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_8kmx8"]
 [ext_resource type="Texture2D" uid="uid://bahw1pfik6w3t" path="res://green.png" id="1_d2hpl"]
 [ext_resource type="Script" path="res://Camera3D.gd" id="2_lpcql"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Player.tscn" id="2_p5awj"]
@@ -11,7 +12,13 @@ albedo_texture = ExtResource("1_d2hpl")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bkcwl"]
 
-[node name="Main" type="Node"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4khq"]
+albedo_color = Color(0.666667, 0, 0.168627, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t6ylt"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_8kmx8")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -31,8 +38,8 @@ script = ExtResource("2_lpcql")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07183, 4.63566, 10.7691)
 
-[node name="Node3D" parent="." instance=ExtResource("2_p5awj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26701, 0.818032, 0.477747)
+[node name="Player" parent="." instance=ExtResource("2_p5awj")]
+transform = Transform3D(-0.369747, 0, 0.929133, 0, 1, 0, -0.929133, 0, -0.369747, 1.26701, 0.818032, 0.477747)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -46,3 +53,10 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "pisteet
 "
+
+[node name="Marker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0988264, 0, 0, 0, 1, 0, 0.656786, 3.90552)
+material_override = SubResource("StandardMaterial3D_t4khq")
+mesh = SubResource("CylinderMesh_t6ylt")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]
