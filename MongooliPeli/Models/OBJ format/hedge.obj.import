@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bro2q2ec5b77g"
+path="res://.godot/imported/hedge.obj-82599696e051268ad8af68f6dd8955e3.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hedge.obj-82599696e051268ad8af68f6dd8955e3.mesh"]
+
+source_file="res://Models/OBJ format/hedge.obj"
+dest_files=["res://.godot/imported/hedge.obj-82599696e051268ad8af68f6dd8955e3.mesh", "res://.godot/imported/hedge.obj-82599696e051268ad8af68f6dd8955e3.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

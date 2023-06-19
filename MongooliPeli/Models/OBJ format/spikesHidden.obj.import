@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://fpomsw8i2uj5"
+path="res://.godot/imported/spikesHidden.obj-9c3d31daf26a6700ef586fed31471e80.mesh"
+
+[deps]
+
+files=["res://.godot/imported/spikesHidden.obj-9c3d31daf26a6700ef586fed31471e80.mesh"]
+
+source_file="res://Models/OBJ format/spikesHidden.obj"
+dest_files=["res://.godot/imported/spikesHidden.obj-9c3d31daf26a6700ef586fed31471e80.mesh", "res://.godot/imported/spikesHidden.obj-9c3d31daf26a6700ef586fed31471e80.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

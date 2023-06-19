@@ -1,0 +1,152 @@
+[gd_scene load_steps=21 format=3 uid="uid://4dawxxuw0710"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_hf7wh"]
+[ext_resource type="Texture2D" uid="uid://cyxn8wk08llup" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_5n4oc"]
+[ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="3_vo5ek"]
+[ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="4_v52pw"]
+[ext_resource type="Script" path="res://Scripts/Button.gd" id="5_e6af1"]
+[ext_resource type="Script" path="res://Scripts/Button2.gd" id="6_kauym"]
+[ext_resource type="Script" path="res://Scripts/Button3.gd" id="7_o1smx"]
+[ext_resource type="Script" path="res://Scripts/Button4.gd" id="8_gei32"]
+[ext_resource type="Script" path="res://Scripts/Marker.gd" id="9_n1hap"]
+[ext_resource type="PackedScene" uid="uid://ccfnxugcf5rb0" path="res://Scenes/Others/kolikke.tscn" id="10_ut3eh"]
+[ext_resource type="PackedScene" uid="uid://cmm1dh8p0cw8w" path="res://Models/GLTF format/fence.glb" id="11_qwx77"]
+[ext_resource type="PackedScene" uid="uid://bsxg62v2radqw" path="res://Models/GLTF format/spikes.glb" id="12_a8tke"]
+[ext_resource type="PackedScene" uid="uid://bxh8mscy5atbh" path="res://Models/GLTF format/treeSnow.glb" id="13_xr1kc"]
+[ext_resource type="PackedScene" uid="uid://6hiwj0u2pb8w" path="res://Scenes/Others/fence.tscn" id="14_mr0g8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46mj4"]
+albedo_texture = ExtResource("2_5n4oc")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lf84u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bkcwl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4khq"]
+albedo_color = Color(0.666667, 0, 0.168627, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t6ylt"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_feqlk"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_hf7wh")
+
+[node name="Maa" type="StaticBody3D" parent="."]
+transform = Transform3D(7.49367, 0, 0, 0, 1, 0, 0, 0, 7.08854, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maa"]
+transform = Transform3D(17.96, 0, 0, 0, 1, 0, 0, 0, 17.6238, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_46mj4")
+mesh = SubResource("BoxMesh_lf84u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maa"]
+transform = Transform3D(17.9, 0, 0, 0, 1, 0, 0, 0, 17.5982, 0, 0, 0)
+shape = SubResource("BoxShape3D_bkcwl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07183, 4.63566, 10.7691)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.916388, -0.0625785, 0.395369, 0.013644, 0.982247, 0.187093, -0.400058, 0.176844, -0.899266, 2.96765, 5.51522, -8.35919)
+script = ExtResource("3_vo5ek")
+
+[node name="Player" parent="." instance=ExtResource("4_v52pw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26701, 0.566674, 0.477747)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "pisteet
+"
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 562.0
+offset_right = 374.0
+offset_bottom = 593.0
+scale = Vector2(2.94604, 1.85862)
+toggle_mode = true
+text = "Q"
+script = ExtResource("5_e6af1")
+
+[node name="Button2" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 428.0
+offset_top = 561.0
+offset_right = 450.0
+offset_bottom = 592.0
+scale = Vector2(2.58943, 1.85112)
+text = "W
+"
+script = ExtResource("6_kauym")
+
+[node name="Button3" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 502.0
+offset_top = 562.0
+offset_right = 526.0
+offset_bottom = 593.0
+scale = Vector2(2.40279, 1.78529)
+text = "E"
+script = ExtResource("7_o1smx")
+
+[node name="Button4" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 562.0
+offset_right = 589.0
+offset_bottom = 593.0
+scale = Vector2(3.29226, 1.81459)
+text = "R
+"
+script = ExtResource("8_gei32")
+
+[node name="Marker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0988264, 0, 0, 0, 1, 0, 0.656786, 3.90552)
+material_override = SubResource("StandardMaterial3D_t4khq")
+mesh = SubResource("CylinderMesh_t6ylt")
+script = ExtResource("9_n1hap")
+
+[node name="kolikke" parent="." instance=ExtResource("10_ut3eh")]
+
+[node name="fence" parent="." instance=ExtResource("11_qwx77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823891, 0.5, 0.0538592)
+
+[node name="fence" parent="fence" instance=ExtResource("11_qwx77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.927177, 0.186719, -0.209647)
+
+[node name="fence" parent="fence/fence" instance=ExtResource("11_qwx77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12081, 0.0186776, -0.126205)
+
+[node name="spikes" parent="." instance=ExtResource("12_a8tke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.96814, 0.5, -1.06805)
+
+[node name="treeSnow" parent="." instance=ExtResource("13_xr1kc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.845007, 0.5, 1.37438)
+
+[node name="treeSnow2" parent="." instance=ExtResource("13_xr1kc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.63927, 0.5, 1.37909)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="treeSnow2"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="treeSnow2/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="treeSnow2/StaticBody3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.935735, 0)
+shape = SubResource("CylinderShape3D_feqlk")
+
+[node name="fence2" parent="." instance=ExtResource("14_mr0g8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33226, 0.5, 5.00359)
+
+[connection signal="input_event" from="Maa" to="." method="_on_static_body_3d_input_event"]
+[connection signal="button_down" from="Control/Button" to="Player" method="_on_button_button_down"]
+[connection signal="button_down" from="Control/Button2" to="Player" method="_on_button_2_button_down"]

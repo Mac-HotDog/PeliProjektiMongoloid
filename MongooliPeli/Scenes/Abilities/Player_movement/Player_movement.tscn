@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4be5s4emyrmn"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/Player_movement/Player_movement.gd" id="1_8lrli"]
+
+[node name="Player_movement" type="Node"]
+script = ExtResource("1_8lrli")

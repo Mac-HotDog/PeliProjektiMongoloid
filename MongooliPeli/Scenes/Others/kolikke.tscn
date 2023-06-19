@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://ccfnxugcf5rb0"]
+
+[ext_resource type="Script" path="res://Scripts/kolikke.gd" id="1_dux5u"]
+[ext_resource type="Script" path="res://Scripts/StaticBody3D2.gd" id="2_53ca5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfgi2"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jj3dn"]
+material = SubResource("StandardMaterial3D_wfgi2")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v4fk2"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q50kt"]
+
+[node name="kolikke" type="Node3D"]
+transform = Transform3D(0.00462057, 0.0878884, 0, -0.737427, 0.000550691, 0, 0, 0, 0.769626, 0, 0, 0)
+script = ExtResource("1_dux5u")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+script = ExtResource("2_53ca5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, -3.72529e-09, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_jj3dn")
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D2"]
+transform = Transform3D(1, -1.81593e-08, 0, 1.81593e-08, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/Area3D"]
+shape = SubResource("CylinderShape3D_v4fk2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1.01468, -5.82077e-11, 0, 1.11759e-08, 1.01468, 0, 0, 0, 1.01468, 0, 0, 0)
+shape = SubResource("CylinderShape3D_q50kt")
+disabled = true
+
+[connection signal="body_entered" from="StaticBody3D2/Area3D" to="." method="_on_area_3d_body_entered"]
