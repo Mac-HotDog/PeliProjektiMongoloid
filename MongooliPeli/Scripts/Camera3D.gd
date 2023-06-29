@@ -30,3 +30,7 @@ func _process(delta):
 	elif mouse_pos.y >= window_size.y - margin:
 		self.transform.origin += Vector3(0, 0, 0.01) 
 		#print("Mouse is touching the bottom of the screen.")
+		
+		
+
+
