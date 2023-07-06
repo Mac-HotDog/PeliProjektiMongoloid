@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpii6gtmclw65"]
+
+[ext_resource type="Script" path="res://Scenes/Others/Sprite3D.gd" id="1_ejc7m"]
+[ext_resource type="Texture2D" uid="uid://teaf1x6y2dhb" path="res://images/barHorizontal_yellow.png" id="2_653f8"]
+[ext_resource type="Texture2D" uid="uid://cgxddsrk10ak2" path="res://images/barHorizontal_blue.png" id="3_64pxs"]
+[ext_resource type="Script" path="res://Scenes/Others/HealthBar2D.gd" id="4_se1cn"]
+
+[node name="ManaBar3D" type="Sprite3D"]
+transform = Transform3D(0.0917623, 0, 0.995781, 0, 1, 0, -0.995781, 0, 0.0917623, -0.00773624, 2.12206, 0)
+billboard = 1
+double_sided = false
+script = ExtResource("1_ejc7m")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(200, 26)
+
+[node name="ManaBar2D" type="TextureProgressBar" parent="SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("2_653f8")
+texture_progress = ExtResource("3_64pxs")
+script = ExtResource("4_se1cn")

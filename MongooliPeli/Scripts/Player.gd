@@ -4,6 +4,8 @@ extends Entity
 var target = Vector3.ZERO
 @export var speed = 5
 @export var gravity = -5
+@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 #var target = Vector3.ZERO
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
@@ -17,6 +19,10 @@ func _read_input():
 func _physics_process(delta):
 	_read_input()
 	move_and_slide()
+	if bar:
+		bar.update_bar(health)
+	if manaBar:
+		manaBar.update_bar(mana)
 	#velocity.y += gravity * delta
 	# Handle Jump.
 	#if Input.is_action_just_pressed("w") and is_on_floor():

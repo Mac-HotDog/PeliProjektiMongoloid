@@ -31,7 +31,7 @@ func _ready():
 	
 	
 	# Play the animation
-	anim_player.play("anim")
+	#anim_player.play("anim")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

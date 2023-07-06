@@ -1,8 +1,11 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=21 format=3 uid="uid://4dawxxuw0710"]
+=======
+[gd_scene load_steps=19 format=3 uid="uid://4dawxxuw0710"]
+>>>>>>> Stashed changes
 
-[ext_resource type="Script" path="res://Scripts/main.gd" id="1_hf7wh"]
 [ext_resource type="Texture2D" uid="uid://cyxn8wk08llup" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_5n4oc"]
-[ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="3_vo5ek"]
+[ext_resource type="Script" path="res://Scripts/kamerapaskakopioi.gd" id="3_fnyoo"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="4_v52pw"]
 [ext_resource type="Script" path="res://Scripts/Button.gd" id="5_e6af1"]
 [ext_resource type="Script" path="res://Scripts/Button2.gd" id="6_kauym"]
@@ -11,9 +14,12 @@
 [ext_resource type="Script" path="res://Scripts/Marker.gd" id="9_n1hap"]
 [ext_resource type="PackedScene" uid="uid://ccfnxugcf5rb0" path="res://Scenes/Others/kolikke.tscn" id="10_ut3eh"]
 [ext_resource type="PackedScene" uid="uid://cmm1dh8p0cw8w" path="res://Models/GLTF format/fence.glb" id="11_qwx77"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://bsxg62v2radqw" path="res://Models/GLTF format/spikes.glb" id="12_a8tke"]
+=======
+[ext_resource type="PackedScene" uid="uid://dc1n8vb43pxuh" path="res://Scripts/spikes_2.tscn" id="12_p7ol5"]
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://bxh8mscy5atbh" path="res://Models/GLTF format/treeSnow.glb" id="13_xr1kc"]
-[ext_resource type="PackedScene" uid="uid://6hiwj0u2pb8w" path="res://Scenes/Others/fence.tscn" id="14_mr0g8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46mj4"]
 albedo_texture = ExtResource("2_5n4oc")
@@ -30,7 +36,13 @@ albedo_color = Color(0.666667, 0, 0.168627, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_feqlk"]
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_hf7wh")
+script = ExtResource("3_fnyoo")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.969978, 0.243192, 0, -0.243192, 0.969978, 0, 6.12955, 12.3923)
+
+[node name="Player" parent="." instance=ExtResource("4_v52pw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566674, 0)
 
 [node name="Maa" type="StaticBody3D" parent="."]
 transform = Transform3D(7.49367, 0, 0, 0, 1, 0, 0, 0, 7.08854, 0, 0, 0)
@@ -47,27 +59,20 @@ shape = SubResource("BoxShape3D_bkcwl")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07183, 4.63566, 10.7691)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.916388, -0.0625785, 0.395369, 0.013644, 0.982247, 0.187093, -0.400058, 0.176844, -0.899266, 2.96765, 5.51522, -8.35919)
-script = ExtResource("3_vo5ek")
-
-[node name="Player" parent="." instance=ExtResource("4_v52pw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26701, 0.566674, 0.477747)
-
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="UI"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "pisteet
 "
 
-[node name="Button" type="Button" parent="Control"]
+[node name="Button" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 353.0
 offset_top = 562.0
@@ -78,7 +83,7 @@ toggle_mode = true
 text = "Q"
 script = ExtResource("5_e6af1")
 
-[node name="Button2" type="Button" parent="Control"]
+[node name="Button2" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 428.0
 offset_top = 561.0
@@ -89,7 +94,7 @@ text = "W
 "
 script = ExtResource("6_kauym")
 
-[node name="Button3" type="Button" parent="Control"]
+[node name="Button3" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 502.0
 offset_top = 562.0
@@ -99,7 +104,7 @@ scale = Vector2(2.40279, 1.78529)
 text = "E"
 script = ExtResource("7_o1smx")
 
-[node name="Button4" type="Button" parent="Control"]
+[node name="Button4" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 570.0
 offset_top = 562.0
@@ -144,9 +149,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.63927, 0.5, 1.37909)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.935735, 0)
 shape = SubResource("CylinderShape3D_feqlk")
 
-[node name="fence2" parent="." instance=ExtResource("14_mr0g8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33226, 0.5, 5.00359)
+[node name="spikes2" parent="." instance=ExtResource("12_p7ol5")]
 
 [connection signal="input_event" from="Maa" to="." method="_on_static_body_3d_input_event"]
-[connection signal="button_down" from="Control/Button" to="Player" method="_on_button_button_down"]
-[connection signal="button_down" from="Control/Button2" to="Player" method="_on_button_2_button_down"]
+[connection signal="button_down" from="UI/Button" to="Player" method="_on_button_button_down"]
+[connection signal="button_down" from="UI/Button2" to="Player" method="_on_button_2_button_down"]

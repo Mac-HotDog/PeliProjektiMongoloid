@@ -3,7 +3,7 @@ extends CharacterBody3D
 class_name Entity
 
 var health: int = 5
-var mana: int = 100
+var mana: int = 77
 var strength: int = 10
 var agility: int = 10
 var intelligence: int = 10
