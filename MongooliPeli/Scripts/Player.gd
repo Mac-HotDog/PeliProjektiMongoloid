@@ -6,7 +6,7 @@ var target = Vector3.ZERO
 @export var gravity = -5
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
-#var target = Vector3.ZERO
+
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
