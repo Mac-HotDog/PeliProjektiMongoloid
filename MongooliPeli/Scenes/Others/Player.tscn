@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cpii6gtmclw65" path="res://Scripts/mana_bar_3d.tscn" id="4_byf85"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nxcm"]
+height = 2.5582
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_ni0ci")
@@ -24,3 +25,11 @@ transform = Transform3D(0.0917623, 0, 0.995781, 0, 1, 0, -0.995781, 0, 0.0917623
 
 [node name="ManaBar3D" parent="." instance=ExtResource("4_byf85")]
 transform = Transform3D(0.0917623, 0, 0.995781, 0, 1, 0, -0.995781, 0, 0.0917623, -0.008, 2.1, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.878296, 0)
+shape = SubResource("CapsuleShape3D_3nxcm")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
