@@ -1,4 +1,6 @@
+
 extends Node3D#tämä oli päänodessa mulla
+
 
 
 
@@ -46,7 +48,9 @@ func move_camera(x, y, z):
 	var camera = $Camera3D
 	var new_origin = camera.transform.origin + Vector3(x, y, z)
 	camera.transform.origin = new_origin
+
 	#print("kameran saama ",new_origin)
+
 	
 
 
@@ -58,8 +62,9 @@ func move_camera(x, y, z):
 func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
+
 		$Camera3D.transform.origin = $Player.global_position + camera_o_pos
-	
+
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)
 		move_camera(0,CAMERA_MOVE_SPEED,CAMERA_MOVE_SPEED)
