@@ -6,10 +6,12 @@ extends Entity
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
+var fireball = load_ability("fireball")
 	
 func _read_input():
 	#if Input.is_action_just_pressed("w") : jump.execute(self, 4)
 	if Input.is_action_just_pressed("q") : stealth.execute(self)
+	if Input.is_action_just_pressed("w") : fireball.execute(self)
 	
 
 
@@ -26,10 +28,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	_read_input()
 	if(navigationAgent.is_navigation_finished()):
 		return
 	moveToPoint(delta, Speed)
-	pass
+
 
 func moveToPoint(delta, speed):
 	var targetPos = navigationAgent.get_next_path_position()
@@ -60,12 +63,14 @@ func _input(event):
 		
 		
 		
-		print("hahmon saama" ,result, "markkerii" )
+		#print("hahmon saama" ,result, "markkerii" )
 		
 		
 		
 		navigationAgent.target_position = result.position
-	
+		
+
+		
 	
 	
 

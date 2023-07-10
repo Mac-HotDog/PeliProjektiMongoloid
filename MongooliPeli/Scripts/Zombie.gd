@@ -35,7 +35,7 @@ func _process(delta):
 	
 	# Conditions
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
-	anim_tree.set("parameters/conditions/run", !_target_in_range())
+	anim_tree.set("parameters/conditions/run", _target_not_in_range())
 	
 	
 	move_and_slide()
@@ -43,9 +43,11 @@ func _process(delta):
 
 func _target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
-	print(global_position.distance_to(player.global_position) < ATTACK_RANGE)
+	
+func _target_not_in_range():
+	return global_position.distance_to(player.global_position) > ATTACK_RANGE
 
-
+#tällä saadaan osumisen tieto
 func _hit_finished():
 	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 1.0:
 		var dir = global_position.direction_to(player.global_position)

@@ -73,7 +73,7 @@ func move_camera(x, y, z):
 	var camera = $Camera3D
 	var new_origin = camera.transform.origin + Vector3(x, y, z)
 	camera.transform.origin = new_origin
-	print("kameran saama ",new_origin)
+	#print("kameran saama ",new_origin)
 	
 
 
