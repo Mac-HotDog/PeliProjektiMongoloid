@@ -1,15 +1,15 @@
 extends Node3D
 
 
-
+@onready var camera_o_pos = $Player/Camera3D.position
 #old code
-func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton and event.pressed:         
-			$Marker.visible = true         
-			$Marker.transform.origin = position
-			$Player.target = position         
-			await get_tree().create_timer(1).timeout         
-			$Marker.visible = false
+#func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
+#	if event is InputEventMouseButton and event.pressed:         
+#			$Marker.visible = true         
+#			$Marker.transform.origin = position
+#			$Player.target = position         
+#			await get_tree().create_timer(1).timeout         
+#			$Marker.visible = false
 #
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse"):
@@ -48,11 +48,11 @@ const CAMERA_MOVE_SPEED = 0.1
 const CAMERA_ZOOM_SPEED = 0.4
 
 
-@onready var camera_o_pos = $Camera3D.position
+
 
 
 func _on_mouse_near_edge(edge):
-	var camera = $Camera3D
+	var camera = $Player/Camera3D
 	
 	
 	if edge == "left":
@@ -76,7 +76,7 @@ func _on_mouse_near_edge(edge):
 
 func move_camera(x, y, z):
 	set_physics_process(true)#koitin saada kamera lagin pois mutta joutuu tekemään enemmän
-	var camera = $Camera3D
+	var camera = $Player/Camera3D
 	var new_origin = camera.transform.origin + Vector3(x, y, z)
 	camera.transform.origin = new_origin
 	print("kameran saama ",new_origin)
@@ -91,7 +91,7 @@ func move_camera(x, y, z):
 func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
-		$Camera3D.transform.origin = $Player.global_position + camera_o_pos
+		$Player/Camera3D.transform.origin = $Player.global_position + camera_o_pos
 	
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)

@@ -35,7 +35,11 @@ albedo_color = Color(0.666667, 0, 0.168627, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_t6ylt"]
 
+<<<<<<< Updated upstream
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x7xma"]
+=======
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1gxb"]
+>>>>>>> Stashed changes
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("11_iuomi")
@@ -70,7 +74,11 @@ _surfaces = [{
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 1, 0, 0, 0, 4, 0, 5, 0, 6, 0, 7, 0, 5, 0, 4, 0),
+<<<<<<< Updated upstream
 "material": SubResource("ShaderMaterial_x7xma"),
+=======
+"material": SubResource("ShaderMaterial_f1gxb"),
+>>>>>>> Stashed changes
 "primitive": 3,
 "vertex_count": 8,
 "vertex_data": PackedByteArray(0, 0, 0, 191, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 191, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 191, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 191, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 255, 127)
@@ -103,14 +111,21 @@ shape = SubResource("BoxShape3D_bkcwl")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.768485, 0.639868, 0, -0.639868, 0.768485, -1.07183, 6.83606, 10.7691)
 
+<<<<<<< Updated upstream
 [node name="Camera3D" type="Camera3D" parent="." groups=["Camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.640096, 0.768295, 0, -0.768295, 0.640096, 3.14718, 9.27195, 8.42833)
 script = ExtResource("3_vo5ek")
 
+=======
+>>>>>>> Stashed changes
 [node name="Player" parent="." instance=ExtResource("4_v52pw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26701, 0.566674, 0.477747)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.640096, 0.768295, 0, -0.768295, 0.640096, 1.88017, 8.70528, 7.95058)
+script = ExtResource("3_vo5ek")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
