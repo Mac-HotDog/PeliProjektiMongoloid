@@ -1,0 +1,523 @@
+[gd_scene load_steps=7 format=3 uid="uid://cmjly3udqefsa"]
+
+[ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/Levels/level_nodes/maa.tscn" id="1_1oqym"]
+[ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/Levels/level_nodes/camera_3d.tscn" id="2_rmvxo"]
+[ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/Levels/level_nodes/directional_light_3d.tscn" id="3_hc22p"]
+[ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="4_je2ue"]
+[ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://Models/kenttaPropit/wall.glb" id="5_bdax2"]
+[ext_resource type="AudioStream" uid="uid://b57wf2ewavmtm" path="res://Invisible - Star Music Visualization.wav" id="6_jq5uc"]
+
+[node name="level1" type="Node3D"]
+
+[node name="Maa" parent="." instance=ExtResource("1_1oqym")]
+
+[node name="Camera3D" parent="." instance=ExtResource("2_rmvxo")]
+
+[node name="DirectionalLight3D" parent="." instance=ExtResource("3_hc22p")]
+
+[node name="UI" parent="." instance=ExtResource("4_je2ue")]
+
+[node name="seinat" type="Node3D" parent="."]
+
+[node name="wall" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall10" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="seinat2" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="wall" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall26" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat3" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="wall" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall10" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall26" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat4" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="wall" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall11" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall27" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat5" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="wall" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat6" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="wall" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat7" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="wall" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat8" type="Node3D" parent="seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="wall" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_jq5uc")
+volume_db = 3.2
+autoplay = true

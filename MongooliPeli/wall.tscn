@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy6yc6tb8utf"]
+
+[ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://Models/kenttaPropit/wall.glb" id="1_r5s3p"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfty"]
+points = PackedVector3Array(-0.49998, 0.00101149, -0.5, 0.496056, 1.1, 0.496056, 0.495238, 1.0991, -0.5, 0.496057, 1.11022e-16, 0.496155, -0.5, 1.09901, 0.495258, 0.495141, 0.00101149, -0.5, -0.5, 0.000989066, 0.495258, -0.49998, 1.09899, -0.5, 0.5, 0.0996069, 0.5, 0.5, 0.0996069, 0.361324)
+
+[node name="wall" instance=ExtResource("1_r5s3p")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="wall2" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall2/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_elfty")

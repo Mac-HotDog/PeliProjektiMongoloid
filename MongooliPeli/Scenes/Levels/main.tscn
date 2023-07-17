@@ -1,15 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://d17khops2g8m8"]
+[gd_scene load_steps=18 format=3 uid="uid://d17khops2g8m8"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_mcync"]
-[ext_resource type="Texture2D" uid="uid://dehqu045us7b1" path="res://images/576.jpg" id="2_uscpm"]
+[ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/Levels/level_nodes/maa.tscn" id="2_ofym2"]
 [ext_resource type="PackedScene" uid="uid://cjqlnllg4thqc" path="res://Scenes/props/block_rounded_long.tscn" id="3_funhl"]
-[ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="4_vlcty"]
+[ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/Levels/level_nodes/directional_light_3d.tscn" id="4_ol10s"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="5_jnaku"]
-[ext_resource type="Script" path="res://Scripts/Button.gd" id="6_4i5at"]
-[ext_resource type="Script" path="res://Scripts/Button2.gd" id="7_66wrn"]
-[ext_resource type="Script" path="res://Scripts/Button3.gd" id="8_iixil"]
-[ext_resource type="Script" path="res://Scripts/Button4.gd" id="9_v8q30"]
-[ext_resource type="Script" path="res://Scripts/Marker.gd" id="10_wbdwe"]
+[ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/Levels/level_nodes/camera_3d.tscn" id="5_pua2n"]
+[ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="7_lnkc3"]
+[ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/Levels/level_nodes/marker.tscn" id="8_oiwdy"]
 [ext_resource type="PackedScene" uid="uid://cbauyqii5nvtc" path="res://Scenes/props/spikes.tscn" id="11_1tr1y"]
 [ext_resource type="Shader" path="res://addons/simplegrasstextured/shaders/grass.gdshader" id="12_sf5gc"]
 [ext_resource type="Texture2D" uid="uid://c4ggdp0kg5wjk" path="res://addons/simplegrasstextured/textures/grassbushcc008.png" id="13_px35e"]
@@ -24,24 +22,7 @@ cell_size = 0.05
 agent_height = 1.0
 agent_radius = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_worjr"]
-albedo_texture = ExtResource("2_uscpm")
-uv1_scale = Vector3(144.775, 144.775, 144.775)
-uv1_offset = Vector3(0.35, 0, 0)
-uv1_triplanar = true
-uv1_triplanar_sharpness = 1.03527
-uv2_triplanar_sharpness = 0.659754
-
-[sub_resource type="BoxMesh" id="BoxMesh_lf84u"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bkcwl"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4khq"]
-albedo_color = Color(0.666667, 0, 0.168627, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_t6ylt"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qvy3a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmyhw"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("12_sf5gc")
@@ -76,7 +57,7 @@ _surfaces = [{
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 1, 0, 0, 0, 4, 0, 5, 0, 6, 0, 7, 0, 5, 0, 4, 0),
-"material": SubResource("ShaderMaterial_qvy3a"),
+"material": SubResource("ShaderMaterial_fmyhw"),
 "primitive": 3,
 "vertex_count": 8,
 "vertex_data": PackedByteArray(0, 0, 0, 191, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 191, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 191, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 191, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 255, 127)
@@ -94,17 +75,7 @@ script = ExtResource("1_mcync")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_skp0b")
 
-[node name="Maa" type="StaticBody3D" parent="NavigationRegion3D" groups=["Ground"]]
-transform = Transform3D(7.49367, 0, 0, 0, 1, 0, 0, 0, 7.08854, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Maa" groups=["Ground"]]
-transform = Transform3D(17.96, 0, 0, 0, 1, 0, 0, 0, 17.6238, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_worjr")
-mesh = SubResource("BoxMesh_lf84u")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Maa" groups=["Ground"]]
-transform = Transform3D(17.9, 0, 0, 0, 1, 0, 0, 0, 17.5982, 0, 0, 0)
-shape = SubResource("BoxShape3D_bkcwl")
+[node name="Maa" parent="NavigationRegion3D" instance=ExtResource("2_ofym2")]
 
 [node name="Seiniä" type="Node3D" parent="NavigationRegion3D"]
 
@@ -156,79 +127,16 @@ transform = Transform3D(2.3697, 0, 0, 0, 2.2172, 0, 0, 0, 1, -14.2509, 0.5, -1.1
 [node name="blockRoundedLong10" parent="NavigationRegion3D/Seiniä" instance=ExtResource("3_funhl")]
 transform = Transform3D(2.3697, 0, 0, 0, 2.2172, 0, 0, 0, 1, -19.0319, 0.5, -1.13587)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.768485, 0.639868, 0, -0.639868, 0.768485, -1.07183, 6.83606, 10.7691)
+[node name="DirectionalLight3D" parent="." instance=ExtResource("4_ol10s")]
 
-[node name="Camera3D" type="Camera3D" parent="." groups=["Camera"]]
-transform = Transform3D(1, 0, 0, 0, 0.640096, 0.768295, 0, -0.768295, 0.640096, 3.14718, 9.27195, 8.42833)
-script = ExtResource("4_vlcty")
+[node name="Camera3D" parent="." instance=ExtResource("5_pua2n")]
 
 [node name="Player" parent="." instance=ExtResource("5_jnaku")]
 transform = Transform3D(0.997916, 0, 0, 0, 0.997916, 0, 0, 0, 0.997916, 1.26701, 0.566674, 0.477747)
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
+[node name="UI" parent="." instance=ExtResource("7_lnkc3")]
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "pisteet
-"
-
-[node name="Button" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 353.0
-offset_top = 562.0
-offset_right = 374.0
-offset_bottom = 593.0
-scale = Vector2(2.94604, 1.85862)
-toggle_mode = true
-text = "Q"
-script = ExtResource("6_4i5at")
-
-[node name="Button2" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 428.0
-offset_top = 561.0
-offset_right = 450.0
-offset_bottom = 592.0
-scale = Vector2(2.58943, 1.85112)
-text = "W
-"
-script = ExtResource("7_66wrn")
-
-[node name="Button3" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 502.0
-offset_top = 562.0
-offset_right = 526.0
-offset_bottom = 593.0
-scale = Vector2(2.40279, 1.78529)
-text = "E"
-script = ExtResource("8_iixil")
-
-[node name="Button4" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 570.0
-offset_top = 562.0
-offset_right = 589.0
-offset_bottom = 593.0
-scale = Vector2(3.29226, 1.81459)
-text = "R
-"
-script = ExtResource("9_v8q30")
-
-[node name="Marker" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0988264, 0, 0, 0, 1, 0, 0.656786, 3.90552)
-material_override = SubResource("StandardMaterial3D_t4khq")
-mesh = SubResource("CylinderMesh_t6ylt")
-script = ExtResource("10_wbdwe")
+[node name="Marker" parent="." instance=ExtResource("8_oiwdy")]
 
 [node name="Piikkeja" type="Node3D" parent="."]
 
@@ -430,7 +338,3 @@ transform = Transform3D(1.97661, 0, 0, 0, 2.69154, 0, 0, 0, 1.91088, -6.643, 0.5
 
 [node name="treePine4" parent="puut" instance=ExtResource("15_h4c1v")]
 transform = Transform3D(1.97661, 0, 0, 0, 2.69154, 0, 0, 0, 1.91088, -23.6426, 0.5, -8.94298)
-
-[connection signal="input_event" from="NavigationRegion3D/Maa" to="." method="_on_static_body_3d_input_event"]
-[connection signal="button_down" from="UI/Button" to="Player" method="_on_button_button_down"]
-[connection signal="button_down" from="UI/Button2" to="Player" method="_on_button_2_button_down"]
