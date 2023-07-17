@@ -7,14 +7,51 @@ extends Entity
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
-	
+
+const bulletpath = preload("res://Scenes/bullet.tscn")
+
 func _read_input():
 	#if Input.is_action_just_pressed("w") : jump.execute(self, 4)
 	if Input.is_action_just_pressed("q") : stealth.execute(self)
-	if Input.is_action_just_pressed("w") : fireball.execute(self)
+	if Input.is_action_just_pressed("w"): fireball.execute(self)
+	if Input.is_action_just_pressed("e"): _bullet()
 	
+func _bullet():
+		
 
+		
+		var camera = get_tree().get_nodes_in_group("Camera")[0]
+		var mousePos = get_viewport().get_mouse_position()
+		var rayLength = 100
+		var from = camera.project_ray_origin(mousePos)
+		var to = from + camera.project_ray_normal(mousePos) * rayLength
+		var space = get_world_3d().direct_space_state
+		var rayQuery = PhysicsRayQueryParameters3D.new()
+		rayQuery.from = from
+		rayQuery.to = to
+		rayQuery.collide_with_areas = true
+		var result = space.intersect_ray(rayQuery)
+		
+		if result.size() < 1:
+			return
+			
+		var xyz = result.position
+		var direction = global_position.direction_to(xyz)
+		var x = self.global_position[0] + direction[0]
+		var z = self.global_position[2] + direction[2]
+		var suunta = Vector3(x, global_position.y, z)
 
+		
+		look_at(suunta, Vector3.UP)
+
+		
+
+		var bullet = bulletpath.instantiate()
+		get_parent().add_child(bullet)
+		#var bullet_direction = Vector2(5,5)
+		#var spawn =
+		bullet.position = suunta
+		
 
 
 
@@ -29,9 +66,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_read_input()
+	
+
 	if(navigationAgent.is_navigation_finished()):
 		return
 	moveToPoint(delta, Speed)
+
+
 
 
 func moveToPoint(delta, speed):
@@ -46,6 +87,7 @@ func moveToPoint(delta, speed):
 
 func faceDirection(direction):
 	look_at(Vector3(direction.x, global_position.y, direction.z), Vector3.UP)
+	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse") or Input.is_action_pressed("RightMouse"):
@@ -65,10 +107,11 @@ func _input(event):
 		
 		#print("hahmon saama" ,result, "markkerii" )
 		
+		if result.size() < 1:
+			return
 		
-		
-		navigationAgent.target_position = result.position
-		
+		#navigationAgent.target_position = result.position
+		navigationAgent.set_target_position(result.position)
 
 		
 	

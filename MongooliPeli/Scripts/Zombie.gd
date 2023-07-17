@@ -34,21 +34,21 @@ func _process(delta):
 	match state_machine.get_current_node():
 		"Run":
 			# Navigation
-			nav_agent.target_position = player.global_transform.origin
-			#nav_agent.set_target_position(player.global_transform.origin)
-			var next_nav_point = nav_agent.get_next_path_position()
-			velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
+			if _target_not_in_range():
+				nav_agent.set_target_position(player.global_transform.origin)
+				var next_nav_point = nav_agent.get_next_path_position()
+				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 			
-			rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
+				rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 			
 		"Attack":
 			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
-			velocity = Vector3.ZERO
 
 
-	print("Current animation: ", state_machine.get_current_node())
-	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
-	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
+
+#	print("Current animation: ", state_machine.get_current_node())
+#	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
+#	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
 
 	move_and_slide()
 	
@@ -56,7 +56,6 @@ func _process(delta):
 func _target_in_range():
 
 	var x = global_position.distance_to(player.global_position) < ATTACK_RANGE
-	
 
 	return x
 	
