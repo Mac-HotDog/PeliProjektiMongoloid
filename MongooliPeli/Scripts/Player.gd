@@ -10,11 +10,12 @@ var target = Vector3.ZERO
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
+var acidBall = load_ability("acidBall")
 	
 func _read_input():
 	#if Input.is_action_just_pressed("w") : jump.execute(self, 4)
 	if Input.is_action_just_pressed("q") : stealth.execute(self)
-	
+	if Input.is_action_just_pressed("w") : acidBall.execute(self)
 	
 func _physics_process(delta):
 	_read_input()
