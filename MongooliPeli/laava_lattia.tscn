@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://m6luwgas8fcq"]
+
+[ext_resource type="Script" path="res://laava_lattia.gd" id="1_gndnl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w18hf"]
+albedo_color = Color(0.929412, 0, 0.129412, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pex7x"]
+material = SubResource("StandardMaterial3D_w18hf")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c72ov"]
+
+[node name="laava_lattia" type="Node3D"]
+transform = Transform3D(2.1, 0, 0, 0, -0.1, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_gndnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_pex7x")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_c72ov")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.493
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_c72ov")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

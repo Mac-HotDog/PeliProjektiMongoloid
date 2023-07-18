@@ -1,523 +1,1187 @@
-[gd_scene load_steps=7 format=3 uid="uid://cmjly3udqefsa"]
+[gd_scene load_steps=17 format=3 uid="uid://cmjly3udqefsa"]
 
 [ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/Levels/level_nodes/maa.tscn" id="1_1oqym"]
+[ext_resource type="Script" path="res://Scripts/level1.gd" id="1_3q8s4"]
 [ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/Levels/level_nodes/camera_3d.tscn" id="2_rmvxo"]
 [ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/Levels/level_nodes/directional_light_3d.tscn" id="3_hc22p"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="4_je2ue"]
 [ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://Models/kenttaPropit/wall.glb" id="5_bdax2"]
 [ext_resource type="AudioStream" uid="uid://b57wf2ewavmtm" path="res://Invisible - Star Music Visualization.wav" id="6_jq5uc"]
+[ext_resource type="PackedScene" uid="uid://cbauyqii5nvtc" path="res://Scenes/props/spikes.tscn" id="7_om6c7"]
+[ext_resource type="PackedScene" uid="uid://bqbttdtbnr1sl" path="res://rocks.tscn" id="8_jf5at"]
+[ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://Models/kenttaPropit/wall-half.glb" id="9_uxpic"]
+[ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://laava_lattia.tscn" id="10_3hadv"]
+[ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://chest.tscn" id="10_w0wr2"]
+[ext_resource type="PackedScene" uid="uid://ncn3e7kjvvnu" path="res://Models/GLTF format/barrel.glb" id="12_n3ls8"]
+[ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="13_301o2"]
+[ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/Levels/level_nodes/marker.tscn" id="15_sju1s"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_jp660"]
+vertices = PackedVector3Array(-58.5432, 1, -61.9635, -66.7932, 1, -61.9635, -66.7932, 1, -53.9635, -58.5432, 1, -61.9635, -66.7932, 1, -53.9635, -66.7932, 1, -45.9635, -50.2932, 1, -61.9635, -58.5432, 1, -61.9635, -66.7932, 1, -45.9635, -66.7932, 1, -37.9635, -33.7932, 1, -61.9635, -66.7932, 1, -21.7135, -66.7932, 1, -13.4635, -1.04315, 1, -28.7135, -0.543152, 1, -28.9635, -0.543152, 1, -61.9635, -9.04315, 1, -61.9635, -1.04315, 1, -13.2135, -1.04315, 1, -20.9635, -33.7932, 1, -61.9635, -42.0432, 1, -61.9635, -50.2932, 1, -61.9635, -66.7932, 1, -37.9635, -66.7932, 1, -29.7135, -1.04315, 1, -28.7135, -9.04315, 1, -61.9635, -17.2932, 1, -61.9635, -1.04315, 1, -5.46351, -1.04315, 1, -13.2135, -33.7932, 1, -61.9635, -1.04315, 1, -28.7135, -17.2932, 1, -61.9635, -25.5432, 1, -61.9635, -33.7932, 1, -61.9635, -42.0432, 1, -61.9635, -66.7932, 1, -29.7135, -66.7932, 1, -21.7135, -1.04315, 1, -28.7135, -25.5432, 1, -61.9635, -33.7932, 1, -61.9635, -1.04315, 1, -20.9635, -33.7932, 1, -61.9635, -66.7932, 1, -13.4635, -66.7932, 1, -5.46351, -1.04315, 1, -5.46351, -33.7932, 1, -61.9635, -66.7932, 1, -5.46351, -66.7932, 1, 2.78649, -1.04315, 1, 2.53649, 7.70685, 1, -28.9635, 15.7068, 1, -28.9635, 15.7068, 1, -61.9635, 7.45685, 1, -61.9635, 7.45685, 1, -61.9635, -0.543152, 1, -61.9635, -0.543152, 1, -28.9635, 7.70685, 1, -28.9635, 66.7068, 1, -53.7135, 66.7068, 1, -61.9635, 60.2068, 1, -61.9635, 66.7068, 1, -53.7135, 60.2068, 1, -61.9635, 53.9568, 1, -61.9635, 66.7068, 1, -53.7135, 53.9568, 1, -61.9635, 47.4568, 1, -61.9635, 66.7068, 1, -45.2135, 34.7068, 1, -61.9635, 28.4568, 1, -61.9635, 16.2068, 1, -28.4635, 66.7068, 1, -45.2135, 47.4568, 1, -61.9635, 41.2068, 1, -61.9635, 66.7068, 1, -36.9635, 15.7068, 1, -61.9635, 15.7068, 1, -28.9635, 16.2068, 1, -28.4635, 21.9568, 1, -61.9635, 66.7068, 1, -36.9635, 41.2068, 1, -61.9635, 34.7068, 1, -61.9635, 16.2068, 1, -28.4635, 66.7068, 1, -28.4635, 28.4568, 1, -61.9635, 21.9568, 1, -61.9635, 16.2068, 1, -28.4635, 14.2068, 1, 1.28649, 14.2068, 1, 2.03649, 15.9568, 1, 2.03649, 16.2068, 1, 1.03649, 16.2068, 1, -6.46351, 66.7068, 1, -4.46351, 66.7068, 1, -12.4635, 16.2068, 1, -13.7135, 16.2068, 1, 1.03649, 15.9568, 1, 2.03649, 16.2068, 1, 3.78649, 66.7068, 1, 3.78649, 66.7068, 1, -28.4635, 16.2068, 1, -28.4635, 16.2068, 1, -21.2135, 66.7068, 1, -20.4635, 16.2068, 1, 1.03649, 66.7068, 1, 3.78649, 66.7068, 1, -4.46351, 16.2068, 1, -6.46351, 16.2068, 1, -13.7135, 66.7068, 1, -12.4635, 66.7068, 1, -20.4635, 16.2068, 1, -21.2135, 7.20685, 1.75, -20.7135, 7.20685, 1.75, -22.9635, 5.20685, 1.75, -23.2135, 0.456848, 1.75, -20.7135, -0.0431519, 1.75, -16.9635, 0.206848, 1.75, -16.9635, 0.456848, 1.75, -20.7135, -0.0431519, 1.75, -27.9635, 5.20685, 1.75, -27.4635, 8.20685, 1.75, -27.9635, -0.0431519, 1.75, -27.9635, 5.20685, 1.75, -23.2135, 5.20685, 1.75, -27.4635, -0.0431519, 1.75, -27.9635, 0.456848, 1.75, -20.7135, 15.2068, 1.75, -27.9635, 9.95685, 1.75, -27.9635, 14.7068, 1.75, -27.7135, 11.4568, 1.5, -13.9635, 12.2068, 1.25, -14.2135, 10.9568, 1.5, -14.2135, 11.4568, 1.5, -13.9635, 10.9568, 1.5, -14.2135, 11.2068, 1.75, -12.9635, 11.4568, 1.75, -12.9635, 2.95685, 1.75, -15.7135, 8.20685, 1.75, -15.7135, 8.45685, 1.75, -16.7135, 11.2068, 1.75, -12.9635, 9.95685, 1.75, -12.9635, 9.95685, 2, -11.7135, 11.4568, 1.75, -12.9635, 11.2068, 1.75, -12.9635, 9.95685, 2, -11.7135, 9.70685, 1.75, -16.7135, 9.95685, 1.75, -15.7135, 12.2068, 1.75, -15.7135, 12.2068, 1.75, -18.4635, 2.95685, 1.75, -17.9635, 2.95685, 1.75, -15.7135, 8.45685, 1.75, -16.7135, 9.70685, 1.75, -17.9635, 14.9568, 1.75, -23.2135, 11.9568, 1.75, -22.9635, 11.7068, 1.75, -21.9635, 13.7068, 1.75, -18.7135, 15.2068, 1.75, -17.7135, 13.7068, 1.75, -18.7135, 13.9568, 1.75, -15.7135, 14.9568, 1.75, -15.4635, 15.2068, 1.75, -17.7135, 11.4568, 1.75, -12.9635, 9.95685, 2, -11.7135, 14.7068, 2, -11.7135, 14.9568, 1.75, -13.2135, 15.2068, 1.75, -17.7135, 14.9568, 1.75, -15.4635, 14.9568, 1.75, -13.2135, 15.2068, 2, -7.21351, 8.45685, 1.75, -16.7135, 9.70685, 1.75, -16.7135, 12.2068, 1.75, -18.4635, 9.70685, 1.75, -17.9635, 11.7068, 1.75, -21.9635, 9.95685, 1.75, -21.9635, 9.70685, 1.75, -17.9635, 12.2068, 1.75, -18.4635, 14.7068, 2, -11.7135, 14.9568, 2, -7.46351, 15.2068, 2, -7.21351, 14.9568, 1.75, -13.2135, 15.2068, 1.75, -27.9635, 14.7068, 1.75, -27.7135, 14.9568, 1.75, -23.2135, 15.2068, 1.75, -17.7135, 15.2068, 1.75, -27.9635, 14.9568, 1.75, -23.2135, 11.7068, 1.75, -21.9635, 12.2068, 1.75, -18.4635, 13.7068, 1.75, -18.7135, 9.70685, 1, -22.9635, 9.70685, 1.25, -23.7135, 8.95685, 1, -23.7135, 8.95685, 1, -22.7135, 1.95685, 1, -18.7135, 8.95685, 1, -18.9635, 8.20685, 1, -19.9635, 1.20685, 1, -19.7135, 9.20685, 1, -13.7135, 9.95685, 1, -13.9635, 9.95685, 1, -14.7135, 2.20685, 1, -14.7135, 1.20685, 1, -13.9635, 12.2068, 1, -26.2135, 12.2068, 1.25, -25.2135, 13.2068, 1, -25.2135, 13.9568, 1, -26.7135, 13.2068, 1, -25.2135, 12.9568, 1, -23.9635, 13.9568, 1, -23.9635, 13.9568, 1, -26.7135, 8.95685, 1, -22.7135, 8.20685, 1, -23.7135, 8.20685, 1, -19.9635, 8.95685, 1, -18.9635, 8.95685, 1, -24.9635, 9.95685, 1, -25.2135, 10.2068, 1, -26.2135, 6.20685, 1, -26.7135, 8.95685, 1, -22.7135, 8.95685, 1, -23.7135, 8.20685, 1, -23.7135, 8.95685, 1, -24.9635, 6.20685, 1, -26.7135, 6.20685, 1, -23.9635, 8.20685, 1, -23.7135, 8.95685, 1, -23.7135, 10.2068, 1, -26.2135, 12.2068, 1, -26.2135, 13.9568, 1, -26.7135, 6.20685, 1, -26.7135, 1.95685, 1, -18.7135, 1.20685, 1, -19.7135, 1.20685, 1, -13.9635, 2.20685, 1, -14.7135, 11.7068, 1.5, -24.9635, 12.2068, 1.5, -24.9635, 10.9568, 1.5, -25.2135, 11.7068, 1.5, -24.9635, 10.9568, 1.5, -25.2135, 10.9568, 1.5, -24.7135, 11.2068, 1.5, -23.9635, 11.7068, 1.25, -24.2135, 9.95685, 1.5, -24.2135, 11.2068, 1.5, -23.9635, 10.9568, 1.5, -24.7135, 10.2068, 1.25, -24.7135, 7.45685, 2, 3.28649, 15.2068, 2, 3.28649, 7.70685, 2, 3.03649, 7.20685, 2, -4.71351, 7.20685, 2, -6.96351, 5.20685, 2, -7.21351, -0.0431519, 2, -6.96351, 0.206848, 2, -4.46351, 5.20685, 2, -11.4635, 8.20685, 2, -11.7135, 8.20685, 1.75, -12.9635, 0.456848, 1.75, -12.9635, 0.456848, 1.75, -12.9635, 0.206848, 1.75, -16.9635, -0.0431519, 1.75, -16.9635, -0.0431519, 2, -6.96351, -0.0431519, 2, -11.2492, -0.0431519, 2, 3.28649, 0.206848, 2, 2.78649, 0.206848, 2, -4.46351, -0.0431519, 2, -6.96351, 5.20685, 2, -11.4635, 0.456848, 1.75, -12.9635, -0.0431519, 2, -6.96351, 5.20685, 2, -7.21351, 7.45685, 2, 3.28649, 7.70685, 2, 3.03649, 0.206848, 2, 2.78649, -0.0431519, 2, 3.28649, 12.2068, 1.25, -14.2135, 13.9568, 1, -13.9635, 13.9568, 1, -14.7135, 12.2068, 1.25, -14.7135, 11.7068, 1, -8.21351, 11.7068, 1.25, -8.71351, 10.9568, 1, -8.71351, 8.95685, 1, -7.71351, 1.95685, 1, 1.03649, 2.20685, 1, -2.96351, 1.20685, 1, -3.71351, 1.20685, 1, 2.03649, 8.20685, 1, -7.71351, 8.95685, 1, -7.71351, 10.9568, 1, -8.71351, 10.9568, 1, -10.7135, 6.20685, 1, -10.7135, 6.20685, 1, -7.96351, 2.20685, 1, -2.96351, 8.95685, 1, -2.96351, 8.20685, 1, -3.96351, 1.20685, 1, -3.71351, 14.2068, 1, 2.03649, 14.2068, 1, 1.28649, 7.95685, 1, 1.28649, 7.70685, 1, 2.03649, 1.95685, 1, 1.03649, 1.20685, 1, 2.03649, 7.70685, 1, 2.03649, 7.95685, 1, 1.28649, 8.95685, 1, -7.71351, 8.20685, 1, -7.71351, 8.20685, 1, -3.96351, 8.95685, 1, -2.96351, 13.2068, 1.25, -10.7135, 13.2068, 1.25, -10.2135, 13.9568, 1, -10.2135, 13.9568, 1, -10.7135, 11.9568, 1.5, -10.2135, 11.9568, 1.5, -8.96351, 13.2068, 1.5, -8.96351, 13.2068, 1.25, -10.2135, 15.2068, 2, -7.21351, 14.9568, 2, -7.46351, 13.7068, 2, -6.96351, 9.95685, 2, -2.21351, 8.95685, 2, 0.286491, 15.2068, 2, 0.286491, 13.7068, 2, -6.96351, 9.95685, 2, -6.96351, 9.95685, 2, -2.21351, 2.95685, 2, -1.96351, 2.95685, 2, 0.286491, 8.95685, 2, 0.286491, 9.95685, 2, -2.21351, -66.7932, 1, 54.5365, -66.7932, 1, 62.0365, -58.5432, 1, 62.0365, -66.7932, 1, 47.0365, -66.7932, 1, 54.5365, -58.5432, 1, 62.0365, -66.7932, 1, 47.0365, -58.5432, 1, 62.0365, -50.0432, 1, 62.0365, -66.7932, 1, 39.5365, -25.0432, 1, 62.0365, -16.5432, 1, 62.0365, -1.04315, 1, 2.53649, -66.7932, 1, 10.0365, -66.7932, 1, 17.5365, -66.7932, 1, 39.5365, -50.0432, 1, 62.0365, -41.7932, 1, 62.0365, -66.7932, 1, 32.2865, -8.04315, 1, 62.0365, -1.04315, 1, 4.03649, -1.04315, 1, 2.53649, -16.5432, 1, 62.0365, -66.7932, 1, 32.2865, -41.7932, 1, 62.0365, -33.2932, 1, 62.0365, -66.7932, 1, 24.7865, -1.04315, 1, 2.53649, -66.7932, 1, 2.78649, -66.7932, 1, 10.0365, -66.7932, 1, 17.5365, -66.7932, 1, 24.7865, -33.2932, 1, 62.0365, -25.0432, 1, 62.0365, 0.456848, 1, 62.0365, 0.706848, 1, 4.28649, -1.04315, 1, 4.03649, -8.04315, 1, 62.0365, 60.2068, 1, 62.0365, 66.7068, 1, 62.0365, 66.7068, 1, 54.5365, 53.7068, 1, 62.0365, 60.2068, 1, 62.0365, 66.7068, 1, 54.5365, 53.7068, 1, 62.0365, 66.7068, 1, 54.5365, 66.7068, 1, 47.2865, 47.2068, 1, 62.0365, 14.4568, 1, 4.28649, 14.7068, 1, 62.0365, 21.2068, 1, 62.0365, 47.2068, 1, 62.0365, 66.7068, 1, 47.2865, 66.7068, 1, 40.0365, 40.7068, 1, 62.0365, 66.7068, 1, 18.2865, 66.7068, 1, 11.0365, 15.9568, 1, 4.28649, 40.7068, 1, 62.0365, 66.7068, 1, 40.0365, 66.7068, 1, 32.7865, 34.2068, 1, 62.0365, 66.7068, 1, 18.2865, 15.9568, 1, 4.28649, 14.4568, 1, 4.28649, 21.2068, 1, 62.0365, 27.7068, 1, 62.0365, 66.7068, 1, 25.5365, 27.7068, 1, 62.0365, 34.2068, 1, 62.0365, 66.7068, 1, 32.7865, 66.7068, 1, 25.5365, 66.7068, 1, 3.78649, 16.2068, 1, 3.78649, 15.9568, 1, 4.28649, 66.7068, 1, 11.0365, 0.706848, 1, 4.28649, 0.456848, 1, 62.0365, 7.45685, 1, 62.0365, 7.45685, 1, 4.28649, 7.45685, 1, 62.0365, 14.7068, 1, 62.0365, 14.4568, 1, 4.28649, 7.45685, 1, 4.28649)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(10, 12, 11), PackedInt32Array(14, 13, 15), PackedInt32Array(15, 13, 16), PackedInt32Array(17, 19, 18), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(29, 28, 27), PackedInt32Array(32, 31, 30), PackedInt32Array(34, 33, 35), PackedInt32Array(35, 33, 36), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(43, 42, 41), PackedInt32Array(48, 47, 44), PackedInt32Array(44, 47, 46), PackedInt32Array(44, 46, 45), PackedInt32Array(50, 49, 51), PackedInt32Array(51, 49, 52), PackedInt32Array(54, 53, 55), PackedInt32Array(55, 53, 56), PackedInt32Array(59, 58, 57), PackedInt32Array(62, 61, 60), PackedInt32Array(64, 63, 65), PackedInt32Array(65, 63, 66), PackedInt32Array(69, 68, 67), PackedInt32Array(71, 70, 72), PackedInt32Array(72, 70, 73), PackedInt32Array(75, 74, 76), PackedInt32Array(76, 74, 77), PackedInt32Array(79, 78, 80), PackedInt32Array(80, 78, 82), PackedInt32Array(80, 82, 81), PackedInt32Array(85, 84, 83), PackedInt32Array(87, 86, 88), PackedInt32Array(88, 86, 89), PackedInt32Array(93, 92, 90), PackedInt32Array(90, 92, 91), PackedInt32Array(95, 94, 96), PackedInt32Array(96, 94, 97), PackedInt32Array(99, 98, 100), PackedInt32Array(100, 98, 101), PackedInt32Array(105, 104, 102), PackedInt32Array(102, 104, 103), PackedInt32Array(109, 108, 106), PackedInt32Array(106, 108, 107), PackedInt32Array(111, 110, 112), PackedInt32Array(112, 110, 113), PackedInt32Array(115, 114, 116), PackedInt32Array(116, 114, 117), PackedInt32Array(118, 120, 119), PackedInt32Array(122, 121, 123), PackedInt32Array(123, 121, 124), PackedInt32Array(127, 126, 125), PackedInt32Array(129, 128, 130), PackedInt32Array(134, 133, 131), PackedInt32Array(131, 133, 132), PackedInt32Array(135, 137, 136), PackedInt32Array(140, 139, 138), PackedInt32Array(143, 142, 141), PackedInt32Array(145, 144, 146), PackedInt32Array(146, 144, 147), PackedInt32Array(149, 148, 150), PackedInt32Array(150, 148, 151), PackedInt32Array(153, 152, 154), PackedInt32Array(154, 152, 155), PackedInt32Array(155, 152, 156), PackedInt32Array(159, 158, 160), PackedInt32Array(160, 158, 157), PackedInt32Array(164, 163, 161), PackedInt32Array(161, 163, 162), PackedInt32Array(166, 165, 167), PackedInt32Array(167, 165, 168), PackedInt32Array(169, 172, 170), PackedInt32Array(170, 172, 171), PackedInt32Array(173, 176, 174), PackedInt32Array(174, 176, 175), PackedInt32Array(178, 177, 179), PackedInt32Array(179, 177, 180), PackedInt32Array(183, 182, 181), PackedInt32Array(186, 185, 184), PackedInt32Array(189, 188, 187), PackedInt32Array(191, 190, 192), PackedInt32Array(192, 190, 193), PackedInt32Array(197, 196, 194), PackedInt32Array(194, 196, 195), PackedInt32Array(199, 198, 200), PackedInt32Array(200, 198, 201), PackedInt32Array(201, 198, 202), PackedInt32Array(204, 203, 205), PackedInt32Array(205, 203, 206), PackedInt32Array(208, 207, 209), PackedInt32Array(209, 207, 210), PackedInt32Array(214, 213, 211), PackedInt32Array(211, 213, 212), PackedInt32Array(216, 215, 217), PackedInt32Array(217, 215, 218), PackedInt32Array(221, 220, 219), PackedInt32Array(226, 225, 222), PackedInt32Array(222, 225, 224), PackedInt32Array(222, 224, 223), PackedInt32Array(228, 227, 229), PackedInt32Array(229, 227, 230), PackedInt32Array(234, 233, 231), PackedInt32Array(231, 233, 232), PackedInt32Array(237, 236, 235), PackedInt32Array(239, 238, 240), PackedInt32Array(240, 238, 242), PackedInt32Array(240, 242, 241), PackedInt32Array(246, 245, 243), PackedInt32Array(243, 245, 244), PackedInt32Array(249, 248, 247), PackedInt32Array(251, 250, 252), PackedInt32Array(252, 250, 254), PackedInt32Array(252, 254, 253), PackedInt32Array(256, 255, 257), PackedInt32Array(257, 255, 258), PackedInt32Array(260, 259, 261), PackedInt32Array(261, 259, 263), PackedInt32Array(263, 259, 262), PackedInt32Array(265, 264, 266), PackedInt32Array(266, 264, 267), PackedInt32Array(271, 270, 268), PackedInt32Array(268, 270, 269), PackedInt32Array(273, 272, 274), PackedInt32Array(274, 272, 275), PackedInt32Array(279, 278, 276), PackedInt32Array(276, 278, 277), PackedInt32Array(281, 280, 282), PackedInt32Array(282, 280, 283), PackedInt32Array(285, 284, 286), PackedInt32Array(286, 284, 287), PackedInt32Array(288, 293, 289), PackedInt32Array(289, 293, 292), PackedInt32Array(289, 292, 290), PackedInt32Array(290, 292, 291), PackedInt32Array(295, 294, 296), PackedInt32Array(296, 294, 297), PackedInt32Array(299, 298, 300), PackedInt32Array(300, 298, 301), PackedInt32Array(305, 304, 302), PackedInt32Array(302, 304, 303), PackedInt32Array(307, 306, 308), PackedInt32Array(308, 306, 309), PackedInt32Array(313, 312, 310), PackedInt32Array(310, 312, 311), PackedInt32Array(317, 316, 314), PackedInt32Array(314, 316, 315), PackedInt32Array(319, 318, 320), PackedInt32Array(320, 318, 321), PackedInt32Array(321, 318, 322), PackedInt32Array(322, 318, 323), PackedInt32Array(326, 325, 324), PackedInt32Array(328, 327, 329), PackedInt32Array(329, 327, 330), PackedInt32Array(333, 332, 331), PackedInt32Array(336, 335, 334), PackedInt32Array(338, 337, 339), PackedInt32Array(339, 337, 340), PackedInt32Array(342, 341, 343), PackedInt32Array(343, 341, 345), PackedInt32Array(343, 345, 344), PackedInt32Array(346, 349, 347), PackedInt32Array(347, 349, 348), PackedInt32Array(351, 350, 352), PackedInt32Array(352, 350, 353), PackedInt32Array(354, 357, 355), PackedInt32Array(355, 357, 356), PackedInt32Array(360, 359, 358), PackedInt32Array(362, 361, 363), PackedInt32Array(363, 361, 364), PackedInt32Array(366, 365, 367), PackedInt32Array(367, 365, 368), PackedInt32Array(371, 370, 369), PackedInt32Array(374, 373, 372), PackedInt32Array(376, 375, 377), PackedInt32Array(377, 375, 378), PackedInt32Array(381, 380, 379), PackedInt32Array(382, 385, 383), PackedInt32Array(383, 385, 384), PackedInt32Array(388, 387, 386), PackedInt32Array(389, 392, 390), PackedInt32Array(390, 392, 391), PackedInt32Array(394, 393, 395), PackedInt32Array(395, 393, 398), PackedInt32Array(395, 398, 397), PackedInt32Array(395, 397, 396), PackedInt32Array(400, 399, 401), PackedInt32Array(401, 399, 402), PackedInt32Array(404, 403, 405), PackedInt32Array(405, 403, 406), PackedInt32Array(410, 409, 407), PackedInt32Array(407, 409, 408), PackedInt32Array(414, 413, 411), PackedInt32Array(411, 413, 412)]
+geometry_parsed_geometry_type = 2
+cell_size = 0.5
+agent_height = 1.0
+agent_radius = 1.0
 
 [node name="level1" type="Node3D"]
+script = ExtResource("1_3q8s4")
 
-[node name="Maa" parent="." instance=ExtResource("1_1oqym")]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_jp660")
+
+[node name="wall-half2" parent="NavigationRegion3D" instance=ExtResource("9_uxpic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -7)
+
+[node name="wall-half" parent="NavigationRegion3D" instance=ExtResource("9_uxpic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -7)
+
+[node name="kivet" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="rocks" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -9)
+
+[node name="rocks2" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -9)
+
+[node name="rocks3" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, -10)
+
+[node name="rocks4" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -10)
+
+[node name="rocks5" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -14)
+
+[node name="rocks6" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, -14)
+
+[node name="rocks7" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, -24)
+
+[node name="rocks9" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, -25)
+
+[node name="rocks10" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -25)
+
+[node name="rocks8" parent="NavigationRegion3D/kivet" instance=ExtResource("8_jf5at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, -24)
+
+[node name="seinat" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.161168, 0)
+
+[node name="wall" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall10" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="seinat2" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall26" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat3" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall10" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall26" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat4" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat5" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat6" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat7" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat8" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat" type="Node3D" parent="NavigationRegion3D/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.161168, -16)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 1.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="seinat2" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat2" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat3" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall9" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
+
+[node name="wall10" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall26" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat3" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat4" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat4" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat5" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall11" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
+
+[node name="wall12" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat5" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat6" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall7" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
+
+[node name="wall8" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
+
+[node name="wall13" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
+
+[node name="wall14" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
+
+[node name="wall15" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat6" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat7" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat7" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="seinat8" type="Node3D" parent="NavigationRegion3D/seinat/seinat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="wall" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
+
+[node name="wall2" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
+
+[node name="wall3" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
+
+[node name="wall4" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
+
+[node name="wall5" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
+
+[node name="wall6" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
+
+[node name="wall16" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
+
+[node name="wall17" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
+
+[node name="wall18" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
+
+[node name="wall19" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
+
+[node name="wall20" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
+
+[node name="wall21" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
+
+[node name="wall22" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
+
+[node name="wall23" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
+
+[node name="wall24" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
+
+[node name="wall25" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
+
+[node name="wall27" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
+
+[node name="wall28" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
+
+[node name="wall29" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
+
+[node name="wall30" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
+
+[node name="wall31" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
+
+[node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
+
+[node name="Maa" parent="NavigationRegion3D" instance=ExtResource("1_1oqym")]
 
 [node name="Camera3D" parent="." instance=ExtResource("2_rmvxo")]
+transform = Transform3D(0.0271366, -0.768012, 0.63986, -3.07786e-09, 0.640096, 0.768295, -0.999632, -0.0208489, 0.01737, 22.4751, 9.27195, -4.97895)
 
 [node name="DirectionalLight3D" parent="." instance=ExtResource("3_hc22p")]
 
-[node name="UI" parent="." instance=ExtResource("4_je2ue")]
-
-[node name="seinat" type="Node3D" parent="."]
-
-[node name="wall" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall2" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
-
-[node name="wall3" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall7" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
-
-[node name="wall8" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
-
-[node name="wall9" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
-
-[node name="wall10" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
-
-[node name="wall11" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
-
-[node name="wall12" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
-
-[node name="wall13" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
-
-[node name="wall14" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
-
-[node name="wall15" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="seinat2" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-
-[node name="wall" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall23" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
-
-[node name="wall24" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
-
-[node name="wall25" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
-
-[node name="wall26" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
-
-[node name="wall27" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
-
-[node name="wall28" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
-
-[node name="wall29" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
-
-[node name="wall30" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
-
-[node name="wall31" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat2" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat3" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-
-[node name="wall" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall7" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
-
-[node name="wall8" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
-
-[node name="wall9" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 3.11862)
-
-[node name="wall10" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 3.11862)
-
-[node name="wall11" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
-
-[node name="wall12" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
-
-[node name="wall13" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
-
-[node name="wall14" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
-
-[node name="wall15" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall23" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
-
-[node name="wall24" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
-
-[node name="wall25" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
-
-[node name="wall26" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09141, 0.661168, 2.11862)
-
-[node name="wall27" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
-
-[node name="wall28" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
-
-[node name="wall29" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
-
-[node name="wall30" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
-
-[node name="wall31" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat3" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat4" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
-
-[node name="wall" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall11" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
-
-[node name="wall12" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
-
-[node name="wall13" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
-
-[node name="wall14" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
-
-[node name="wall15" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall27" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
-
-[node name="wall28" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
-
-[node name="wall29" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
-
-[node name="wall30" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
-
-[node name="wall31" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat4" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat5" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
-
-[node name="wall" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall2" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
-
-[node name="wall3" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall7" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
-
-[node name="wall8" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
-
-[node name="wall11" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
-
-[node name="wall12" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
-
-[node name="wall13" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
-
-[node name="wall14" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
-
-[node name="wall15" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall18" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
-
-[node name="wall19" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall23" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
-
-[node name="wall24" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
-
-[node name="wall27" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
-
-[node name="wall28" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
-
-[node name="wall29" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
-
-[node name="wall30" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
-
-[node name="wall31" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat5" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat6" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
-
-[node name="wall" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall2" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
-
-[node name="wall3" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall7" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 3.11862)
-
-[node name="wall8" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 3.11862)
-
-[node name="wall11" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 3.11862)
-
-[node name="wall12" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 3.11862)
-
-[node name="wall13" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 3.11862)
-
-[node name="wall14" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 3.11862)
-
-[node name="wall15" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall18" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
-
-[node name="wall19" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat6" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat7" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
-
-[node name="wall" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall2" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
-
-[node name="wall3" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall18" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
-
-[node name="wall19" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat7" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
-[node name="seinat8" type="Node3D" parent="seinat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
-
-[node name="wall" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 3.11862)
-
-[node name="wall2" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 3.11862)
-
-[node name="wall3" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 3.11862)
-
-[node name="wall4" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 3.11862)
-
-[node name="wall5" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 3.11862)
-
-[node name="wall6" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 3.11862)
-
-[node name="wall16" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 3.11862)
-
-[node name="wall17" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0914092, 0.661168, 2.11862)
-
-[node name="wall18" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09141, 0.661168, 2.11862)
-
-[node name="wall19" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09141, 0.661168, 2.11862)
-
-[node name="wall20" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09141, 0.661168, 2.11862)
-
-[node name="wall21" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09141, 0.661168, 2.11862)
-
-[node name="wall22" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09141, 0.661168, 2.11862)
-
-[node name="wall23" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.09141, 0.661168, 2.11862)
-
-[node name="wall24" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09141, 0.661168, 2.11862)
-
-[node name="wall25" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09141, 0.661168, 2.11862)
-
-[node name="wall27" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0914, 0.661168, 2.11862)
-
-[node name="wall28" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0914, 0.661168, 2.11862)
-
-[node name="wall29" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0914, 0.661168, 2.11862)
-
-[node name="wall30" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0914, 0.661168, 2.11862)
-
-[node name="wall31" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
-
-[node name="wall32" parent="seinat/seinat8" instance=ExtResource("5_bdax2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 stream = ExtResource("6_jq5uc")
 volume_db = 3.2
-autoplay = true
+
+[node name="UI" parent="." instance=ExtResource("4_je2ue")]
+
+[node name="piikit" type="Node3D" parent="."]
+
+[node name="spikes2" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 15.0586, 0.5, 2.10549)
+
+[node name="spikes3" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 14.0586, 0.5, 2.10549)
+
+[node name="spikes4" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 13.0586, 0.5, 2.10549)
+
+[node name="spikes5" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 8.0586, 0.5, 1.10549)
+
+[node name="spikes6" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 7.0586, 0.5, 1.10549)
+
+[node name="spikes7" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 6.0586, 0.5, 1.10549)
+
+[node name="spikes8" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 5.0586, 0.5, 1.10549)
+
+[node name="spikes9" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 4.0586, 0.5, 1.10549)
+
+[node name="spikes10" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 3.0586, 0.5, 1.10549)
+
+[node name="spikes11" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 5.0586, 0.5, -2.89451)
+
+[node name="spikes12" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 4.0586, 0.5, -2.89451)
+
+[node name="spikes13" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 3.0586, 0.5, -2.89451)
+
+[node name="spikes14" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 8.0586, 0.5, -7.89451)
+
+[node name="spikes15" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 7.0586, 0.5, -7.89451)
+
+[node name="spikes16" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 6.0586, 0.5, -7.89451)
+
+[node name="spikes17" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 7.0586, 0.5, -18.8945)
+
+[node name="spikes18" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 6.0586, 0.5, -14.8945)
+
+[node name="spikes19" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 7.0586, 0.5, -14.8945)
+
+[node name="spikes20" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 6.0586, 0.5, -18.8945)
+
+[node name="spikes21" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 8.0586, 0.5, -23.8945)
+
+[node name="spikes23" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 8.0586, 0.5, -24.8945)
+
+[node name="spikes22" parent="piikit" instance=ExtResource("7_om6c7")]
+transform = Transform3D(1.30446, 0, 0, 0, 1, 0, 0, 0, 1.2611, 7.0586, 0.5, -23.8945)
+
+[node name="chest" parent="." instance=ExtResource("10_w0wr2")]
+transform = Transform3D(-0.999798, 0, -0.0200873, 0, 1, 0, 0.0200873, 0, -0.999798, 13.2578, 0.5, -17.9564)
+
+[node name="laava_lattiat" type="Node3D" parent="."]
+
+[node name="laava_lattia" parent="laava_lattiat" instance=ExtResource("10_3hadv")]
+transform = Transform3D(2.1, 0, 0, 0, -0.1, 0, 0, 0, 2, 1.65382, 0.600001, 1.59993)
+
+[node name="laava_lattia2" parent="laava_lattiat" instance=ExtResource("10_3hadv")]
+transform = Transform3D(2.1, 0, 0, 0, -0.1, 0, 0, 0, 2, 1.65382, 0.600001, -14.3595)
+
+[node name="laava_lattia3" parent="laava_lattiat" instance=ExtResource("10_3hadv")]
+transform = Transform3D(2.1, 0, 0, 0, -0.1, 0, 0, 0, 2, 3.75342, 0.600001, -14.3595)
+
+[node name="laava_lattia4" parent="laava_lattiat" instance=ExtResource("10_3hadv")]
+transform = Transform3D(2.1, 0, 0, 0, -0.1, 0, 0, 0, 2, 3.75342, 0.600001, -19.4587)
+
+[node name="barrels" type="Node3D" parent="."]
+
+[node name="barrel" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.5, -10)
+
+[node name="barrel2" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.28033, 0.5, -10.376)
+
+[node name="barrel9" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.74931, 0.5, -15.6937)
+
+[node name="barrel10" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.74128, 0.507299, -18.5843)
+
+[node name="barrel3" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42212, 0.5, -10.0349)
+
+[node name="barrel4" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.78145, 0.5, -9.1812)
+
+[node name="barrel5" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.78145, 0.5, -9.66938)
+
+[node name="barrel6" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.78145, 0.5, -10.2062)
+
+[node name="barrel7" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.24154, 0.5, -3.32712)
+
+[node name="barrel8" parent="barrels" instance=ExtResource("12_n3ls8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5163, 0.5, -0.390331)
+
+[node name="Player" parent="." instance=ExtResource("13_301o2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.277, 0.579709, 0.0336842)
+
+[node name="Marker" parent="." instance=ExtResource("15_sju1s")]
+transform = Transform3D(1, 0, 0, 0, 0.0988264, 0, 0, 0, 1, 17.3767, 0.598826, -2.05416)

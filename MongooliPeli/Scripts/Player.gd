@@ -13,10 +13,15 @@ var Speed = 5
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var acidBall = load_ability("acidBall")
+var timer
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
+	timer = Timer.new()  # create a new Timer
+	add_child(timer)  # add it as a child
+	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	timer.timeout.connect(_on_timer_timeout)
+	
 func _read_input():
 	#if Input.is_action_just_pressed("w") : jump.execute(self, 4)
 	if Input.is_action_just_pressed("q") : stealth.execute(self)
@@ -89,3 +94,13 @@ func _input(event):
 func _on_area_3d_area_entered(area):
 	if area:
 		health += -5
+		timer.start()
+		
+
+	
+
+func _on_area_3d_area_exited(area):
+	timer.stop()
+	
+func _on_timer_timeout():
+	health += -5
