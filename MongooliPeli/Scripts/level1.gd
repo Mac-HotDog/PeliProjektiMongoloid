@@ -115,10 +115,10 @@ func _physics_process(delta):
 		# Check if the mouse is near any edge and emit the signal
 
 		if distance_left < EDGE_THRESHOLD:
-			_on_mouse_near_edge("left")
-		if distance_right < EDGE_THRESHOLD:
-			_on_mouse_near_edge("right")
-		if distance_top < EDGE_THRESHOLD:
-			_on_mouse_near_edge("top")
-		if distance_bottom < EDGE_THRESHOLD:
 			_on_mouse_near_edge("bottom")
+		if distance_right < EDGE_THRESHOLD:
+			_on_mouse_near_edge("top")
+		if distance_top < EDGE_THRESHOLD:
+			_on_mouse_near_edge("left")
+		if distance_bottom < EDGE_THRESHOLD:
+			_on_mouse_near_edge("right")
