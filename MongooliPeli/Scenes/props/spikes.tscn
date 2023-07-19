@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbauyqii5nvtc"]
+
+[ext_resource type="PackedScene" uid="uid://bsxg62v2radqw" path="res://Models/GLTF format/spikes.glb" id="1_crqgt"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rg004"]
+points = PackedVector3Array(-0.405, 0, -0.4, -0.405, 0, 0.4, -0.405, 0.0499951, -0.4, 0.405, 0, -0.4, -0.405, 0.0499951, 0.4, 0.405, 0, 0.4, -0.266326, 0.25, -0.262569, 0.405, 0.0499951, -0.4, -0.266326, 0.25, 0.26249, 0.405, 0.0499951, 0.4, 0.266247, 0.25, -0.262569, 0.266247, 0.25, 0.26249)
+
+[node name="spikes" instance=ExtResource("1_crqgt")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_rg004")
+disabled = true
+
+[node name="Area3D" type="Area3D" parent="." index="2"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_rg004")

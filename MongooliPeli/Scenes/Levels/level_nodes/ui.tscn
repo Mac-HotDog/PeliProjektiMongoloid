@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyalyehgjbgq6"]
+
+[ext_resource type="Script" path="res://Scripts/Button.gd" id="1_epue7"]
+[ext_resource type="Script" path="res://Scripts/Button2.gd" id="2_5h3f6"]
+[ext_resource type="Script" path="res://Scripts/Button3.gd" id="3_ffk1o"]
+[ext_resource type="Script" path="res://Scripts/Button4.gd" id="4_lv4mm"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "pisteet
+"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 562.0
+offset_right = 374.0
+offset_bottom = 593.0
+scale = Vector2(2.94604, 1.85862)
+toggle_mode = true
+text = "Q"
+script = ExtResource("1_epue7")
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 428.0
+offset_top = 561.0
+offset_right = 450.0
+offset_bottom = 592.0
+scale = Vector2(2.58943, 1.85112)
+text = "W
+"
+script = ExtResource("2_5h3f6")
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 502.0
+offset_top = 562.0
+offset_right = 526.0
+offset_bottom = 593.0
+scale = Vector2(2.40279, 1.78529)
+text = "E"
+script = ExtResource("3_ffk1o")
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 562.0
+offset_right = 589.0
+offset_bottom = 593.0
+scale = Vector2(3.29226, 1.81459)
+text = "R
+"
+script = ExtResource("4_lv4mm")

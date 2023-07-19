@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2tx8h5u7a2a7"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/acidBall/acidBall.gd" id="1_hkfii"]
+
+[node name="acidBall" type="Node3D"]
+script = ExtResource("1_hkfii")

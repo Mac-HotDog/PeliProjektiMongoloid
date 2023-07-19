@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://df7lc6si536aq"]
+
+[ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/Levels/level_nodes/maa.tscn" id="1_ru4cs"]
+[ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/Levels/level_nodes/camera_3d.tscn" id="2_ind23"]
+[ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/Levels/level_nodes/directional_light_3d.tscn" id="3_4ptmg"]
+[ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="4_vjcpq"]
+
+[node name="level1" type="Node3D"]
+
+[node name="Maa" parent="." instance=ExtResource("1_ru4cs")]
+
+[node name="Camera3D" parent="." instance=ExtResource("2_ind23")]
+
+[node name="DirectionalLight3D" parent="." instance=ExtResource("3_4ptmg")]
+
+[node name="UI" parent="." instance=ExtResource("4_vjcpq")]

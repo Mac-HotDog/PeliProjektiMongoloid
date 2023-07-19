@@ -1,19 +1,29 @@
 extends Entity
 
+@export var speed = 5
+@export var gravity = -5
+@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var navigationAgent : NavigationAgent3D = $NavigationAgent3D
+
+var target = Vector3.ZERO
 var Speed = 5
-# Called when the node enters the scene tree for the first time.
 
-
-#var target = Vector3.ZERO
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
 var bullet = load_ability("bullet")
+var acidBall = load_ability("acidBall")
+var timer
 
-#const bullet = preload("res://Scenes/Abilities/bullet/bullet.tscn")
-
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	timer = Timer.new()  # create a new Timer
+	add_child(timer)  # add it as a child
+	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	timer.timeout.connect(_on_timer_timeout)
+	
 func _read_input():
 	#kääntyminen spellin suuntaan
 	var camera = get_tree().get_nodes_in_group("Camera")[0]
@@ -54,14 +64,18 @@ func _read_input():
 
 
 
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if bar:
+		bar.update_bar(health)
+	if manaBar:
+		manaBar.update_bar(mana)
+
 	if Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or Input.is_action_just_pressed("e"):
 		_read_input()
-
+	
 
 	if(navigationAgent.is_navigation_finished()):
 		return
@@ -122,8 +136,16 @@ func _input(event):
 
 
 
+func _on_area_3d_area_entered(area):
+	if area:
+		health += -5
+		timer.start()
+		
 
 
 
-
-
+func _on_area_3d_area_exited(area):
+	timer.stop()
+	
+func _on_timer_timeout():
+	health += -5
