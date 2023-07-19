@@ -72,3 +72,8 @@ func _target_not_in_range():
 #		var dir = global_position.direction_to(player.global_position)
 #		#player.hit(dir)
 
+
+
+
+
+

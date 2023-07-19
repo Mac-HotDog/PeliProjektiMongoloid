@@ -54,5 +54,7 @@ func _physics_process(delta: float) -> void:
 func load_ability(name):
 	var scene = ResourceLoader.load("res://Scenes/Abilities/" + name + "/" + name + ".tscn")
 	var d = scene.instantiate()
+
 	add_child(d)
 	return d
+

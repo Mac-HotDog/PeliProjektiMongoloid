@@ -85,9 +85,10 @@ func move_camera(x, y, z):
 	
 
 func _physics_process(delta):
-	
+	var camera_pos = $Camera3D.global_position
+	var player_pos = $Player.global_position
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
-		$Camera3D.transform.origin = $Player.global_position + camera_o_pos
+		$Camera3D.transform.origin = player_pos + camera_o_pos
 	
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)
