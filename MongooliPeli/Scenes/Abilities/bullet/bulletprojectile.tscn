@@ -21,6 +21,7 @@ mesh = SubResource("CapsuleMesh_ep6uf")
 skeleton = NodePath("")
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.2, 0, 0, 0, -2.18557e-08, -0.2, 0, 0.5, -8.74228e-09, 0, 0, 0)

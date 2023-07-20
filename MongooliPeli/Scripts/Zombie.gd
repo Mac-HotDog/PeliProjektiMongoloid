@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Entity
 
 
 var player = null
