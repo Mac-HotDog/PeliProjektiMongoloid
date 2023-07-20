@@ -38,7 +38,7 @@ func _process(delta):
 		# Conditions
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 
-	anim_tree.set("parameters/conditions/run/", _target_not_in_range())
+	anim_tree.set("parameters/conditions/run", _target_not_in_range())
 	
 	
 	match state_machine.get_current_node():
@@ -56,10 +56,10 @@ func _process(delta):
 
 
 
-#	print("Current animation: ", state_machine.get_current_node())
-#	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
-#	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
-
+	print("Current animation: ", state_machine.get_current_node())
+	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
+	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
+	print("Player: ", player)
 	move_and_slide()
 	
 

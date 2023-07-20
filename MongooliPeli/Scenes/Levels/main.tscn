@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_hf7wh"]
 [ext_resource type="Texture2D" uid="uid://cyxn8wk08llup" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_5n4oc"]
-[ext_resource type="PackedScene" uid="uid://igrc84teqrtw" path="res://Models/Zombie/Zombie.tscn" id="6_0h5di"]
+[ext_resource type="PackedScene" uid="uid://igrc84teqrtw" path="res://Models/Zombie/Zombie.tscn" id="5_igjmc"]
 [ext_resource type="Script" path="res://Scripts/Marker.gd" id="9_n1hap"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="10_g5k24"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="14_ef6s0"]
@@ -488,10 +488,8 @@ material_override = SubResource("StandardMaterial3D_t4khq")
 mesh = SubResource("CylinderMesh_t6ylt")
 script = ExtResource("9_n1hap")
 
-[node name="Player" parent="." instance=ExtResource("14_ef6s0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15421, -0.196472, 0.203256)
-
 [node name="UI" parent="." instance=ExtResource("10_g5k24")]
 
-[node name="Zombie" parent="." instance=ExtResource("6_0h5di")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39787, -0.196472, -1.42394)
+[node name="Player" parent="." instance=ExtResource("14_ef6s0")]
+
+[node name="Zombie" parent="." instance=ExtResource("5_igjmc")]
