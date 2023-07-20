@@ -3,6 +3,7 @@ extends Entity
 
 var player = null
 var state_machine
+var timer
 
 const SPEED = 4.0
 const ATTACK_RANGE = 2.0
@@ -10,19 +11,28 @@ const ATTACK_RANGE = 2.0
 #@export var player_path : NodePath
 
 @export var player_path := "/root/Main/Player"
-
 @onready var nav_agent = $NavigationAgent3DZombie
 @onready var anim_tree = $AnimationTree
-
+@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
-
+	timer = Timer.new()  # create a new Timer
+	add_child(timer)  # add it as a child
+	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	timer.timeout.connect(_on_timer_timeout)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if bar:
+		bar.update_bar(health)
+	if manaBar:
+		manaBar.update_bar(mana)
+		
 	velocity = Vector3.ZERO
 	
 		# Conditions
@@ -75,5 +85,14 @@ func _target_not_in_range():
 
 
 
+func _on_area_3d_area_entered(area):
+	if area:
+		health += -15
+		timer.start()
+		
 
-
+func _on_area_3d_area_exited(area):
+	timer.stop()
+	
+func _on_timer_timeout():
+	health += -5

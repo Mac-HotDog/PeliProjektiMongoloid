@@ -36,7 +36,7 @@ func _physics_process(delta):
 	#apply_central_impulse(velocity)
 	
 	
-
+	top_level = true
 
 	# eri tavat
 	var movement = mouse_pos.normalized() * speed * delta
