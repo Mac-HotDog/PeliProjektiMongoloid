@@ -10,7 +10,7 @@ const ATTACK_RANGE = 2.0
 
 #@export var player_path : NodePath
 
-@export var player_path := "/root/Main/Player"
+@export var player_path := "/root/Main/Mannekiini"
 @onready var nav_agent = $NavigationAgent3DZombie
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -28,14 +28,23 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
 	if bar:
 		bar.update_bar(health)
 	if manaBar:
 		manaBar.update_bar(mana)
+
 		
 	velocity = Vector3.ZERO
 	
 		# Conditions
+	anim_tree.set("parameters/conditions/die",die())
+	if die() == true:
+		$HealthBar3D.visible = false
+		$ManaBar3D.visible = false
+		await get_tree().create_timer(10).timeout
+		queue_free()
+	
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())
@@ -56,10 +65,11 @@ func _process(delta):
 
 
 
-	print("Current animation: ", state_machine.get_current_node())
-	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
-	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
-	print("Player: ", player)
+#	print("Current animation: ", state_machine.get_current_node())
+#	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
+#	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
+#	print("Player: ", player)
+	
 	move_and_slide()
 	
 
@@ -87,7 +97,8 @@ func _target_not_in_range():
 
 func _on_area_3d_area_entered(area):
 	if area:
-		health += -15
+		#health += -15
+		change_health(-15)
 		timer.start()
 		
 

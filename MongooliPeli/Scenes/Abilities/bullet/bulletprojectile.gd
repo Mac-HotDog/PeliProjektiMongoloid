@@ -2,13 +2,13 @@ extends RigidBody3D
 
 
 
-var speed = 5
+var speed = 4
 var gravity = 0
 var timer
 var parent = get_parent()
 var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 10
+var despawn_distance = 20
 @onready var initial_position = position
 
 #func _ready():
@@ -29,17 +29,14 @@ func mouse_position(pos):
 
 func _physics_process(delta):
 
-	#var direction Vector3()
-#	var forward_vector = global_transform.basis.z.normalized()
-#	var velocity = forward_vector * speed
-	#var velocity = mouse_pos * speed
-	#apply_central_impulse(velocity)
+
 	
 	
 	top_level = true
 
 	# eri tavat
-	var movement = mouse_pos.normalized() * speed * delta
+	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
+	var movement = to * speed * delta
 	transform.origin += movement
 	var displacement = position - initial_position
 	var traveled_distance = displacement.length()
@@ -47,7 +44,12 @@ func _physics_process(delta):
 		#queue_free()
 	if traveled_distance >= despawn_distance:
 		queue_free()
-	
+		
+	#var direction Vector3()
+#	var forward_vector = global_transform.basis.z.normalized()
+#	var velocity = forward_vector * speed
+	#var velocity = mouse_pos * speed
+	#apply_central_impulse(velocity)
 	
 	#move_and_collide(velocity)
 	

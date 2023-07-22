@@ -16,7 +16,8 @@ var _regen_timer: float = 0  # Timer to keep track of regeneration interval
 # Basic stat modifying functions
 func change_health(value: int) -> void:
 	self.health += value
-	if self.health <= 0:
+	print(self," current health:",health)
+	if health <= 0:
 		die()
 
 func change_mana(value: int) -> void:
@@ -39,14 +40,16 @@ func regenerate_mana() -> void:
 	self.mana = min(self.mana + self.mana_regen, 100)
 
 # Function to be called when an entity dies
-func die() -> void:
-	print(str(self) + " has died.")  # placeholder, replace with actual functionality
-
+func die():#vähän sotkin tätä
+# placeholder, replace with actual functionality
+	if self.health <= 0:
+		print(str(self) + " has died.")
+		return true
 # Called every physics frame
 func _physics_process(delta: float) -> void:
 	self._regen_timer += delta
 	if self._regen_timer >= 1.0:
-		print(self.health)
+		#print(self.health)
 		self._regen_timer -= 1.0
 		regenerate_health()
 		regenerate_mana()

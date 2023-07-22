@@ -1,6 +1,14 @@
 extends Node3D
 
+# Threshold distance from the edge
+const EDGE_THRESHOLD = 50
 
+const CAMERA_MOVE_SPEED = 0.1
+
+const CAMERA_ZOOM_SPEED = 0.4
+
+
+@onready var camera_o_pos = $Camera3D.position
 
 
 
@@ -36,15 +44,7 @@ func _input(event):
 
 
 
-# Threshold distance from the edge
-const EDGE_THRESHOLD = 50
 
-const CAMERA_MOVE_SPEED = 0.1
-
-const CAMERA_ZOOM_SPEED = 0.4
-
-
-@onready var camera_o_pos = $Camera3D.position
 
 
 func _on_mouse_near_edge(edge):
@@ -86,7 +86,7 @@ func move_camera(x, y, z):
 
 func _physics_process(delta):
 	var camera_pos = $Camera3D.global_position
-	var player_pos = $Player.global_position
+	var player_pos = $Mannekiini.global_position
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
 		$Camera3D.transform.origin = player_pos + camera_o_pos
 	
