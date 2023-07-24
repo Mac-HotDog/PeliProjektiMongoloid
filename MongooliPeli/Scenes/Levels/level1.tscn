@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/Levels/level_nodes/camera_3d.tscn" id="2_rmvxo"]
 [ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/Levels/level_nodes/directional_light_3d.tscn" id="3_hc22p"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="4_je2ue"]
-[ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://Models/kenttaPropit/wall.glb" id="5_bdax2"]
-[ext_resource type="AudioStream" uid="uid://b57wf2ewavmtm" path="res://Invisible - Star Music Visualization.wav" id="6_jq5uc"]
-[ext_resource type="PackedScene" uid="uid://cbauyqii5nvtc" path="res://Scenes/props/spikes.tscn" id="7_om6c7"]
-[ext_resource type="PackedScene" uid="uid://bqbttdtbnr1sl" path="res://rocks.tscn" id="8_jf5at"]
-[ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://Models/kenttaPropit/wall-half.glb" id="9_uxpic"]
-[ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://laava_lattia.tscn" id="10_3hadv"]
-[ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://chest.tscn" id="10_w0wr2"]
-[ext_resource type="PackedScene" uid="uid://ncn3e7kjvvnu" path="res://Models/GLTF format/barrel.glb" id="12_n3ls8"]
+[ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://assetit/Models/kenttaPropit/wall.glb" id="5_bdax2"]
+[ext_resource type="PackedScene" uid="uid://cbauyqii5nvtc" path="res://assetit/Models/kenttaPropit/spikes.tscn" id="7_om6c7"]
+[ext_resource type="PackedScene" uid="uid://bqbttdtbnr1sl" path="res://assetit/Models/kenttaPropit/rocks.tscn" id="8_jf5at"]
+[ext_resource type="AudioStream" uid="uid://b57wf2ewavmtm" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="8_kq5o8"]
+[ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://assetit/Models/kenttaPropit/wall-half.glb" id="9_uxpic"]
+[ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/laava_lattia.tscn" id="10_3hadv"]
+[ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="10_w0wr2"]
+[ext_resource type="PackedScene" uid="uid://ncn3e7kjvvnu" path="res://assetit/Models/GLTF format/barrel.glb" id="12_n3ls8"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="13_301o2"]
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/Levels/level_nodes/marker.tscn" id="15_sju1s"]
 
@@ -1048,7 +1048,7 @@ transform = Transform3D(0.0271366, -0.768012, 0.63986, -3.07786e-09, 0.640096, 0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-stream = ExtResource("6_jq5uc")
+stream = ExtResource("8_kq5o8")
 volume_db = 3.2
 
 [node name="UI" parent="." instance=ExtResource("4_je2ue")]

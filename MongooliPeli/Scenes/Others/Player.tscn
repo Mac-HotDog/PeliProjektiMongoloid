@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://hxa8722sb5es"]
 
-[ext_resource type="PackedScene" uid="uid://dkub18xaiuy5g" path="res://Models/18-voodoo-dool_fbx/Voodoo-Dool.fbx" id="1_aifgh"]
+[ext_resource type="PackedScene" uid="uid://dkub18xaiuy5g" path="res://assetit/Models/18-voodoo-dool_fbx/Voodoo-Dool.fbx" id="1_aifgh"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_ni0ci"]
-[ext_resource type="PackedScene" uid="uid://wu1mb4excvd5" path="res://Scripts/health_bar_3d.tscn" id="3_heedj"]
-[ext_resource type="PackedScene" uid="uid://cpii6gtmclw65" path="res://Scripts/mana_bar_3d.tscn" id="4_byf85"]
+[ext_resource type="PackedScene" uid="uid://wu1mb4excvd5" path="res://Scenes/Others/health_bar_3d.tscn" id="3_heedj"]
+[ext_resource type="PackedScene" uid="uid://cpii6gtmclw65" path="res://Scenes/Others/mana_bar_3d.tscn" id="4_byf85"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nxcm"]
 height = 2.94022

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyo3yqepue686"]
+
+[ext_resource type="PackedScene" uid="uid://dumcyiyfy7igj" path="res://assetit/Models/GLTF format/chest.glb" id="1_n0nvl"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yq7g4"]
+points = PackedVector3Array(-0.246322, 0, -0.24637, 0.238516, 0.25, 0.238573, -0.238527, 0.25, 0.238573, -0.246322, 0, 0.24637, 0.246311, 0, 0.24637, 0.238516, 0.25, -0.238573, 0.246311, 0, -0.24637, -0.238527, 0.25, -0.238573)
+
+[node name="chest" instance=ExtResource("1_n0nvl")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_yq7g4")
