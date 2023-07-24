@@ -54,6 +54,8 @@ func _process(delta):
 		"Run":
 			# Navigation
 			if _target_not_in_range():
+				#print(self.global_rotation)
+					
 				nav_agent.set_target_position(player.global_transform.origin)
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
@@ -61,6 +63,7 @@ func _process(delta):
 				rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 			
 		"Attack":
+
 			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 
 
@@ -98,8 +101,9 @@ func _target_not_in_range():
 func _on_area_3d_area_entered(area):
 	if area:
 		#health += -15
-		change_health(-15)
 		timer.start()
+		change_health(-15)
+
 		
 
 func _on_area_3d_area_exited(area):

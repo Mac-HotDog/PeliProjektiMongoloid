@@ -7,6 +7,7 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
+@onready var model = $Armature/Skeleton3D
 
 var target = Vector3.ZERO
 var Speed = 5
@@ -80,10 +81,10 @@ func play_animation(animation,condition):
 		else:
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
-	
+
 	if condition == false and anim_player.current_animation == animation:
 		anim_player.stop()
-	
+
 		#print(anim_player.current_animation)
 
 
@@ -113,8 +114,7 @@ func _physics_process(delta):
 
 	play_animation("NeutralIdle",allow_idle())
 	#print(anim_player.get_current_animation())
-	
-	
+
 	if bar:
 		bar.update_bar(health)
 	if manaBar:
@@ -137,12 +137,15 @@ func moveToPoint(delta, speed):
 	var direction = global_position.direction_to(targetPos)
 	faceDirection(targetPos)
 	velocity = direction * speed
+#	print(self.global_rotation)
+#	print("malli ",model.global_rotation)
 	move_and_slide()
 
 
 
 func faceDirection(direction):
-	look_at(Vector3(direction.x, global_position.y, direction.z), Vector3.UP)
+	var kohta = Vector3(direction.x, global_position.y, direction.z)
+	look_at(kohta, Vector3.UP,true)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
@@ -159,7 +162,7 @@ func _input(event):
 		rayQuery.to = to
 		rayQuery.collide_with_areas = true
 		var result = space.intersect_ray(rayQuery)
-		
+
 		
 		
 		#print("hahmon saama" ,result, "markkerii" )

@@ -31,7 +31,6 @@ func _physics_process(delta):
 
 
 	
-	
 	top_level = true
 
 	# eri tavat
@@ -54,3 +53,10 @@ func _physics_process(delta):
 	#move_and_collide(velocity)
 	
 	#linear_velocity = Vector3(10,0,0)
+
+
+
+
+func _on_area_3d_area_entered(area):
+	if area:
+		queue_free()
