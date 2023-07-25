@@ -10,7 +10,7 @@ const ATTACK_RANGE = 2.0
 
 #@export var player_path : NodePath
 
-@export var player_path := "/root/Main/Player"
+#@export var player_path := "res://Scenes/Others/Player.tscn"
 @onready var nav_agent = $NavigationAgent3DZombie
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -18,7 +18,7 @@ const ATTACK_RANGE = 2.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player = get_node(player_path)
+	player = get_node("res://Scenes/Others/Player.tscn")
 	state_machine = anim_tree.get("parameters/playback")
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
@@ -36,9 +36,9 @@ func _process(delta):
 	velocity = Vector3.ZERO
 	
 		# Conditions
-	anim_tree.set("parameters/conditions/attack", _target_in_range())
+	#anim_tree.set("parameters/conditions/attack", _target_in_range())
 
-	anim_tree.set("parameters/conditions/run", _target_not_in_range())
+	#anim_tree.set("parameters/conditions/run", _target_not_in_range())
 	
 	
 	match state_machine.get_current_node():
@@ -64,16 +64,17 @@ func _process(delta):
 	
 
 func _target_in_range():
-
+	
 	var x = global_position.distance_to(player.global_position) < ATTACK_RANGE
 
 	return x
 	
 	
 func _target_not_in_range():
-	var x = global_position.distance_to(player.global_position) > ATTACK_RANGE
+	#var x = global_position.distance_to(player.global_position) > ATTACK_RANGE
 
-	return x
+	#return x
+	return null
 	
 	
 #tällä saadaan osumisen tieto

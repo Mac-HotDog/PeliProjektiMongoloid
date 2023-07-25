@@ -2,8 +2,6 @@ extends Node3D
 
 
 
-
-
 			
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse"):
@@ -28,10 +26,6 @@ func _input(event):
 		$Marker.transform.origin = result.position
 		await get_tree().create_timer(1).timeout         
 		$Marker.visible = false 
-
-
-
-
 
 
 
@@ -78,11 +72,6 @@ func move_camera(x, y, z):
 	#print("kameran saama ",new_origin)
 	
 
-
-
-
-		
-	
 
 func _physics_process(delta):
 	var camera_pos = $Camera3D.global_position
