@@ -15,7 +15,7 @@ const ATTACK_RANGE = 2.0
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
-@export var player_path =  "/root/Main/Player"
+@export var player_path =  "/root/level1/Player"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,7 +34,8 @@ func _process(delta):
 		bar.update_bar(health)
 	if manaBar:
 		manaBar.update_bar(mana)
-		
+	if health < 1:
+		queue_free()
 	velocity = Vector3.ZERO
 	
 		# Conditions
