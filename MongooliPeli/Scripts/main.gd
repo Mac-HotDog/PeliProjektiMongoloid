@@ -9,6 +9,7 @@ const CAMERA_ZOOM_SPEED = 0.4
 
 
 @onready var camera_o_pos = $Camera3D.position
+@onready var player_o_pos = $Mannekiini.position
 
 
 
@@ -34,7 +35,7 @@ func _input(event):
 
 		$Marker.visible = true         
 		$Marker.transform.origin = result.position
-		await get_tree().create_timer(1).timeout         
+		await get_tree().create_timer(1).timeout
 		$Marker.visible = false 
 
 
@@ -87,9 +88,12 @@ func move_camera(x, y, z):
 func _physics_process(delta):
 	var camera_pos = $Camera3D.global_position
 	var player_pos = $Mannekiini.global_position
+	var difference = camera_o_pos[2] - player_o_pos[2]
+	var z = player_pos[2] + difference
+	var new_camera_pos = Vector3(player_pos[0],camera_pos[1],z)
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
-		$Camera3D.transform.origin = player_pos + camera_o_pos
-	
+		$Camera3D.transform.origin = new_camera_pos
+
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)
 		move_camera(0,CAMERA_ZOOM_SPEED,CAMERA_ZOOM_SPEED)

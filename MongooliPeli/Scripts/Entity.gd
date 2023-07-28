@@ -43,7 +43,7 @@ func regenerate_mana() -> void:
 func die():#vähän sotkin tätä
 # placeholder, replace with actual functionality
 	if self.health <= 0:
-		print(str(self) + " has died.")
+		#print(str(self) + " has died.")
 		return true
 # Called every physics frame
 func _physics_process(delta: float) -> void:

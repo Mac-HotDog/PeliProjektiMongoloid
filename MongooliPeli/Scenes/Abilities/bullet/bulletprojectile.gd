@@ -2,13 +2,13 @@ extends RigidBody3D
 
 
 
-var speed = 4
+var speed = 14
 var gravity = 0
 var timer
 var parent = get_parent()
-var direction = Vector3(1, 0, 0)
+#var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 20
+var despawn_distance = 15
 @onready var initial_position = position
 
 #func _ready():
@@ -23,7 +23,7 @@ var despawn_distance = 20
 #func _on_timer_timeout():
 #	self.queue_free()
 #
-	
+	#enemmäkin suunta
 func mouse_position(pos):
 	mouse_pos = pos
 
@@ -32,11 +32,14 @@ func _physics_process(delta):
 
 	
 	top_level = true
-
+	
 	# eri tavat
 	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
 	var movement = to * speed * delta
-	transform.origin += movement
+	transform.origin[0] = transform.origin[0] + movement[0]
+	transform.origin[1] = 1
+	transform.origin[2] = transform.origin[2] + movement[2]
+	#print(position)
 	var displacement = position - initial_position
 	var traveled_distance = displacement.length()
 	#if self.collide == true:

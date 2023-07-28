@@ -29,7 +29,7 @@ func mouse_position(pos):
 
 
 func execute(node):
-	
+	await get_tree().create_timer(0.1).timeout
 	top_level = true
 	var bullet = instance.instantiate()
 	bullet.mouse_position(mouse_pos)

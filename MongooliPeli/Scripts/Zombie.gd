@@ -89,11 +89,12 @@ func _target_not_in_range():
 	return x
 	
 	
-#tällä saadaan osumisen tieto
-#func _hit_finished():
-#	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 1.0:
-#		var dir = global_position.direction_to(player.global_position)
-#		#player.hit(dir)
+#tällä saadaan melee osumisen tieto
+func _hit_finished():
+	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 0.5:
+		#var dir = global_position.direction_to(player.global_position)
+		var melee = true
+		player.hit(melee)
 
 
 

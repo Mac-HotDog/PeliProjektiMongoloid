@@ -1,7 +1,7 @@
 extends Entity
 
-@export var speed = 5
-@export var gravity = -5
+@export var SPEED = 5
+@export var gravity = 6
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var navigationAgent = $NavigationAgent3D
@@ -9,12 +9,20 @@ extends Entity
 @onready var anim_tree = $AnimationTree
 @onready var model = $Armature/Skeleton3D
 
-var target = Vector3.ZERO
+#signal player_hit
+
+#var target = Vector3.ZERO
 var Speed = 5
+
 var timer
-var state_machine
-var no_animation_playing
-var player_moving
+#var player_hit
+var allow_idle
+var allow_run
+var player_navigating
+var jump_speed = 6
+var fornow = false
+
+
 
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
@@ -25,8 +33,9 @@ var acidBall = load_ability("acidBall")
 
 
 func _ready():
+	allow_idle = true
 	#state_machine = anim_tree.get("parameters/playback")
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
@@ -44,75 +53,110 @@ func _read_input():
 	rayQuery.from = from
 	rayQuery.to = to
 	rayQuery.collide_with_areas = true
+	rayQuery.collide_with_bodies = true
 	var result = space.intersect_ray(rayQuery)
-	
+
 	if result.size() < 1:
 		return
-			
 	var xyz = result.position
-	var direction = global_position.direction_to(xyz)
-	var x = self.global_position[0] + direction[0]
-	var z = self.global_position[2] + direction[2]
-	var suunta = Vector3(x, global_position.y, z)
+	var cast_to = global_position.direction_to(xyz)
+#
+#	var x = self.global_position[0] + direction[0]
+#	var z = self.global_position[2] + direction[2]
+#	var suunta = Vector3(x, global_position.y, z)
+	var suunta = Vector3(xyz[0],global_position.y,xyz[2])
 
-
-
-#	if Input.is_action_just_pressed("w"):
-#		jump.execute(self,4)
 	if Input.is_action_just_pressed("q"):
 		look_at(suunta, Vector3.UP)
 		stealth.execute(self)
 	if Input.is_action_just_pressed("w"):
-		look_at(suunta, Vector3.UP)
+		look_at(suunta, Vector3.UP,true)
 		fireball.execute(self)
 	if Input.is_action_just_pressed("e"):
-		look_at(suunta, Vector3.UP)
+		#print("to ",direction)
+		look_at(suunta, Vector3.UP,true)
 		e_pressed(0)
-		bullet.mouse_position(xyz)
+		bullet.mouse_position(cast_to)
+
 		bullet.execute(self)
+
 
 func play_animation(animation,condition):
 	if condition:
-		if animation == "CastForwardRight":
-			#anim_player.set_blend_time("Running","CastForwardRight",0.1)
-			anim_player.stop()
-			anim_player.set_speed_scale(4)
-			anim_player.play(animation)
-		else:
+		if animation == "Running":
+			allow_idle = false
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
+		if animation == "Jump":
+			#moveToPoint(0,0)
+			allow_idle = false
+			anim_player.stop()
+			anim_player.set_speed_scale(2)
+			anim_player.play(animation)
+		if animation == "CastForwardRight":
+			#anim_player.set_blend_time("Running","CastForwardRight",2)
+			allow_idle = false
+			anim_player.stop()
+			anim_player.set_speed_scale(10)
+			anim_player.play(animation)
+		if animation == "NeutralIdle":
+			anim_player.set_speed_scale(1)
+			anim_player.play(animation)
+		if animation == "PunchedFace":
+			anim_player.stop()
+			allow_idle = false
+			anim_player.play(animation)
+			
+	#if not condition and anim_player.get_animation(animation) == animation:
+		#anim_player.stop(animation)
 
-	if condition == false and anim_player.current_animation == animation:
-		anim_player.stop()
 
 		#print(anim_player.current_animation)
 
 
 func e_pressed(over):
-	var fornow
 	if over == 0:
 		fornow = true
+		allow_idle = false
+		allow_run = false
 		play_animation("CastForwardRight",fornow)
-	if over == 1: #saadaan signaalista
+		await get_tree().create_timer(0.5).timeout
+		allow_run = true
 		fornow = false
-		play_animation("CastForwardRight",fornow)
+	if over == 1:
+		return fornow
+		
+#	if over == 1: #saadaan signaalista
+#		fornow = false
+#		play_animation("CastForwardRight",fornow)
 
 
-func allow_idle():
-	if !player_moving:
-		if anim_player.get_current_animation() != "CastForwardRight":
-			return true
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-#	if anim_player.get_current_animation() == "" or anim_player.get_current_animation() == "NeutralIdle":
-#		no_animation_playing = true
+#func allow_idle():
+#	if !player_navigating:
+#		if (e_pressed("?") or 
+#		anim_player.get_current_animation() == "Jump"):
+#			return false
 #	else:
-#		no_animation_playing = false
-	player_moving = not navigationAgent.is_navigation_finished()
-	play_animation("Running",player_moving)
+#		return true
 
-	play_animation("NeutralIdle",allow_idle())
+func _physics_process(delta):
+	if Input.is_action_just_pressed("r"):
+		if is_on_floor():
+			#var dir = rotation #??????
+			play_animation("Jump",true)
+			velocity.y +=  jump_speed
+			#velocity.dir = 1.1
+			#print(Vector3.FORWARD)
+			move_and_slide()
+	if not is_on_floor():
+		velocity.y -= gravity *delta
+		move_and_slide()
+	#print(anim_player.get_current_animation())
+
+	allow_run = not navigationAgent.is_navigation_finished()
+	
+
+	play_animation("NeutralIdle",allow_idle)
 	#print(anim_player.get_current_animation())
 
 	if bar:
@@ -120,26 +164,33 @@ func _physics_process(delta):
 	if manaBar:
 		manaBar.update_bar(mana)
 
-	if Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or Input.is_action_just_pressed("e"):
+	if (Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or 
+	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")):
 		_read_input()
 	
 
 	
 	if(navigationAgent.is_navigation_finished()):
 		return
-	moveToPoint(delta, Speed)
+	if await e_pressed(1) == false:
+		moveToPoint(delta, Speed)
 
 
 
 
 func moveToPoint(delta, speed):
-	var targetPos = navigationAgent.get_next_path_position()
-	var direction = global_position.direction_to(targetPos)
-	faceDirection(targetPos)
-	velocity = direction * speed
-#	print(self.global_rotation)
-#	print("malli ",model.global_rotation)
-	move_and_slide()
+	if is_on_floor():
+		var targetPos = navigationAgent.get_next_path_position()
+		var direction = global_position.direction_to(targetPos)
+		faceDirection(targetPos)
+		velocity = direction * speed
+#		print(self.global_rotation)
+		allow_run = true
+		play_animation("Running",allow_run)
+		move_and_slide()
+
+		
+
 
 
 
@@ -165,7 +216,7 @@ func _input(event):
 
 		
 		
-		#print("hahmon saama" ,result, "markkerii" )
+		#print("hahmon saama" ,result, "markkerii")
 		
 		#estää crashin jos klikkaa ulos mapista
 		if result.size() < 1:
@@ -178,9 +229,13 @@ func _input(event):
 	
 	
 
-#func hit(dir):
+func hit(hit):
 	#emit_signal("player_hit")
 	#velocity += dir * HIT_STAGGER
+	if hit: #vain melee
+		change_health(-15)
+		allow_idle = false
+		play_animation("PunchedFace",true)
 
 
 
@@ -203,8 +258,8 @@ func _on_timer_timeout():
 
 
 func _on_animation_player_animation_finished(anim_name):
-	print(anim_name)
-	play_animation("NeutralIdle", true)
+#	play_animation("NeutralIdle", true)
 #	if anim_name == "CastForwardRight":
 #		e_pressed(1)
+	allow_idle = true
 
