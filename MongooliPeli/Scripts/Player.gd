@@ -72,7 +72,8 @@ func _physics_process(delta):
 		bar.update_bar(health)
 	if manaBar:
 		manaBar.update_bar(mana)
-
+	if health < 0:
+		get_tree().change_scene_to_file("res://Scenes/Levels/HavisitPelinScene.tscn")
 	if Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or Input.is_action_just_pressed("e"):
 		_read_input()
 	

@@ -24,10 +24,11 @@ func _input(event):
 		rayQuery.to = to
 		rayQuery.collide_with_areas = true
 		var result = space.intersect_ray(rayQuery)
-
+		print(result)
 		
-		$Marker.visible = true         
-		$Marker.transform.origin = result.position
+		$Marker.visible = true
+		var pos = result.position    
+		$Marker.transform.origin = pos
 		await get_tree().create_timer(1).timeout         
 		$Marker.visible = false 
 

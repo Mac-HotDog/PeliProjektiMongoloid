@@ -20,7 +20,7 @@ autostart = true
 shape = SubResource("BoxShape3D_mhy5t")
 
 [node name="spikesLarge" parent="." instance=ExtResource("2_67ujq")]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74227e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-1, 2.58415e-07, 0, -8.74228e-08, -2.95592, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="spikesLarge"]
 
