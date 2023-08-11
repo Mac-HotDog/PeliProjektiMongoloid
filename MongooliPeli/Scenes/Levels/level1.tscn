@@ -2,20 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/level_nodes/maa.tscn" id="1_1oqym"]
 [ext_resource type="Script" path="res://Scripts/level1.gd" id="1_3q8s4"]
-[ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/level_nodes/camera_3d.tscn" id="2_rmvxo"]
 [ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/level_nodes/directional_light_3d.tscn" id="3_hc22p"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="4_je2ue"]
 [ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://assetit/Models/kenttaPropit/wall.glb" id="5_bdax2"]
 [ext_resource type="PackedScene" uid="uid://cbauyqii5nvtc" path="res://assetit/Models/kenttaPropit/spikes.tscn" id="7_om6c7"]
 [ext_resource type="PackedScene" uid="uid://bqbttdtbnr1sl" path="res://assetit/Models/kenttaPropit/rocks.tscn" id="8_jf5at"]
-[ext_resource type="AudioStream" uid="uid://b57wf2ewavmtm" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="8_kq5o8"]
+[ext_resource type="AudioStream" uid="uid://bmd6ftx18guvh" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="8_kq5o8"]
 [ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://assetit/Models/kenttaPropit/wall-half.glb" id="9_uxpic"]
 [ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/laava_lattia.tscn" id="10_3hadv"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="10_w0wr2"]
 [ext_resource type="PackedScene" uid="uid://ncn3e7kjvvnu" path="res://assetit/Models/GLTF format/barrel.glb" id="12_n3ls8"]
-[ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="13_301o2"]
+[ext_resource type="AudioStream" uid="uid://mu1ynrsdq4pm" path="res://audio/effects/warp-sfx-6897.mp3" id="15_qcgx8"]
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="15_sju1s"]
 [ext_resource type="Script" path="res://Scenes/Others/spawn_points.gd" id="16_03h4g"]
+[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiini.tscn" id="17_nqjgq"]
 [ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="17_w7oas"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_jp660"]
@@ -1046,9 +1046,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0914, 0.661168, 2.11862)
 [node name="wall32" parent="NavigationRegion3D/seinat/seinat/seinat8" instance=ExtResource("5_bdax2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0914, 0.661168, 2.11862)
 
-[node name="Camera3D" parent="." instance=ExtResource("2_rmvxo")]
-transform = Transform3D(0.0271366, -0.768012, 0.63986, -3.07786e-09, 0.640096, 0.768295, -0.999632, -0.0208489, 0.01737, 22.4751, 9.27195, -4.97895)
-
 [node name="DirectionalLight3D" parent="." instance=ExtResource("3_hc22p")]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
@@ -1175,11 +1172,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.24154, 0.5, -3.32712)
 [node name="barrel8" parent="barrels" instance=ExtResource("12_n3ls8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5163, 0.5, -0.390331)
 
-[node name="Player" parent="." instance=ExtResource("13_301o2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4774, 0.579709, 4.65611)
-collision_layer = 1
-collision_mask = 1
-
 [node name="Marker" parent="." instance=ExtResource("15_sju1s")]
 transform = Transform3D(1, 0, 0, 0, 0.0988264, 0, 0, 0, 1, 17.3767, 0.598826, -2.05416)
 
@@ -1192,6 +1184,9 @@ script = ExtResource("16_03h4g")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="spawnPoints/Area3D"]
 transform = Transform3D(14.1414, 0, 0, 0, 2.25964, 0, 0, 0, 17.5228, 0, 0, 0)
 shape = SubResource("CylinderShape3D_asdnn")
+
+[node name="spawnaudio" type="AudioStreamPlayer3D" parent="spawnPoints"]
+stream = ExtResource("15_qcgx8")
 
 [node name="spawnPoints2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.51749, 2.38419e-07, -10.6049)
@@ -1215,6 +1210,12 @@ shape = SubResource("CylinderShape3D_asdnn")
 
 [node name="Voitto area" parent="." instance=ExtResource("17_w7oas")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.53288, 0, -36.6351)
+
+[node name="Mannekiini" parent="." instance=ExtResource("17_nqjgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8607, 0.611883, 2.14381)
+
+[node name="Camera3D" type="Camera3D" parent="." groups=["Camera"]]
+transform = Transform3D(0.994104, 0.0691429, -0.0835228, 0.00680941, 0.72897, 0.684512, 0.108215, -0.681045, 0.724201, 19.63, 4.81979, 5.3282)
 
 [connection signal="body_entered" from="spawnPoints/Area3D" to="spawnPoints" method="_on_area_3d_body_entered" flags=18]
 [connection signal="body_entered" from="spawnPoints2/Area3D" to="spawnPoints2" method="_on_area_3d_body_entered" flags=18]

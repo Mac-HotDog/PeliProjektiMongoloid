@@ -5,7 +5,7 @@ var fireballprojectile = preload("res://Scenes/Abilities/fireball/fireballprojec
 
 
 @onready var parent = get_parent()
-@export var marker_path := "/root/Main/Mannekiini/Marker3D"
+@export var marker_path := "/root/level1/Mannekiini/Marker3D"
 @onready var marker = get_node(marker_path)
 
 

@@ -29,8 +29,8 @@ func _on_timer_timeout():
 	result = space_state.intersect_ray(query)
 #	collision_normal = result.normal
 	#var collision_info = result.get_collision_info()
-	for key in result.keys():
-		print(str(key) + ": " + str(result[key]))
+#	for key in result.keys():
+#		print(str(key) + ": " + str(result[key]))
 	#print(result.rotation_degrees)
 	# Check if the ray hit something (e.g., the floor)
 	if result:

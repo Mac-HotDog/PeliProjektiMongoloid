@@ -47,7 +47,6 @@ func _input(event):
 
 
 # Threshold distance from the edge
-const EDGE_THRESHOLD = 50
 
 
 

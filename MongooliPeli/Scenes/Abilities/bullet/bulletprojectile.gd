@@ -8,7 +8,7 @@ var timer
 var parent = get_parent()
 #var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 100
+var despawn_distance = 400 
 @onready var initial_position = position
 
 #func _ready():
@@ -62,7 +62,8 @@ func _physics_process(delta):
 #Area3D:<Area3D#45030049371>
 
 func _on_area_3d_area_entered(area):
-	var playerarea = Area3D#45030049371
+	var playerarea = "Area3D#45030049371"
 	if area:
+		print(area)
 		if area != playerarea:
 			queue_free()

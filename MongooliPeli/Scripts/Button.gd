@@ -12,7 +12,7 @@ func _ready():
 	timer.set_wait_time(5.0)  # set the wait time to 5 seconds
 	timer.set_one_shot(true)  # make it a one-shot timer
 	timer.timeout.connect(_on_timer_timeout)
-	bar.update_bar(100)
+	#bar.update_bar(100)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

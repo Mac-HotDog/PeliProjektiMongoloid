@@ -13,7 +13,7 @@ var bullet = "Area3Dbulletprojectile"
 
 
 #@export var player_path : NodePath
-@export var player_path := "/root/Main/Mannekiini"
+@export var player_path := "/root/level1/Mannekiini"
 
 #@export var player_path := "res://Scenes/Others/Player.tscn"
 
@@ -36,7 +36,7 @@ func _ready():
 	timer.timeout.connect(_on_timer_timeout)
 	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed+ time since the previous frame.
 func _process(delta):
 
 	if bar:
@@ -53,11 +53,11 @@ func _process(delta):
 		queue_free()
 
 	velocity = Vector3.ZERO
-	print(death_sound.is_playing())
+
 		# Conditions
 	anim_tree.set("parameters/conditions/death",die())
 	if die() == true:
-		death_sound.play()
+		#death_sound.play()
 		$HealthBar3D.visible = false
 		$ManaBar3D.visible = false
 		$Area3D/CollisionShape3D2.disabled = true
@@ -88,7 +88,7 @@ func _process(delta):
 
 
 
-#	print("Current animation: ", state_machine.get_current_node())
+	print("Current animation: ", state_machine.get_current_node())
 #	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
 #	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
 #	print("Player: ", player)
