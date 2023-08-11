@@ -8,13 +8,16 @@ var timer
 const SPEED = 4.0
 const ATTACK_RANGE = 2.0
 
-#@export var player_path : NodePath
+#player dmg sources
+var bullet = "Area3Dbulletprojectile"
 
+#@export var player_path : NodePath
 @export var player_path := "/root/Main/Mannekiini"
 @onready var nav_agent = $NavigationAgent3DZombie
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var death_sound = $audiodeath
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,20 +34,22 @@ func _process(delta):
 
 	if bar:
 		bar.update_bar(health)
-	if manaBar:
-		manaBar.update_bar(mana)
+#	if manaBar:
+#		manaBar.update_bar(mana)
 
 		
 	velocity = Vector3.ZERO
-	
+	print(death_sound.is_playing())
 		# Conditions
-	anim_tree.set("parameters/conditions/die",die())
+	anim_tree.set("parameters/conditions/death",die())
 	if die() == true:
+		death_sound.play()
 		$HealthBar3D.visible = false
 		$ManaBar3D.visible = false
-		await get_tree().create_timer(10).timeout
+		$Area3D/CollisionShape3D2.disabled = true
+		await get_tree().create_timer(5).timeout
 		queue_free()
-	
+
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())
@@ -55,7 +60,7 @@ func _process(delta):
 			# Navigation
 			if _target_not_in_range():
 				#print(self.global_rotation)
-					
+
 				nav_agent.set_target_position(player.global_transform.origin)
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
@@ -68,6 +73,7 @@ func _process(delta):
 
 
 
+
 #	print("Current animation: ", state_machine.get_current_node())
 #	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
 #	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
@@ -77,7 +83,6 @@ func _process(delta):
 	
 
 func _target_in_range():
-
 	var x = global_position.distance_to(player.global_position) < ATTACK_RANGE
 
 	return x

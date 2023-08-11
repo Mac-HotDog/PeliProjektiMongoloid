@@ -11,7 +11,10 @@ const CAMERA_ZOOM_SPEED = 0.4
 @onready var camera_o_pos = $Camera3D.position
 @onready var player_o_pos = $Mannekiini.position
 
-
+func _ready():
+	var audioplayer = $AudioStreamPlayer
+	#audioplayer.
+	
 
 			
 func _input(event):

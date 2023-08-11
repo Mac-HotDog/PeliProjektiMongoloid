@@ -16,7 +16,7 @@ var _regen_timer: float = 0  # Timer to keep track of regeneration interval
 # Basic stat modifying functions
 func change_health(value: int) -> void:
 	self.health += value
-	print(self," current health:",health)
+	#print(self," current health:",health)
 	if health <= 0:
 		die()
 
@@ -47,6 +47,7 @@ func die():#vähän sotkin tätä
 		return true
 # Called every physics frame
 func _physics_process(delta: float) -> void:
+	die()
 	self._regen_timer += delta
 	if self._regen_timer >= 1.0:
 		#print(self.health)

@@ -1,9 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://4dawxxuw0710"]
+[gd_scene load_steps=36 format=3 uid="uid://4dawxxuw0710"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_hf7wh"]
 [ext_resource type="Texture2D" uid="uid://cyxn8wk08llup" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_5n4oc"]
 [ext_resource type="PackedScene" uid="uid://igrc84teqrtw" path="res://Models/Zombie/Zombie.tscn" id="5_bhc5f"]
+[ext_resource type="AudioStream" uid="uid://dk55l5q3x28cm" path="res://audio/effects/horror-background-atmosphere-156462.mp3" id="6_44ody"]
 [ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiini.tscn" id="6_a5k82"]
+[ext_resource type="PackedScene" uid="uid://c7uihborwxy2l" path="res://guard.tscn" id="7_a5vwk"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="10_g5k24"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_htxde"]
@@ -494,3 +496,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.531, -0.00329503, 6.48)
 [node name="Zombie" parent="." instance=ExtResource("5_bhc5f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72138, -0.0878612, 0)
 collision_layer = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_44ody")
+volume_db = -20.395
+autoplay = true
+
+[node name="guard" parent="." instance=ExtResource("7_a5vwk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64544, 0, 0)

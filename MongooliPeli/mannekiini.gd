@@ -8,10 +8,12 @@ extends Entity
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
 @onready var model = $Armature/Skeleton3D
+@onready var bullet_cast_sound = $audiobulletcast
+@onready var fireball_cast_sound =$audiofireballcast
 
 #signal player_hit
 
-#var target = Vector3.ZERO
+
 var Speed = 5
 
 var timer
@@ -22,7 +24,8 @@ var player_navigating
 var jump_speed = 6
 var fornow = false
 
-
+#enemy projectiles areas
+var spear = "Area3Dspearprojectile"
 
 # ==ABILITIES LOAD==
 var jump = load_ability("jump")
@@ -71,13 +74,14 @@ func _read_input():
 		stealth.execute(self)
 	if Input.is_action_just_pressed("w"):
 		look_at(suunta, Vector3.UP,true)
+		fireball_cast_sound.play()
 		fireball.execute(self)
 	if Input.is_action_just_pressed("e"):
 		#print("to ",direction)
 		look_at(suunta, Vector3.UP,true)
 		e_pressed(0)
 		bullet.mouse_position(cast_to)
-
+		bullet_cast_sound.play()
 		bullet.execute(self)
 
 
@@ -91,7 +95,7 @@ func play_animation(animation,condition):
 			#moveToPoint(0,0)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(2)
+			anim_player.set_speed_scale(1.6)
 			anim_player.play(animation)
 		if animation == "CastForwardRight":
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
@@ -103,7 +107,7 @@ func play_animation(animation,condition):
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
 		if animation == "PunchedFace":
-			anim_player.stop()
+			#anim_player.stop()
 			allow_idle = false
 			anim_player.play(animation)
 			
@@ -113,14 +117,14 @@ func play_animation(animation,condition):
 
 		#print(anim_player.current_animation)
 
-
+# allow e animtion
 func e_pressed(over):
 	if over == 0:
 		fornow = true
 		allow_idle = false
 		allow_run = false
 		play_animation("CastForwardRight",fornow)
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.4).timeout
 		allow_run = true
 		fornow = false
 	if over == 1:
@@ -131,18 +135,10 @@ func e_pressed(over):
 #		play_animation("CastForwardRight",fornow)
 
 
-#func allow_idle():
-#	if !player_navigating:
-#		if (e_pressed("?") or 
-#		anim_player.get_current_animation() == "Jump"):
-#			return false
-#	else:
-#		return true
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("r"):
 		if is_on_floor():
-			#var dir = rotation #??????
 			play_animation("Jump",true)
 			velocity.y +=  jump_speed
 			#velocity.dir = 1.1
@@ -154,10 +150,9 @@ func _physics_process(delta):
 	#print(anim_player.get_current_animation())
 
 	allow_run = not navigationAgent.is_navigation_finished()
-	
-
 	play_animation("NeutralIdle",allow_idle)
 	#print(anim_player.get_current_animation())
+
 
 	if bar:
 		bar.update_bar(health)
@@ -188,10 +183,6 @@ func moveToPoint(delta, speed):
 		allow_run = true
 		play_animation("Running",allow_run)
 		move_and_slide()
-
-		
-
-
 
 
 func faceDirection(direction):
@@ -225,10 +216,8 @@ func _input(event):
 		#navigationAgent.target_position = result.position
 		navigationAgent.set_target_position(result.position)
 
-		
-	
-	
 
+#zombie melee hit
 func hit(hit):
 	#emit_signal("player_hit")
 	#velocity += dir * HIT_STAGGER
@@ -244,15 +233,22 @@ func hit(hit):
 
 func _on_area_3d_area_entered(area):
 	if area:
-		health += -5
-		timer.start()
+		var string = (str(area))
+		var is_spear = string.substr(0,len(spear))
+		if is_spear == spear:
+			health += -200
+			allow_idle = false
+			play_animation("PunchedFace",true)
+
+		#health += -5
+		#timer.start()
 		
 
 
 
 func _on_area_3d_area_exited(area):
 	timer.stop()
-	
+
 func _on_timer_timeout():
 	health += -5
 

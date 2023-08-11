@@ -8,7 +8,7 @@ var timer
 var parent = get_parent()
 #var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 15
+var despawn_distance = 100
 @onready var initial_position = position
 
 #func _ready():
@@ -33,7 +33,7 @@ func _physics_process(delta):
 	
 	top_level = true
 	
-	# eri tavat
+
 	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
 	var movement = to * speed * delta
 	transform.origin[0] = transform.origin[0] + movement[0]
@@ -47,6 +47,7 @@ func _physics_process(delta):
 	if traveled_distance >= despawn_distance:
 		queue_free()
 		
+	# eri tavat
 	#var direction Vector3()
 #	var forward_vector = global_transform.basis.z.normalized()
 #	var velocity = forward_vector * speed
@@ -58,8 +59,10 @@ func _physics_process(delta):
 	#linear_velocity = Vector3(10,0,0)
 
 
-
+#Area3D:<Area3D#45030049371>
 
 func _on_area_3d_area_entered(area):
+	var playerarea = Area3D#45030049371
 	if area:
-		queue_free()
+		if area != playerarea:
+			queue_free()
