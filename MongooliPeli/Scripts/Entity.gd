@@ -41,7 +41,7 @@ func regenerate_mana() -> void:
 # Function to be called when an entity dies
 func die() -> void:
 	print(str(self) + " has died.")  # placeholder, replace with actual functionality
-
+	
 # Called every physics frame
 func _physics_process(delta: float) -> void:
 	self._regen_timer += delta

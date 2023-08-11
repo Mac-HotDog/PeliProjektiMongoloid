@@ -1,9 +1,9 @@
 [gd_scene load_steps=26 format=3 uid="uid://cbie7sxj70x3u"]
 
-[ext_resource type="Texture2D" uid="uid://c8ivck8a7gxhl" path="res://idle/idle_mremireh_body__diffuse.png" id="1_pu8d7"]
-[ext_resource type="Texture2D" uid="uid://tj8tfoobjb04" path="res://idle/idle_mremireh_body_normal.png" id="2_kvenr"]
-[ext_resource type="Texture2D" uid="uid://csvgkscq8fmxf" path="res://idle/idle_mremireh_shoe_diffuse.png" id="3_t3qpb"]
-[ext_resource type="Texture2D" uid="uid://dtdqshbo38wva" path="res://idle/idle_mremireh_shoe_normal.png" id="4_hrhpy"]
+[ext_resource type="Texture2D" uid="uid://c8ivck8a7gxhl" path="res://assetit/Models/Zombie/idle/idle_mremireh_body__diffuse.png" id="1_pu8d7"]
+[ext_resource type="Texture2D" uid="uid://tj8tfoobjb04" path="res://assetit/Models/Zombie/idle/idle_mremireh_body_normal.png" id="2_kvenr"]
+[ext_resource type="Texture2D" uid="uid://csvgkscq8fmxf" path="res://assetit/Models/Zombie/idle/idle_mremireh_shoe_diffuse.png" id="3_t3qpb"]
+[ext_resource type="Texture2D" uid="uid://dtdqshbo38wva" path="res://assetit/Models/Zombie/idle/idle_mremireh_shoe_normal.png" id="4_hrhpy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jnvsf"]
 resource_name = "emireh_body_material"

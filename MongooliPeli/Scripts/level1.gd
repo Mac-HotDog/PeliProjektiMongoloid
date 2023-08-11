@@ -2,7 +2,7 @@ extends Node3D
 
 
 
-#old code
+#TOIMISPA TÄÄ PASKA VOI VITTUTUUTUGUUTUTUTUTUTU
 func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton and event.pressed:         
 			$Marker.visible = true         
@@ -24,10 +24,11 @@ func _input(event):
 		rayQuery.to = to
 		rayQuery.collide_with_areas = true
 		var result = space.intersect_ray(rayQuery)
-
+		print(result)
 		
-		$Marker.visible = true         
-		$Marker.transform.origin = result.position
+		$Marker.visible = true
+		var pos = result.position    
+		$Marker.transform.origin = pos
 		await get_tree().create_timer(1).timeout         
 		$Marker.visible = false 
 
@@ -79,7 +80,7 @@ func move_camera(x, y, z):
 	var camera = $Camera3D
 	var new_origin = camera.transform.origin + Vector3(x, y, z)
 	camera.transform.origin = new_origin
-	print("kameran saama ",new_origin)
+	#print("kameran saama ",new_origin)
 	
 
 
@@ -115,10 +116,10 @@ func _physics_process(delta):
 		# Check if the mouse is near any edge and emit the signal
 
 		if distance_left < EDGE_THRESHOLD:
-			_on_mouse_near_edge("bottom")
-		if distance_right < EDGE_THRESHOLD:
-			_on_mouse_near_edge("top")
-		if distance_top < EDGE_THRESHOLD:
 			_on_mouse_near_edge("left")
-		if distance_bottom < EDGE_THRESHOLD:
+		if distance_right < EDGE_THRESHOLD:
 			_on_mouse_near_edge("right")
+		if distance_top < EDGE_THRESHOLD:
+			_on_mouse_near_edge("top")
+		if distance_bottom < EDGE_THRESHOLD:
+			_on_mouse_near_edge("bottom")

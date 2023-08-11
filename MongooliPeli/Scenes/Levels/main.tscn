@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_hf7wh"]
 [ext_resource type="Texture2D" uid="uid://cyxn8wk08llup" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_5n4oc"]
-[ext_resource type="PackedScene" uid="uid://igrc84teqrtw" path="res://Models/Zombie/Zombie.tscn" id="5_igjmc"]
+[ext_resource type="PackedScene" uid="uid://dnh5ay23lbkol" path="res://Scenes/Others/Zombie.tscn" id="5_igjmc"]
 [ext_resource type="Script" path="res://Scripts/Marker.gd" id="9_n1hap"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/Levels/level_nodes/ui.tscn" id="10_g5k24"]
 [ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="14_ef6s0"]
@@ -493,3 +493,4 @@ script = ExtResource("9_n1hap")
 [node name="Player" parent="." instance=ExtResource("14_ef6s0")]
 
 [node name="Zombie" parent="." instance=ExtResource("5_igjmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.03101, 0, 0)

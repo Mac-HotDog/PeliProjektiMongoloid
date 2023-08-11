@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhkd8awoo87m8"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/Menu.gd" id="1_8a201"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8a201")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 393.0
+offset_right = 925.0
+offset_bottom = 504.0
+scale = Vector2(0.581945, 1.11654)
+text = "start game"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 439.0
+offset_top = 188.0
+offset_right = 757.0
+offset_bottom = 330.0
+text = "Monogooli peli :DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

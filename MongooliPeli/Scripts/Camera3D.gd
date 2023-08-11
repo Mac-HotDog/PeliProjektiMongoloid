@@ -18,19 +18,19 @@ func _process(delta):
 	var mouse_pos = get_viewport().get_mouse_position()
 	var window_size = get_viewport().get_size()
 	
-	if mouse_pos.x <= margin:
-		self.transform.origin += Vector3(-0.01, 0, 0) 
-		#print("Mouse is touching the left side of the screen.")
-	elif mouse_pos.x >= window_size.x - margin:
-		self.transform.origin += Vector3(0.01, 0, 0) 
-		#print("Mouse is touching the right side of the screen.")
-	if mouse_pos.y <= margin:
-		self.transform.origin += Vector3(0, 0, -0.01) 
-		#print("Mouse is touching the top of the screen.")
-	elif mouse_pos.y >= window_size.y - margin:
-		self.transform.origin += Vector3(0, 0, 0.01) 
-		#print("Mouse is touching the bottom of the screen.")
-		
-		
+#	if mouse_pos.x <= margin:
+#		self.transform.origin += Vector3(-0.01, 0, 0) 
+#		#print("Mouse is touching the left side of the screen.")
+#	elif mouse_pos.x >= window_size.x - margin:
+#		self.transform.origin += Vector3(0.01, 0, 0) 
+#		#print("Mouse is touching the right side of the screen.")
+#	if mouse_pos.y <= margin:
+#		self.transform.origin += Vector3(0, 0, -0.01) 
+#		#print("Mouse is touching the top of the screen.")
+#	elif mouse_pos.y >= window_size.y - margin:
+#		self.transform.origin += Vector3(0, 0, 0.01) 
+#		#print("Mouse is touching the bottom of the screen.")
+#
+#
 
 

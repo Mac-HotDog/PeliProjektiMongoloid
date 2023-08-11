@@ -7,8 +7,8 @@ extends Node3D
 #var direction = Vector3.ZERO
 var instance = preload("res://Scenes/Abilities/bullet/bulletprojectile.tscn")
 
-@export var player_path := "/root/Main/Player"
-@export var marker_path := "/root/Main/Player/Marker3D"
+@export var player_path := "/root/level1/Player"
+@export var marker_path := "/root/level1/Player/Marker3D"
 @onready var player = get_node(player_path)
 @onready var marker = get_node(marker_path)
 var mouse_pos
