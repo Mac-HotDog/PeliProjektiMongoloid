@@ -2,44 +2,33 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtdqshbo38wva"
-<<<<<<<< HEAD:MongooliPeli/animations/idle/idle_mremireh_shoe_normal.png.import
-path.s3tc="res://.godot/imported/idle_mremireh_shoe_normal.png-eef900de697ac18f3329404fd64f016f.s3tc.ctex"
-========
-path.s3tc="res://.godot/imported/idle_mremireh_shoe_normal.png-3cadc002db231e9e657bfe63fc497ba8.s3tc.ctex"
->>>>>>>> paskaoksa:MongooliPeli/assetit/Models/Zombie/idle/idle_mremireh_shoe_normal.png.import
+uid="uid://bpgkflbyav7e4"
+path="res://.godot/imported/idle_mremireh_shoe_normal.png-eef900de697ac18f3329404fd64f016f.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
-generator_parameters={}
 
 [deps]
 
-<<<<<<<< HEAD:MongooliPeli/animations/idle/idle_mremireh_shoe_normal.png.import
 source_file="res://animations/idle/idle_mremireh_shoe_normal.png"
-dest_files=["res://.godot/imported/idle_mremireh_shoe_normal.png-eef900de697ac18f3329404fd64f016f.s3tc.ctex"]
-========
-source_file="res://assetit/Models/Zombie/idle/idle_mremireh_shoe_normal.png"
-dest_files=["res://.godot/imported/idle_mremireh_shoe_normal.png-3cadc002db231e9e657bfe63fc497ba8.s3tc.ctex"]
->>>>>>>> paskaoksa:MongooliPeli/assetit/Models/Zombie/idle/idle_mremireh_shoe_normal.png.import
+dest_files=["res://.godot/imported/idle_mremireh_shoe_normal.png-eef900de697ac18f3329404fd64f016f.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://idle/idle_mremireh_shoe_normal.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

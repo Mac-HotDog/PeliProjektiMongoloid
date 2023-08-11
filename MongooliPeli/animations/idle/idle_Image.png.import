@@ -2,26 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vutlrvevdcwg"
-<<<<<<<< HEAD:MongooliPeli/animations/idle/idle_Image.png.import
+uid="uid://dk2nys3mn6wpq"
 path="res://.godot/imported/idle_Image.png-cc08384de00898ed13a807e6433dab2f.ctex"
-========
-path="res://.godot/imported/idle_Image.png-cfb3690a4e580fb33275618fcd35abd0.ctex"
->>>>>>>> paskaoksa:MongooliPeli/assetit/Models/Zombie/idle/idle_Image.png.import
 metadata={
 "vram_texture": false
 }
-generator_parameters={}
 
 [deps]
 
-<<<<<<<< HEAD:MongooliPeli/animations/idle/idle_Image.png.import
 source_file="res://animations/idle/idle_Image.png"
 dest_files=["res://.godot/imported/idle_Image.png-cc08384de00898ed13a807e6433dab2f.ctex"]
-========
-source_file="res://assetit/Models/Zombie/idle/idle_Image.png"
-dest_files=["res://.godot/imported/idle_Image.png-cfb3690a4e580fb33275618fcd35abd0.ctex"]
->>>>>>>> paskaoksa:MongooliPeli/assetit/Models/Zombie/idle/idle_Image.png.import
 
 [params]
 
@@ -31,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

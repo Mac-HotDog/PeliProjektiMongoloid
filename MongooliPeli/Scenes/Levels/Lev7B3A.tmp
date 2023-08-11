@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://bblotkfoiypbq"]
+[gd_scene load_steps=22 format=3 uid="uid://bblotkfoiypbq"]
 
 [ext_resource type="Script" path="res://Scripts/level1.gd" id="1_a68h3"]
 [ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/level_nodes/camera_3d.tscn" id="2_ruoua"]
 [ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/level_nodes/directional_light_3d.tscn" id="3_pf3uh"]
 [ext_resource type="MeshLibrary" uid="uid://be60t7578h8sm" path="res://blockit.tres" id="5_hg4u6"]
 [ext_resource type="Shader" path="res://Scenes/level_nodes/SkyShader.gdshader" id="5_thx6e"]
-[ext_resource type="PackedScene" uid="uid://hxa8722sb5es" path="res://Scenes/Others/Player.tscn" id="7_1mcsd"]
 [ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Others/spawn_points.tscn" id="8_f14lp"]
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="9_s7iy2"]
 [ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/laava_lattia.tscn" id="10_0atoh"]
@@ -190,6 +189,3 @@ shape = SubResource("ConvexPolygonShape3D_qsnmo")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 4.8, 40.1732, 1, 94.3246)
 shape = SubResource("ConvexPolygonShape3D_u8wx1")
-
-[node name="Player" parent="." instance=ExtResource("7_1mcsd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1283, 0.963942, 86.367)
