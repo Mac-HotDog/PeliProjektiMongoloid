@@ -8,6 +8,7 @@ const CAMERA_MOVE_SPEED = 0.1
 const CAMERA_ZOOM_SPEED = 0.4
 
 
+
 @onready var camera_o_pos = $Camera3D.position
 @onready var player_o_pos = $Mannekiini.position
 
@@ -45,8 +46,8 @@ func _input(event):
 
 
 
-
-
+# Threshold distance from the edge
+const EDGE_THRESHOLD = 50
 
 
 
@@ -82,11 +83,6 @@ func move_camera(x, y, z):
 	#print("kameran saama ",new_origin)
 	
 
-
-
-
-		
-	
 
 func _physics_process(delta):
 	var camera_pos = $Camera3D.global_position

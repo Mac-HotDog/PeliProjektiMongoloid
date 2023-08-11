@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://r8iwbfn3p04w"]
+
+[ext_resource type="PackedScene" uid="uid://dkub18xaiuy5g" path="res://assetit/Models/18-voodoo-dool_fbx/Voodoo-Dool.fbx" id="1_kndk1"]
+
+[node name="Voodoo-Dool" instance=ExtResource("1_kndk1")]
+
+[node name="Camera" parent="RootNode" index="0"]
+transform = Transform3D(0.685921, -0.324014, 0.651558, 1.19209e-07, 0.895396, 0.445271, -0.727676, -0.305421, 0.61417, 7.35889, 4.95831, 6.92579)

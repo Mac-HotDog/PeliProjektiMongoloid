@@ -40,11 +40,11 @@ func regenerate_mana() -> void:
 	self.mana = min(self.mana + self.mana_regen, 100)
 
 # Function to be called when an entity dies
-func die():#vähän sotkin tätä
-# placeholder, replace with actual functionality
-	if self.health <= 0:
-		#print(str(self) + " has died.")
-		return true
+
+func die() -> void:
+	print(str(self) + " has died.")  # placeholder, replace with actual functionality
+	
+
 # Called every physics frame
 func _physics_process(delta: float) -> void:
 	die()

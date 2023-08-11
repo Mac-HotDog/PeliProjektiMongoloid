@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="MongooliProjekti"
-run/main_scene="res://Scenes/Levels/main.tscn"
+run/main_scene="res://Scenes/Levels/Menu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://images/doge.png"
+config/icon="res://assetit/images/doge.png"
 
 [autoload]
 

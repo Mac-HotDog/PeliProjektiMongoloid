@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://44ncku0ujjx2"]
+
+[node name="VoititPelinScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 474.0
+offset_top = 226.0
+offset_right = 797.0
+offset_bottom = 252.0
+text = "Voitit PELIN :DDDDDDDDDDDDDDDDDDD"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 526.0
+offset_top = 362.0
+offset_right = 887.0
+offset_bottom = 549.0
+theme_override_font_sizes/font_size = 100
+text = "TAPU TAPU"

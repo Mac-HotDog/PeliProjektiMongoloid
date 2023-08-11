@@ -1,0 +1,14 @@
+[gd_resource type="VisualShader" load_steps=2 format=3 uid="uid://cmyf6ljw03ftl"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_veu4b"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+"
+graph_offset = Vector2(-96.2773, -32.046)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_veu4b")
+nodes/fragment/2/position = Vector2(80, 120)
