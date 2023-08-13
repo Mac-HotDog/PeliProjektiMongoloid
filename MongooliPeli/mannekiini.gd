@@ -83,6 +83,9 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
+	#stop pathing
+	if Input.is_action_just_pressed("s"):
+		navigationAgent.set_target_position(self.position)
 
 
 func play_animation(animation,condition):
@@ -160,7 +163,8 @@ func _physics_process(delta):
 		manaBar.update_bar(mana)
 
 	if (Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or 
-	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")):
+	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")
+	or Input.is_action_just_pressed("s")):
 		_read_input()
 	
 

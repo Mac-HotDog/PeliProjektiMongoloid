@@ -8,8 +8,8 @@ var timer
 var parent = get_parent()
 #var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 400 
-@onready var initial_position = position
+var despawn_distance = 12
+@onready var initial_position = global_position
 
 #func _ready():
 #	timer = Timer.new()  # create a new Timer
@@ -45,6 +45,8 @@ func _physics_process(delta):
 	#if self.collide == true:
 		#queue_free()
 	if traveled_distance >= despawn_distance:
+		print(traveled_distance)
+		print("despawn")
 		queue_free()
 		
 	# eri tavat
