@@ -30,6 +30,7 @@ var bullet = "Area3Dbulletprojectile"
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
+	
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
@@ -88,7 +89,7 @@ func _process(delta):
 
 
 
-	print("Current animation: ", state_machine.get_current_node())
+	#print("Current animation: ", state_machine.get_current_node())
 #	print("Attack parameter: ", anim_tree.get("parameters/conditions/attack"))
 #	print("Run parameter: ", anim_tree.get("parameters/conditions/run"))
 #	print("Player: ", player)
@@ -124,13 +125,13 @@ func _hit_finished():
 func _on_area_3d_area_entered(area):
 	if area:
 		#health += -15
-		timer.start()
+		#timer.start()
 		change_health(-15)
 
 		
 
 func _on_area_3d_area_exited(area):
 	timer.stop()
-	
+
 func _on_timer_timeout():
 	health += -5

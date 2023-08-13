@@ -36,6 +36,8 @@ func _input(event):
 			return
 		if result.position.y < 0:
 			result.position.y = 0.3
+		if result.position.y < 1.5:
+			result.position.y = 0.3
 
 		$Marker.visible = true         
 		$Marker.transform.origin = result.position

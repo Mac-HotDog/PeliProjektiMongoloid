@@ -45,8 +45,8 @@ func _physics_process(delta):
 	#if self.collide == true:
 		#queue_free()
 	if traveled_distance >= despawn_distance:
-		print(traveled_distance)
-		print("despawn")
+#		print(traveled_distance)
+#		print("despawn")
 		queue_free()
 		
 	# eri tavat
