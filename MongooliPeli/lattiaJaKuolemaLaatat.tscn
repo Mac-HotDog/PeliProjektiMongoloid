@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://mocy5mbam30k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybo8a"]
+albedo_color = Color(0.447059, 0.278431, 0.223529, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hnsii"]
+material = SubResource("StandardMaterial3D_ybo8a")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogcyw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbtbp"]
+albedo_color = Color(0.588235, 0.117647, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f0i7g"]
+material = SubResource("StandardMaterial3D_kbtbp")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r4wqc"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Node3D" type="MeshInstance3D" parent="." groups=["maa"]]
+mesh = SubResource("BoxMesh_hnsii")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="Area3D" type="Area3D" parent="Node3D"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Node3D/Area3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["tappo"]]
+mesh = SubResource("BoxMesh_f0i7g")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_r4wqc")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_r4wqc")

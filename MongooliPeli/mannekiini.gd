@@ -15,7 +15,7 @@ extends Entity
 
 
 var Speed = 5
-
+var leap_strength = 10
 var timer
 #var player_hit
 var allow_idle
@@ -23,12 +23,12 @@ var allow_run
 var player_navigating
 var jump_speed = 6
 var fornow = false
-
+var leap_direction
 #enemy projectiles areas
 var spear = "Area3Dspearprojectile"
 
 # ==ABILITIES LOAD==
-var jump = load_ability("jump")
+#var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
 var bullet = load_ability("bullet")
@@ -68,7 +68,7 @@ func _read_input():
 #	var z = self.global_position[2] + direction[2]
 #	var suunta = Vector3(x, global_position.y, z)
 	var suunta = Vector3(xyz[0],global_position.y,xyz[2])
-
+	leap_direction = suunta
 	if Input.is_action_just_pressed("q"):
 		look_at(suunta, Vector3.UP)
 		stealth.execute(self)
@@ -136,24 +136,31 @@ func e_pressed(over):
 #	if over == 1: #saadaan signaalista
 #		fornow = false
 #		play_animation("CastForwardRight",fornow)
-
+func leap():
+	# Apply the leap in the specified direction
+	velocity += leap_direction * leap_strength
+	pass
 
 
 func _physics_process(delta):
+#	if Input.is_action_just_pressed("r"):
+#		if is_on_floor():
+#			play_animation("Jump",true)
+#			velocity.y +=  jump_speed
+#			#velocity.dir = 1.1
+#			#print(Vector3.FORWARD)
+#			move_and_slide()
+	#if not is_on_floor():
+		#velocity.y -= gravity *delta
+	move_and_slide()
+	#print(anim_player.get_current_animation())
 	if Input.is_action_just_pressed("r"):
 		if is_on_floor():
-			play_animation("Jump",true)
-			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
-			#print(Vector3.FORWARD)
-			move_and_slide()
-	if not is_on_floor():
-		velocity.y -= gravity *delta
-		move_and_slide()
-	#print(anim_player.get_current_animation())
-
+			leap()
+			
 	allow_run = not navigationAgent.is_navigation_finished()
-	play_animation("NeutralIdle",allow_idle)
+	if is_on_floor():
+		play_animation("NeutralIdle",allow_idle)
 	#print(anim_player.get_current_animation())
 
 
@@ -172,7 +179,8 @@ func _physics_process(delta):
 	if(navigationAgent.is_navigation_finished()):
 		return
 	if await e_pressed(1) == false:
-		moveToPoint(delta, Speed)
+		
+			moveToPoint(delta, Speed)
 
 
 
