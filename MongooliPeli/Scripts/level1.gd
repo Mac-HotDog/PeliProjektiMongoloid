@@ -13,11 +13,11 @@ const CAMERA_ZOOM_SPEED = 0.4
 @onready var player_o_pos = $Mannekiini.position
 
 func _ready():
+	#bgm
 	var audioplayer = $AudioStreamPlayer
 	#audioplayer.play()
 	
 
-			
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse"):
 		var camera = get_tree().get_nodes_in_group("Camera")[0]
@@ -30,17 +30,19 @@ func _input(event):
 		rayQuery.from = from
 		rayQuery.to = to
 		rayQuery.collide_with_areas = true
+		rayQuery.set_collide_with_bodies(true)
 		var result = space.intersect_ray(rayQuery)
-		
+		var edited_result = result.position
 		if result.size() < 1:
 			return
-		if result.position.y < 0:
-			result.position.y = 0.3
-		if result.position.y < 1.5:
-			result.position.y = 0.3
+
+		if result.position.y > 0:
+			edited_result[1] = 0.5
+		if result.position.y > 1.5:
+			edited_result[1] = 0.5
 
 		$Marker.visible = true         
-		$Marker.transform.origin = result.position
+		$Marker.transform.origin = edited_result
 		await get_tree().create_timer(1).timeout
 		$Marker.visible = false 
 

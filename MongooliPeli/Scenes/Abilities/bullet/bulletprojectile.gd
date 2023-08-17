@@ -36,9 +36,9 @@ func _physics_process(delta):
 
 	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
 	var movement = to * speed * delta
-	transform.origin[0] = transform.origin[0] + movement[0]
+	transform.origin[0] += movement[0]
 	transform.origin[1] = 1
-	transform.origin[2] = transform.origin[2] + movement[2]
+	transform.origin[2] += movement[2]
 	#print(position)
 	var displacement = position - initial_position
 	var traveled_distance = displacement.length()
@@ -64,8 +64,8 @@ func _physics_process(delta):
 #Area3D:<Area3D#45030049371>
 
 func _on_area_3d_area_entered(area):
-	var playerarea = "Area3D#45030049371"
+	var player_area := Area3D#45030049371    #?????
 	if area:
-		print(area)
-		if area != playerarea:
+#		print(area)
+		if area != player_area:
 			queue_free()

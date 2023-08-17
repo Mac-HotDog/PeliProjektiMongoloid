@@ -9,7 +9,7 @@ const SPEED = 4.0
 const ATTACK_RANGE = 10.0
 
 #@export var player_path : NodePath
-@export var player_path := "/root/Main/Mannekiini"
+@export var player_path := "/root/level1/Mannekiini"
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D

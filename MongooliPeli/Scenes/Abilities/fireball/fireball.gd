@@ -16,6 +16,7 @@ func execute(node):
 	#var marker = get_node(marker_path)
 	#projectile.transform.origin = marker.global_position
 	add_child(projectile)
+	projectile.top_level = true
 	global_transform.origin = marker.global_transform.origin
 	global_transform.basis = marker.global_transform.basis
 

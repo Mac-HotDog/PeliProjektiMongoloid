@@ -1,11 +1,12 @@
 extends Entity
 
-
+var player_o_pos
 var player = null
 var state_machine
 var timer
+#var level = 1
 
-const SPEED = 4.0
+const SPEED = 3.0
 const ATTACK_RANGE = 2.0
 
 #player dmg sources
@@ -21,7 +22,7 @@ var bullet = "Area3Dbulletprojectile"
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
-
+@onready var particles = $GPUParticles3D
 @onready var death_sound = $audiodeath
 
 #@export var player_path =  "/root/level1/Player"
@@ -30,6 +31,7 @@ var bullet = "Area3Dbulletprojectile"
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
+	player_o_pos = player.global_position
 	
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
@@ -50,18 +52,17 @@ func _process(delta):
 
 	if manaBar:
 		manaBar.update_bar(mana)
-	if health < 1:
-		queue_free()
 
 	velocity = Vector3.ZERO
 
 		# Conditions
-	anim_tree.set("parameters/conditions/death",die())
+	anim_tree.set("parameters/conditions/die",die())
 	if die() == true:
-		#death_sound.play()
+		#death_sound.play()# ei toimi??
+
 		$HealthBar3D.visible = false
 		$ManaBar3D.visible = false
-		$Area3D/CollisionShape3D2.disabled = true
+		$Area3DZombie/CollisionShape3D2.disabled = true
 		await get_tree().create_timer(5).timeout
 		queue_free()
 
@@ -71,6 +72,8 @@ func _process(delta):
 	
 	
 	match state_machine.get_current_node():
+		"GetUp":
+			look_at(Vector3(player_o_pos[0], global_position.y, player_o_pos[2]), Vector3.UP)
 		"Run":
 			# Navigation
 			if _target_not_in_range():

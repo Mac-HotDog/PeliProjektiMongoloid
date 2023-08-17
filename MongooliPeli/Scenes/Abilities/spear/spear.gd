@@ -5,7 +5,7 @@ var spearprojectile = preload("res://Scenes/Abilities/spear/spearprojectile.tscn
 
 
 @onready var parent = get_parent()
-@export var marker_path := "/root/Main/guard/Marker3D"
+@export var marker_path := "/root/level1/guard/Marker3D"
 @onready var marker = get_node(marker_path)
 var target_pos
 

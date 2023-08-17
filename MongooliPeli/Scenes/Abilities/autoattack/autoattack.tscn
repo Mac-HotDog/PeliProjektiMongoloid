@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv3ha8cy0tha3"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/autoattack/autoattack.gd" id="1_eiypb"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_eiypb")

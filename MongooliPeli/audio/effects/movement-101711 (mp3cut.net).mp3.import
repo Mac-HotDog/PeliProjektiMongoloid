@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cbwa4vshsf3k4"
+path="res://.godot/imported/movement-101711 (mp3cut.net).mp3-a7c537666ed7dd84839e811fd1d8d5c7.mp3str"
+
+[deps]
+
+source_file="res://audio/effects/movement-101711 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/movement-101711 (mp3cut.net).mp3-a7c537666ed7dd84839e811fd1d8d5c7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
