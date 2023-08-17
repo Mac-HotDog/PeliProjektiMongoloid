@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c55ic2eyt7w6n"]
 
-[ext_resource type="Texture2D" uid="uid://otn23r16ubh6" path="res://assetit/thumb-BloodFabric01.png" id="1_122iw"]
+[ext_resource type="Texture2D" uid="uid://otn23r16ubh6" path="res://assetit/images/thumb-BloodFabric01.png" id="1_122iw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ey6hj"]
 transparency = 1

@@ -2,12 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xv26i3pu6gpl"
+uid="uid://pp5lfirdt08y"
 path="res://.godot/imported/idle_Image_3.png-396e6c43b50be99c1ebea83b93be53ec.ctex"
 metadata={
 "vram_texture": false
 }
-generator_parameters={}
 
 [deps]
 
@@ -22,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

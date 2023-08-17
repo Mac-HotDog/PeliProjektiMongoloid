@@ -5,7 +5,8 @@ var fireballprojectile = preload("res://Scenes/Abilities/fireball/fireballprojec
 
 
 @onready var parent = get_parent()
-@export var marker_path := "/root/Main/Player/Marker3D"
+@export var marker_path := "/root/level1/Mannekiini/Marker3D"
+@onready var marker = get_node(marker_path)
 
 
 func execute(node):
@@ -15,6 +16,8 @@ func execute(node):
 	#var marker = get_node(marker_path)
 	#projectile.transform.origin = marker.global_position
 	add_child(projectile)
+	global_transform.origin = marker.global_transform.origin
+	global_transform.basis = marker.global_transform.basis
 
 	projectile.linear_velocity = Vector3(10,0,0)
 

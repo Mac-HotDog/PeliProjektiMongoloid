@@ -1,16 +1,23 @@
 extends Node3D
 
+# Threshold distance from the edge
+const EDGE_THRESHOLD = 50
+
+const CAMERA_MOVE_SPEED = 0.2
+
+const CAMERA_ZOOM_SPEED = 0.4
 
 
-#TOIMISPA TÄÄ PASKA VOI VITTUTUUTUGUUTUTUTUTUTU
-func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton and event.pressed:         
-			$Marker.visible = true         
-			$Marker.transform.origin = position
-			$Player.target = position         
-			await get_tree().create_timer(1).timeout         
-			$Marker.visible = false
-#
+
+@onready var camera_o_pos = $Camera3D.position
+@onready var player_o_pos = $Mannekiini.position
+
+func _ready():
+	var audioplayer = $AudioStreamPlayer
+	#audioplayer.play()
+	
+
+			
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse"):
 		var camera = get_tree().get_nodes_in_group("Camera")[0]
@@ -24,32 +31,26 @@ func _input(event):
 		rayQuery.to = to
 		rayQuery.collide_with_areas = true
 		var result = space.intersect_ray(rayQuery)
-		print(result)
 		
-		$Marker.visible = true
-		var pos = result.position    
-		$Marker.transform.origin = pos
-		await get_tree().create_timer(1).timeout         
+		if result.size() < 1:
+			return
+		if result.position.y < 0:
+			result.position.y = 0.3
+		if result.position.y < 1.5:
+			result.position.y = 0.3
+
+		$Marker.visible = true         
+		$Marker.transform.origin = result.position
+		await get_tree().create_timer(1).timeout
 		$Marker.visible = false 
 
 
 
 
 
-
-
-
-
-
 # Threshold distance from the edge
-const EDGE_THRESHOLD = 50
-
-const CAMERA_MOVE_SPEED = 0.1
-
-const CAMERA_ZOOM_SPEED = 0.4
 
 
-@onready var camera_o_pos = $Camera3D.position
 
 
 func _on_mouse_near_edge(edge):
@@ -84,16 +85,19 @@ func move_camera(x, y, z):
 	
 
 
-
-
-		
-	
-
 func _physics_process(delta):
-	
+	if Input.is_action_just_pressed("esc"):
+		get_tree().paused = true
+		$pause.show()
+		#get_tree().change_scene_to_file("res://Scenes/Levels/LevelTest.tscn")
+	var camera_pos = $Camera3D.global_position
+	var player_pos = $Mannekiini.global_position
+	var difference = camera_o_pos[2] - player_o_pos[2]
+	var z = player_pos[2] + difference
+	var new_camera_pos = Vector3(player_pos[0],camera_pos[1],z)
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
-		$Camera3D.transform.origin = $Player.global_position + camera_o_pos
-	
+		$Camera3D.transform.origin = new_camera_pos
+
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)
 		move_camera(0,CAMERA_ZOOM_SPEED,CAMERA_ZOOM_SPEED)

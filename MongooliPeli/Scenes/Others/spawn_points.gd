@@ -14,5 +14,6 @@ func _on_area_3d_body_entered(body):
 			top_level = true
 			zombiIns = zombi.instantiate()
 			add_child(zombiIns)
+			$spawnaudio.play()
 			#numberOfZombies -= 1
 			#queue_free()

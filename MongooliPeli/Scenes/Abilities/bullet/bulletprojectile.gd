@@ -2,14 +2,14 @@ extends RigidBody3D
 
 
 
-var speed = 5
+var speed = 14
 var gravity = 0
 var timer
 var parent = get_parent()
-var direction = Vector3(1, 0, 0)
+#var direction = Vector3(1, 0, 0)
 var mouse_pos
-var despawn_distance = 10
-@onready var initial_position = position
+var despawn_distance = 12
+@onready var initial_position = global_position
 
 #func _ready():
 #	timer = Timer.new()  # create a new Timer
@@ -23,32 +23,49 @@ var despawn_distance = 10
 #func _on_timer_timeout():
 #	self.queue_free()
 #
-	
+	#enemmäkin suunta
 func mouse_position(pos):
 	mouse_pos = pos
 
 func _physics_process(delta):
 
+
+	
+	top_level = true
+	
+
+	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
+	var movement = to * speed * delta
+	transform.origin[0] = transform.origin[0] + movement[0]
+	transform.origin[1] = 1
+	transform.origin[2] = transform.origin[2] + movement[2]
+	#print(position)
+	var displacement = position - initial_position
+	var traveled_distance = displacement.length()
+	#if self.collide == true:
+		#queue_free()
+	if traveled_distance >= despawn_distance:
+#		print(traveled_distance)
+#		print("despawn")
+		queue_free()
+		
+	# eri tavat
 	#var direction Vector3()
 #	var forward_vector = global_transform.basis.z.normalized()
 #	var velocity = forward_vector * speed
 	#var velocity = mouse_pos * speed
 	#apply_central_impulse(velocity)
 	
-	
-	top_level = true
-
-	# eri tavat
-	var movement = mouse_pos.normalized() * speed * delta
-	transform.origin += movement
-	var displacement = position - initial_position
-	var traveled_distance = displacement.length()
-	#if self.collide == true:
-		#queue_free()
-	if traveled_distance >= despawn_distance:
-		queue_free()
-	
-	
 	#move_and_collide(velocity)
 	
 	#linear_velocity = Vector3(10,0,0)
+
+
+#Area3D:<Area3D#45030049371>
+
+func _on_area_3d_area_entered(area):
+	var playerarea = "Area3D#45030049371"
+	if area:
+		print(area)
+		if area != playerarea:
+			queue_free()

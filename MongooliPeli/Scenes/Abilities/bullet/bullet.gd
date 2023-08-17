@@ -7,8 +7,10 @@ extends Node3D
 #var direction = Vector3.ZERO
 var instance = preload("res://Scenes/Abilities/bullet/bulletprojectile.tscn")
 
-@export var player_path := "/root/level1/Player"
-@export var marker_path := "/root/level1/Player/Marker3D"
+
+@export var player_path := "/root/level1/Mannekiini"
+@export var marker_path := "/root/level1/Mannekiini/Marker3D"
+
 @onready var player = get_node(player_path)
 @onready var marker = get_node(marker_path)
 var mouse_pos
@@ -29,7 +31,7 @@ func mouse_position(pos):
 
 
 func execute(node):
-	
+	await get_tree().create_timer(0.1).timeout
 	top_level = true
 	var bullet = instance.instantiate()
 	bullet.mouse_position(mouse_pos)

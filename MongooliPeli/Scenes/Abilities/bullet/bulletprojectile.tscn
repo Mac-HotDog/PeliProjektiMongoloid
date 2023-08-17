@@ -21,10 +21,12 @@ skeleton = NodePath("")
 transform = Transform3D(0.2, 0, 0, 0, -2.18557e-08, -0.2, 0, 0.5, -8.74228e-09, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_me056")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3Dbulletprojectile" type="Area3D" parent="."]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3Dbulletprojectile"]
 transform = Transform3D(0.2, 0, 0, 0, -2.18557e-08, -0.2, 0, 0.5, -8.74228e-09, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_me056")
+
+[connection signal="area_entered" from="Area3Dbulletprojectile" to="." method="_on_area_3d_area_entered"]

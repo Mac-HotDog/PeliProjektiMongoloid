@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://mocy5mbam30k"]
+
+[ext_resource type="PackedScene" uid="uid://dwlrg7i1p0yga" path="res://laava.tscn" id="1_fyntu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybo8a"]
+albedo_color = Color(0.447059, 0.278431, 0.223529, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hnsii"]
+material = SubResource("StandardMaterial3D_ybo8a")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogcyw"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Node3D" type="MeshInstance3D" parent="." groups=["maa"]]
+mesh = SubResource("BoxMesh_hnsii")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="Area3D" type="Area3D" parent="Node3D"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Node3D/Area3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="MeshInstance3D" parent="." instance=ExtResource("1_fyntu")]

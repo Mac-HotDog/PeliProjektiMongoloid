@@ -90,7 +90,7 @@ func moveToPoint(delta, speed):
 	var direction = global_position.direction_to(targetPos)
 	faceDirection(targetPos)
 	velocity = direction * speed
-
+	print(targetPos)
 	move_and_slide()
 
 
