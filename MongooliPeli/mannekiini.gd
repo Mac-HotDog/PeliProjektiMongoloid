@@ -337,18 +337,22 @@ func _on_area_3d_area_entered(area):
 			health += -200
 			allow_idle = false
 			play_animation("PunchedFace",true)
-
-		#health += -5
-		#timer.start()
+		var ryhmat = area.get_groups()
+		for x in ryhmat:
+			if x == "tappo":
+				health += -500
+			if x == "piikit":
+				health -= 5
+		
 		
 
 
 
-func _on_area_3d_area_exited(area):
-	timer.stop()
-
-func _on_timer_timeout():
-	health += -5
+#func _on_area_3d_area_exited(area):
+#	timer.stop()
+#
+#func _on_timer_timeout():
+#	health += -5
 
 
 func _on_animation_player_animation_finished(anim_name):
