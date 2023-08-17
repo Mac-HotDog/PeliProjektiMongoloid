@@ -1,7 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://cmjly3udqefsa"]
+[gd_scene load_steps=19 format=3 uid="uid://cmjly3udqefsa"]
 
 [ext_resource type="PackedScene" uid="uid://c37l88a5gfv1d" path="res://Scenes/level_nodes/maa.tscn" id="1_1oqym"]
-[ext_resource type="Script" path="res://Scripts/level1.gd" id="1_3q8s4"]
 [ext_resource type="PackedScene" uid="uid://bme2hjlb8l0y8" path="res://Scenes/level_nodes/directional_light_3d.tscn" id="3_hc22p"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="4_je2ue"]
 [ext_resource type="PackedScene" uid="uid://bkmvinkwamm11" path="res://assetit/Models/kenttaPropit/wall.glb" id="5_bdax2"]
@@ -28,7 +27,6 @@ agent_radius = 0.2
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_asdnn"]
 
 [node name="level1" type="Node3D"]
-script = ExtResource("1_3q8s4")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_jp660")

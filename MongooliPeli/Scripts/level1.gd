@@ -3,7 +3,7 @@ extends Node3D
 # Threshold distance from the edge
 const EDGE_THRESHOLD = 50
 
-const CAMERA_MOVE_SPEED = 0.1
+const CAMERA_MOVE_SPEED = 0.2
 
 const CAMERA_ZOOM_SPEED = 0.4
 
@@ -14,7 +14,7 @@ const CAMERA_ZOOM_SPEED = 0.4
 
 func _ready():
 	var audioplayer = $AudioStreamPlayer
-	audioplayer.play()
+	#audioplayer.play()
 	
 
 			
@@ -86,6 +86,10 @@ func move_camera(x, y, z):
 
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("esc"):
+		get_tree().paused = true
+		$pause.show()
+		#get_tree().change_scene_to_file("res://Scenes/Levels/LevelTest.tscn")
 	var camera_pos = $Camera3D.global_position
 	var player_pos = $Mannekiini.global_position
 	var difference = camera_o_pos[2] - player_o_pos[2]

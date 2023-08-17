@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dhkd8awoo87m8"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/Menu.gd" id="1_8a201"]
+[ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_wku3s"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_8a201")
+script = ExtResource("1_wku3s")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
@@ -28,4 +28,32 @@ offset_right = 757.0
 offset_bottom = 330.0
 text = "Monogooli peli :DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
 
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Mikeal on paras"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 482.0
+offset_right = 305.0
+offset_bottom = 498.0
+scale = Vector2(0.920001, 1)
+min_value = -80.0
+max_value = 0.0
+tick_count = 10
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 396.0
+offset_right = 126.0
+offset_bottom = 448.0
+text = "VOLUME
+
+"
+
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

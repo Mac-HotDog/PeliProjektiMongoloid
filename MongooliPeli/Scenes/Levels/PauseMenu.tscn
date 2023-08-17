@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid="uid://drkktastme8my"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/PauseMenu.gd" id="1_l7bxo"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l7bxo")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -185.0
+offset_right = 28.5
+offset_bottom = -159.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Paused
+"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -135.0
+offset_right = 46.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Continue?"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Volume
+"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = 86.0
+offset_right = 82.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+min_value = -80.0
+max_value = 0.0
+tick_count = 10
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
