@@ -32,9 +32,10 @@ func _input(event):
 		rayQuery.collide_with_areas = true
 		rayQuery.set_collide_with_bodies(true)
 		var result = space.intersect_ray(rayQuery)
-		var edited_result = result.position
 		if result.size() < 1:
 			return
+		var edited_result = result.position
+		
 
 		if result.position.y > 0:
 			edited_result[1] = 0.5
