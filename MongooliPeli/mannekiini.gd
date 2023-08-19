@@ -22,9 +22,13 @@ var o_player_rotation
 
 #var parent = get_parent()
 
+var qLock = false
+var wLock = false
+var eLock = false
 
-
-
+var qTimer 
+var wTimer 
+var eTimer 
 
 #var Speed = 5
 var timer
@@ -34,7 +38,7 @@ var allow_run
 var player_navigating
 var jump_speed = 3
 var fornow = false
-
+var PBAR
 #enemy projectiles areas
 var spear = "Area3Dspearprojectile"
 
@@ -51,6 +55,7 @@ var autoattack = load_ability("autoattack")
 
 
 func _ready():
+	PBAR = get_node("res://Scripts/Button3.gd")
 	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
 	dash_marker_o_position = dash_marker.position
@@ -60,6 +65,21 @@ func _ready():
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	timer.timeout.connect(_on_timer_timeout)
+	
+	qTimer = Timer.new()  # create a new Timer
+	add_child(qTimer)  # add it as a child
+	qTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	qTimer.timeout.connect(_on_timer_timeoutq)
+	
+	eTimer = Timer.new()  # create a new Timer
+	add_child(eTimer)  # add it as a child
+	eTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	eTimer.timeout.connect(_on_timer_timeoutw)
+	
+	eTimer = Timer.new()  # create a new Timer
+	add_child(eTimer)  # add it as a child
+	eTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	eTimer.timeout.connect(_on_timer_timeoute)
 	
 func _read_input():
 	#kääntyminen spellin suuntaan
@@ -89,6 +109,7 @@ func _read_input():
 #	if Input.is_action_just_pressed("q"):
 #		look_at(suunta, Vector3.UP)
 #		stealth.execute(self)
+	
 	if Input.is_action_just_pressed("q"):
 		#print("to ",direction)
 		look_at(suunta, Vector3.UP,true)
@@ -97,14 +118,18 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
-	if Input.is_action_just_pressed("w"):
-		look_at(suunta, Vector3.UP,true)
-		fireball_cast_sound.play()
-		fireball.execute(self)
-	if Input.is_action_just_pressed("e"):
-		o_player_position = global_position
-		o_player_rotation = global_rotation
-		dash()
+#	if Input.is_action_just_pressed("w"):
+#		look_at(suunta, Vector3.UP,true)
+#		fireball_cast_sound.play()
+#		fireball.execute(self)
+	if wLock == false:
+		$"res://Scripts/Button2.gd".alotaCDW()
+		wLock = true
+		wTimer.start()
+		if Input.is_action_just_pressed("w"):
+			o_player_position = global_position
+			o_player_rotation = global_rotation
+			dash()
 
 		#stop pathing
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
@@ -202,14 +227,19 @@ func _physics_process(delta):
 		anim_player.play("DramaticDeath")
 	
 	#hyppy
-	if Input.is_action_just_pressed("r"):
-		if is_on_floor():
-			#navigationAgent.is_target_reachable()
-			play_animation("Jump",true)
-			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
-			#print(Vector3.FORWARD)
-			move_and_slide()
+	if eLock == false:
+		eLock = true
+		eTimer.start()
+		if PBAR != null:
+			PBAR.alotaCDE()
+		if Input.is_action_just_pressed("e"):
+			if is_on_floor():
+				#navigationAgent.is_target_reachable()
+				play_animation("Jump",true)
+				velocity.y +=  jump_speed
+				#velocity.dir = 1.1
+				#print(Vector3.FORWARD)
+				move_and_slide()
 	if not is_on_floor():
 		velocity.y -= gravity *delta
 		move_and_slide()
@@ -351,8 +381,8 @@ func _on_area_3d_area_entered(area):
 #func _on_area_3d_area_exited(area):
 #	timer.stop()
 #
-#func _on_timer_timeout():
-#	health += -5
+func _on_timer_timeout():
+	health += -5
 
 
 func _on_animation_player_animation_finished(anim_name):
@@ -360,7 +390,16 @@ func _on_animation_player_animation_finished(anim_name):
 	allow_idle = true
 
 
+func _on_timer_timeoutq():
+	qLock = false
+	qTimer.stop()
 
+func _on_timer_timeoutw():
+	wLock = false
+	wTimer.stop()
+func _on_timer_timeoute():
+	eLock = false
+	eTimer.stop()
 
 
 
