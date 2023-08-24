@@ -90,7 +90,7 @@ func _process(delta):
 				#print(self.global_rotation)
 					
 				nav_agent.set_target_position(player.global_transform.origin)
-				nav_agent.set_path_desired_distance(ATTACK_RANGE)
+				nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
 				#print(nav_agent.distance_to_target())
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED

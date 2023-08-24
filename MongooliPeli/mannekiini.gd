@@ -7,26 +7,47 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
+@onready var raycast = get_tree().get_nodes_in_group("Raycast")[0]
 @onready var model = $Armature/Skeleton3D
+
+#audio
 @onready var bullet_cast_sound = $audiobulletcast
 @onready var fireball_cast_sound =$audiofireballcast
+@onready var death_sound = $audiodeath
+
+
+
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
-@onready var autoattacktimer = $AutoAttackTimer
-
 #dashia varten..
 var dash_marker_o_position
 var o_player_position
 var o_player_rotation
+const DASH_SPEED = 10.0
+const DASH_DISTANCE = 5.0
+const DASH_ACCELERATION = 10.0
+const DASH_DECELERATION = 15.0
+var dash_direction: Vector3 = Vector3.ZERO
+var is_dashing = false
+var dash_progress: float = 0.0
+var is_jumping = false
 
+# aa varten
+@onready var targetmeshinstance = preload("res://Scenes/targetmesh.tscn")
+@onready var targetmesh = targetmeshinstance.instantiate()
+@onready var autoattacktimer = $AutoAttackTimer
+@export var aa_range = 8
+@export var aa_dmg = 15
+var collider
+var aa_target_pos
+var aa_free = true #onko aa olemassa, tällä myös lähetetään vihollisen posia permana
+var keep_aa #keep autoattackking
+var target_found = false#flag for following enemy
+var target
+var target_pos 
 
 #var parent = get_parent()
-
-
-
-
-
-#var Speed = 5
+var dead = false #flag for whendead()
 var timer
 #var player_hit
 var allow_idle
@@ -45,9 +66,10 @@ var zombie_area = "Area3DZombie"
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
-var bullet = load_ability("bullet")
+var bullet = load_ability("bullet")#parent scene for projectile
 var acidBall = load_ability("acidBall")
-var autoattack = load_ability("autoattack")
+var autoattack = load_ability("autoattack")#parent scene for projectile
+
 
 
 func _ready():
@@ -59,7 +81,7 @@ func _ready():
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
-	timer.timeout.connect(_on_timer_timeout)
+	#timer.timeout.connect(_on_timer_timeout)
 	
 func _read_input():
 	#kääntyminen spellin suuntaan
@@ -110,39 +132,35 @@ func _read_input():
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
 	or Input.is_action_just_released("s")):
 		navigationAgent.set_target_position(self.position)
+		allow_idle = true
+		keep_aa = false
 		#allow_run = false
 
 
 func dash():
-		var player_pos = global_position
-		var vector_to_marker = dash_marker.global_position - global_position
-		var vektori = vector_to_marker.normalized()
-		var max_range = vector_to_marker.length()
-		var marker_location = dash_marker.global_position
-		var direction_to = global_position.direction_to(dash_marker.position)
-		
-		play_animation("RunSlide",true)
-		Speed = 28
-		navigationAgent.set_target_position(marker_location)
-		await get_tree().create_timer(0.001).timeout
-		if abs(global_rotation[1] - o_player_rotation[1]) > 2:
-			global_position = o_player_position
-			global_rotation = o_player_rotation
-			navigationAgent.set_target_position(self.position)
-			#dash_marker.transform_origin[2] += -1
-			navigationAgent.set_target_position(marker_location)
-		else:
-			#navigationAgent.set_target_position(dash_marker_o_position)#????
-			dash_cast_sound.play()
-	
-		
-		#navigationAgent.set_path_desired_distance(20)
-		#navigationAgent.set_path_max_distance()
-		#print(global_position.distance_to(navigationAgent.get_target_position()))
-		#print(navigationAgent.get_current_navigation_path_index())
-		#print(navigationAgent.get_current_navigation_result()
-
-		#transform.origin = marker_location
+#		var player_pos = global_position
+#		var vector_to_marker = dash_marker.global_position - global_position
+#		var vektori = vector_to_marker.normalized()
+#		var max_range = vector_to_marker.length()
+#		var marker_location = dash_marker.global_position
+#		var direction_to = global_position.direction_to(dash_marker.position)
+#
+#		play_animation("RunSlide",true)
+#		Speed = 28
+#		navigationAgent.set_target_position(marker_location)
+#		await get_tree().create_timer(0.001).timeout
+#		if abs(global_rotation[1] - o_player_rotation[1]) > 2:
+#			global_position = o_player_position
+#			global_rotation = o_player_rotation
+#			navigationAgent.set_target_position(self.position)
+#			#dash_marker.transform_origin[2] += -1
+#			#navigationAgent.set_target_position(marker_location)
+#		else:
+#			#navigationAgent.set_target_position(dash_marker_o_position)#????
+#			dash_cast_sound.play()
+#			await get_tree().create_timer(0.3).timeout
+#			navigationAgent.set_target_position(self.position)
+		pass
 
 
 func play_animation(animation,condition):
@@ -157,7 +175,7 @@ func play_animation(animation,condition):
 			allow_idle = false
 			allow_run = false
 			anim_player.stop()
-			anim_player.set_speed_scale(1.9)
+			anim_player.set_speed_scale(2)
 			anim_player.play(animation)
 		if animation == "CastForwardRight":#bullet
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
@@ -165,9 +183,9 @@ func play_animation(animation,condition):
 			anim_player.stop()
 			anim_player.set_speed_scale(10)
 			anim_player.play(animation)
-		if animation == "ThrowRight":
+		if animation == "ThrowRight":#auto attack
 			allow_idle = false
-			anim_player.set_speed_scale(2)
+			anim_player.set_speed_scale(1.5)
 			anim_player.play(animation)
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
@@ -180,7 +198,7 @@ func play_animation(animation,condition):
 		if animation == "GetUpFromLayingOnBack":
 			anim_player.set_speed_scale(2)
 			anim_player.play(animation)
-		if animation == "RunSlide": # ei omaa animaatiota eikä toimi?
+		if animation == "RunSlide":
 			#anim_player.stop()
 			allow_run = false
 			allow_idle = false
@@ -189,21 +207,70 @@ func play_animation(animation,condition):
 	if not condition and anim_player.get_current_animation() == animation:
 		anim_player.stop()
 		allow_idle = true
+		
+	#print(anim_player.current_animation)
+
+func _on_animation_player_animation_finished(anim_name):
+	#set_physics_process_internal(true)
+	allow_idle = true
 
 
-		#print(anim_player.current_animation)
 
-
-
-
+func whendead():
+		dead = true
+		death_sound.play()
+		anim_player.play("DramaticDeath")
 
 func _physics_process(delta):
-	if die():
-		anim_player.play("DramaticDeath")
-	
+	if die() and dead == false:
+		whendead()
+
+	#aa
+	if target_found and not target.die():
+		if not aa_free:#lähettää vihun pos permana
+			autoattack.attack_target_position(target.global_position)
+		if keep_aa and not in_aa_range(target.global_position):
+			navigationAgent.set_target_position(target.global_position)
+			navigationAgent.set_path_desired_distance(aa_range)
+		if keep_aa:
+			auto_attack(target.global_position)
+
+#	if target_found:
+#		target_pos = collider.global_position
+#		var mesh = targetmesh.instantiate()
+#		target.add_child(mesh)
+#		mesh.global_transform.origin = target.global_position
+#		mesh.global_transform.origin.y = 5
+
+	#uusi dash?
+	if Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
+		is_dashing = true
+		dash_direction = transform.basis.z.normalized() 
+
+	if is_dashing:
+		play_animation("RunSlide", true)
+		dash_cast_sound.play()
+		var dash_vector = dash_direction * DASH_DISTANCE
+		var dash_speed = DASH_SPEED
+
+		if dash_progress < 1.0:
+			#print("h")
+			dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
+			dash_progress += DASH_ACCELERATION * delta
+
+		move_and_collide(dash_vector * dash_speed * delta)
+		#print(dash_speed)
+		if dash_progress >= 1.0:
+			is_dashing = false
+			dash_direction = Vector3.ZERO
+			dash_progress = 0.0
+
 	#hyppy
-	if Input.is_action_just_pressed("r"):
+	if is_on_floor():
+			is_jumping = false
+	if Input.is_action_just_pressed("r") and not is_jumping:
 		if is_on_floor():
+			is_jumping = true
 			#navigationAgent.is_target_reachable()
 			play_animation("Jump",true)
 			velocity.y +=  jump_speed
@@ -231,7 +298,6 @@ func _physics_process(delta):
 	#print("allowrun: ", allow_run)
 
 
-
 	if bar:
 		bar.update_bar(health)
 	if manaBar:
@@ -252,6 +318,7 @@ func _physics_process(delta):
 
 
 
+
 func moveToPoint(delta, speed):
 	if is_on_floor() and not Input.is_action_pressed("s"):
 		var targetPos = navigationAgent.get_next_path_position()
@@ -267,12 +334,33 @@ func moveToPoint(delta, speed):
 
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
-	look_at(kohta, Vector3.UP,true)
+	look_at(kohta, Vector3.UP, true)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
 #input to move to 
 func _input(event):
+	if Input.is_action_just_pressed("LeftMouse"):
+		var camera = get_tree().get_nodes_in_group("Camera")[0]
+		var mousePos = get_viewport().get_mouse_position()
+		var rayLength = 100
+		var from = camera.project_ray_origin(mousePos)
+		var to = from + camera.project_ray_normal(mousePos) * rayLength
+		var space = get_world_3d().direct_space_state
+		var rayQuery = PhysicsRayQueryParameters3D.new()
+		#rayQuery.set_shape(value)
+		rayQuery.from = from
+		rayQuery.to = to
+		#rayQuery.collide_with_areas = true
+		rayQuery.set_collide_with_areas(false)
+		rayQuery.set_collide_with_bodies(true)
+		#rayQuery.set_collision_mask()
+		var result = space.intersect_ray(rayQuery)
+		
+		#estää crashin jos klikkaa ulos mapista
+		if result.size() < 1:
+			return
+	
 	if Input.is_action_just_pressed("RightMouse") or Input.is_action_pressed("RightMouse"):
 		var camera = get_tree().get_nodes_in_group("Camera")[0]
 		var mousePos = get_viewport().get_mouse_position()
@@ -281,38 +369,68 @@ func _input(event):
 		var to = from + camera.project_ray_normal(mousePos) * rayLength
 		var space = get_world_3d().direct_space_state
 		var rayQuery = PhysicsRayQueryParameters3D.new()
+		#rayQuery.set_shape(value)
+
 		rayQuery.from = from
 		rayQuery.to = to
 		#rayQuery.collide_with_areas = true
-		rayQuery.set_collide_with_areas(true)
-		#rayQuery.set_collide_with_bodies(false)
+		rayQuery.set_collide_with_areas(false)
+		rayQuery.set_collide_with_bodies(true)
 		#rayQuery.set_collision_mask()
-		
 		var result = space.intersect_ray(rayQuery)
+		#estää crashin jos klikkaa ulos mapista
 		if result.size() < 1:
 			return
 		var xyz = result.position
-		#print("hahmon saama" ,result)
-		
 		var suunta = Vector3(xyz[0],global_position.y,xyz[2])
-		var collider = str(result.collider)
-		if collider.substr(0,len(zombie_area)) == zombie_area and autoattacktimer.time_left <= 0.1:
-			autoattacktimer.start()
-			navigationAgent.set_target_position(self.position)
-			play_animation("ThrowRight", true)
-			look_at(suunta,Vector3.UP,true)
-			autoattack.attack_target(result.position)
-			autoattack.execute(self)
-			#print("osuma zombiin")
+		collider = result.collider
+		var distance = global_position.distance_to(result.position)
 		
-		#estää crashin jos klikkaa ulos mapista
+
+
 		
-		
-		#navigationAgent.target_position = result.position
-		if collider.substr(0,len(zombie_area)) != zombie_area:
+		if not (collider is Enemy):
+			#var mesh = target.get_node("targetmesh")
+			if target_found:
+				targetmesh.visible = false
+			aa_free = true
+			target_found = false
+			keep_aa = false
 			Speed = 5
+			navigationAgent.set_path_desired_distance(1)
 			navigationAgent.set_target_position(result.position)
+		#print("hahmon saama" ,result.collider)
 		
+		
+		#autoattack
+		var colliderpos = collider.global_position
+		
+#		var colliderstr = str(result.collider)
+#		if colliderstr.substr(0,len(zombie_area)) == zombie_area and autoattacktimer.time_left <= 0.1:
+		#navigationAgent.target_position = result.position
+		#if collider.substr(0,len(zombie_area)) != zombie_area:
+#		if collider is Enemy and distance > aa_range:
+#			navigationAgent.set_path_desired_distance(aa_range)# kusee
+#			if navigationAgent.distance_to_target()
+
+		if collider is Enemy and collider.get_node("targetmesh") == null:
+			collider.add_child(targetmesh)
+			targetmesh.global_transform.origin = collider.global_position
+			targetmesh.global_transform.origin.y = 5
+		
+		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
+			#collider.get_node("targetmesh").visible = true
+			targetmesh.visible= true
+			target = collider
+			keep_aa = true
+			target_found = true
+			#aa_target_pos = collider.global_position
+
+
+
+			#aa_target_pos = colliderpos# fix
+			#auto_attack(colliderpos)
+
 
 
 #zombie melee hit
@@ -321,8 +439,7 @@ func hit(hit):
 	#velocity += dir * HIT_STAGGER
 	if hit: #vain melee
 		change_health(-15)
-		allow_idle = false
-		play_animation("PunchedFace",true)
+		#play_animation("PunchedFace",true)
 
 
 
@@ -355,11 +472,33 @@ func _on_area_3d_area_entered(area):
 #	health += -5
 
 
-func _on_animation_player_animation_finished(anim_name):
-	#set_physics_process_internal(true)
-	allow_idle = true
+
+	
+func auto_attack(targetpos):
+	if in_aa_range(targetpos):
+		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
+		#var enemy area = get_tree().add_child(Area3D.new)
+		navigationAgent.set_target_position(self.position)
+		#autoattacktimer.stop()
+		autoattacktimer.start()
+		look_at(suunta, Vector3.UP, true)
+		play_animation("ThrowRight", true)
 
 
+func aa_animation_moment(pos):#oikea hetki aa animaatiolle
+	navigationAgent.set_target_position(self.position)
+	autoattack.attack_target_position(target.global_position)
+	autoattack.execute(self)
+
+
+func in_aa_range(targetpos):
+	return global_position.distance_to(targetpos) <= aa_range
+	
+func aa_freed():
+	aa_free = false
+
+func auto_attack_dmg():
+	return aa_dmg
 
 
 
