@@ -4,7 +4,7 @@ extends Entity
 var player = null
 var state_machine
 var timer
-
+var dead = false
 const SPEED = 4.0
 const ATTACK_RANGE = 10.0
 
@@ -27,7 +27,17 @@ var spear_cd = 4.0
 #	if spear_timer.time_left < 0.1:
 #		spear_timer.start(spear_cd)
 
-var right_hand_bone_index
+func whendead():
+	dead = true
+	#deathaudio.play()
+	$HealthBar3D.visible = false
+	$ManaBar3D.visible = false
+	$Area3D/CollisionShape3D.disabled = true
+	#anim_tree.set("parameters/conditions/death",true)
+	await get_tree().create_timer(5).timeout
+	queue_free()
+	#manaBar.visible = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,13 +77,8 @@ func _process(delta):
 	
 		# Conditions
 	anim_tree.set("parameters/conditions/death",die())
-	if die() == true:
-		$HealthBar3D.visible = false
-		$ManaBar3D.visible = false
-		$Area3D/CollisionShape3D.disabled = true
-		#anim_tree.set("parameters/conditions/death",true)
-		await get_tree().create_timer(5).timeout
-		queue_free()
+	if die() == true and dead == false:
+		whendead()
 	
 	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
 
@@ -90,7 +95,7 @@ func _process(delta):
 				#print(self.global_rotation)
 					
 				nav_agent.set_target_position(player.global_transform.origin)
-				nav_agent.set_path_desired_distance(ATTACK_RANGE)
+				nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
 				#print(nav_agent.distance_to_target())
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED

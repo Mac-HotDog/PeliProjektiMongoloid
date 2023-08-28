@@ -4,8 +4,8 @@ extends RigidBody3D
 
 var speed = 10.0
 var gravity = 0
-var parent = get_parent()
-var target
+@onready var parent = get_parent()
+var target_pos
 
 
 #func _ready():
@@ -21,17 +21,18 @@ var target
 #	self.queue_free()
 #
 
-func attack_target(pos):
-	target = pos
+func attack_target_position(pos):
+	target_pos = pos
 
 func _physics_process(delta):
 
 
 	
 	top_level = true
-	var direction = global_position.direction_to(target)
-	var too = Vector3(direction[0], 1,direction[2])
-	var to = Vector3(target[0], 1.5,target[2])
+	#print(target_pos)
+	var direction = global_position.direction_to(target_pos)
+	var too = Vector3(direction[0], 1.5,direction[2])
+	var to = Vector3(target_pos[0], 1.5,target_pos[2])
 	var movement = too * speed * delta
 	transform.origin[0] += movement[0]
 	transform.origin[1] = 1.5
@@ -77,4 +78,5 @@ func _on_area_3d_area_entered(area):
 	if area:
 #		print(area)
 		#if area != player_area:
+		parent.aa_freed()
 		queue_free()

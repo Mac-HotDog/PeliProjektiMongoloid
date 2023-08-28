@@ -35,7 +35,9 @@ func _input(event):
 		if result.size() < 1:
 			return
 		var edited_result = result.position
-		
+#		var mihin = result.collider
+#		if mihin is Entity:
+#			print("jumpe")
 
 		if result.position.y > 0:
 			edited_result[1] = 0.5
@@ -46,6 +48,8 @@ func _input(event):
 		$Marker.transform.origin = edited_result
 		await get_tree().create_timer(1).timeout
 		$Marker.visible = false 
+		
+
 
 
 

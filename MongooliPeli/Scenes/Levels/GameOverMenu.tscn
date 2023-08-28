@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://1dr8trta8h7p"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/GameOverMenu.gd" id="1_2ixju"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ujeja"]
+font_size = 30
+font_color = Color(0.788235, 0.0784314, 0.113725, 1)
+
+[node name="GameOverMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2ixju")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 240.0
+offset_right = 662.0
+offset_bottom = 285.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_ujeja")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 352.0
+offset_right = 620.0
+offset_bottom = 383.0
+action_mode = 0
+text = "TRY AGAIN"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

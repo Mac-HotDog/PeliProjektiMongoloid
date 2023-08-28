@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ba285m0ounits"]
+[gd_scene load_steps=5 format=3 uid="uid://ba285m0ounits"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/bullet/bulletprojectile.gd" id="1_lhfyy"]
+[ext_resource type="Script" path="res://Scenes/Abilities/bullet/Area3Dbulletprojectile.gd" id="2_yuneo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ep6uf"]
 
@@ -24,6 +25,7 @@ shape = SubResource("ConvexPolygonShape3D_me056")
 [node name="Area3Dbulletprojectile" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 2
+script = ExtResource("2_yuneo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3Dbulletprojectile"]
 transform = Transform3D(0.2, 0, 0, 0, -2.18557e-08, -0.2, 0, 0.5, -8.74228e-09, 0, 0, 0)

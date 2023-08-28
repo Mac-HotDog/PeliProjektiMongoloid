@@ -1,16 +1,20 @@
-extends CharacterBody3D
+extends Enemy
 
 
 var player = null
 var state_machine
+var dead = false
 
 const SPEED = 4.0
 const ATTACK_RANGE = 2.0
 
-@export var player_path := "/root/World/Map/NavigationRegion3D/Player"
+@export var player_path := "/root/level1/Mannekiini"
 
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
+@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var deathaudio = $audiodeath
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,11 +23,32 @@ func _ready():
 	state_machine = anim_tree.get("parameters/playback")
 
 
+func whendead():
+	dead = true
+	deathaudio.play()
+	$CollisionShape3D.disabled = true
+	$Area3DZombie/CollisionShape3D2.disabled = true
+	bar.visible = false
+	#manaBar.visible = false
+	await get_tree().create_timer(5).timeout
+	queue_free()
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	velocity = Vector3.ZERO
 	
+	if bar:
+		bar.update_bar(health)
+#	if manaBar:
+#		manaBar.update_bar(mana)
+	
+	if die() and dead == false:
+		whendead()
+		
 	match state_machine.get_current_node():
+		"GetUp":
+			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 		"Run":
 			# Navigation
 			nav_agent.set_target_position(player.global_transform.origin)
@@ -36,7 +61,7 @@ func _process(delta):
 	# Conditions
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 	anim_tree.set("parameters/conditions/run", !_target_in_range())
-	
+	anim_tree.set("parameters/conditions/die", die())
 	
 	move_and_slide()
 
@@ -49,5 +74,14 @@ func _hit_finished():
 	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 1.0:
 		var dir = global_position.direction_to(player.global_position)
 		player.hit(dir)
+		
 
 
+
+
+
+func _on_area_3d_zombie_area_entered(area):
+	if area is autoattack:
+		health += -player.aa_dmg_returner()
+	if area is bullet:
+		health += -player.bullet_dmg_returner()
