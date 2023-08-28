@@ -135,9 +135,9 @@ func _read_input():
 	#rayQuery.collide_with_areas = true
 	rayQuery.collide_with_bodies = true
 	var result = space.intersect_ray(rayQuery)
-	var xyz = result.position
 	if result.size() < 1:
 		return
+	var xyz = result.position
 
 	var cast_to = global_position.direction_to(xyz)
 #
@@ -311,31 +311,31 @@ func _physics_process(delta):
 #		mesh.global_transform.origin.y = 5
 
 	#uusi dash? vähän paska mut toimii
-	if wLock == false and Input.is_action_just_pressed("w"):
+	if wLock == false and Input.is_action_just_pressed("w") and is_dashing == false:
 		nodet.alotaCDW()
 		wLock = true
 		wTimer.start()
-		if Input.is_action_just_pressed("w") and is_dashing == false and (is_on_floor() or is_jumping):
-			is_dashing = true
-			dash_direction = transform.basis.z.normalized() 
+	#if Input.is_action_just_pressed("w") and is_dashing == false: #and (is_on_floor() or is_jumping):
+		is_dashing = true
+		dash_direction = transform.basis.z.normalized() 
 		#print(is_dashing)
-		if is_dashing:
-			play_animation("RunSlide", true)
-			dash_cast_sound.play()
-			var dash_vector = dash_direction * DASH_DISTANCE
-			var dash_speed = DASH_SPEED
+	if is_dashing:
+		play_animation("RunSlide", true)
+		dash_cast_sound.play()
+		var dash_vector = dash_direction * DASH_DISTANCE
+		var dash_speed = DASH_SPEED
 
-			if dash_progress < 1.0:
-				#print("h")
-				dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
-				dash_progress += DASH_ACCELERATION * delta
+		if dash_progress < 1.0:
+			#print("h")
+			dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
+			dash_progress += DASH_ACCELERATION * delta
 
-			move_and_collide(dash_vector * dash_speed * delta)
-			#print(dash_speed)
-			if dash_progress >= 1.0:
-				is_dashing = false
-				dash_direction = Vector3.ZERO
-				dash_progress = 0.0
+		move_and_collide(dash_vector * dash_speed * delta)
+		#print(dash_speed)
+		if dash_progress >= 1.0:
+			is_dashing = false
+			dash_direction = Vector3.ZERO
+			dash_progress = 0.0
 
 	#hyppy
 	if eLock == false and Input.is_action_just_pressed("e"):
