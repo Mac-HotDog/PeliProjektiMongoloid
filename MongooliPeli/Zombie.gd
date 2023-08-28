@@ -5,7 +5,7 @@ var player = null
 var state_machine
 var dead = false
 
-const SPEED = 4.0
+var SPEED = 4.0
 const ATTACK_RANGE = 2.0
 
 @export var player_path := "/root/level1/Mannekiini"
@@ -21,6 +21,10 @@ const ATTACK_RANGE = 2.0
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
+	
+func change_health(value):
+	health += value
+	
 
 
 func whendead():
@@ -85,3 +89,10 @@ func _on_area_3d_zombie_area_entered(area):
 		health += -player.aa_dmg_returner()
 	if area is bullet:
 		health += -player.bullet_dmg_returner()
+	if area is aoesplash:
+		SPEED = 1
+
+
+func _on_area_3d_zombie_area_exited(area):
+	if area is aoesplash:
+		SPEED = 4

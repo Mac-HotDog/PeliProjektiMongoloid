@@ -7,7 +7,6 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@onready var raycast = get_tree().get_nodes_in_group("Raycast")[0]
 @onready var model = $Armature/Skeleton3D
 
 #audio
@@ -58,7 +57,8 @@ var allow_idle
 var allow_run
 var player_navigating
 var jump_speed = 3
-var fornow = false
+#var fornow = false
+var mouse_pos
 
 
 
@@ -77,7 +77,8 @@ var acidBall = load_ability("acidBall")
 var autoattack = load_ability("autoattack")#parent scene for projectile
 var aoesplash = load_ability("aoesplash")
 
-
+#animaatiot jotka estää uoksun ja idlen
+var activeanimations = ["CastForwardRight", "Jump", "DramaticDeath", "RunSlide", "ThrowRight","CastUpRight"]
 
 func _ready():
 	add_child(targetmesh)
@@ -106,16 +107,16 @@ func _read_input():
 	#rayQuery.collide_with_areas = true
 	rayQuery.collide_with_bodies = true
 	var result = space.intersect_ray(rayQuery)
-	var xyz = result.position
 	if result.size() < 1:
 		return
+	mouse_pos = result.position
 
-	var cast_to = global_position.direction_to(xyz)
+	var cast_to = global_position.direction_to(mouse_pos)
 #
 #	var x = self.global_position[0] + direction[0]
 #	var z = self.global_position[2] + direction[2]
 #	var suunta = Vector3(x, global_position.y, z)
-	var suunta = Vector3(xyz[0],global_position.y,xyz[2])
+	var suunta = Vector3(mouse_pos[0],global_position.y,mouse_pos[2])
 
 #	if Input.is_action_just_pressed("q"):
 #		look_at(suunta, Vector3.UP)
@@ -129,14 +130,14 @@ func _read_input():
 		bullet_cast_sound.play()
 		bullet.execute(self)
 	if Input.is_action_just_pressed("w"):
+		aoesplash.mouse_position(mouse_pos)
 		look_at(suunta, Vector3.UP,true)
 		play_animation("CastUpRight", true)
-		#fireball_cast_sound.play()
-		aoesplash.mouse_position(xyz)
-		aoesplash.execute(self)
+		fireball_cast_sound.play()
+		#aoesplash.mouse_position(mouse_pos)
 	if Input.is_action_just_pressed("e"):
-		o_player_position = global_position
-		o_player_rotation = global_rotation
+#		o_player_position = global_position #vanhaa dashia varten
+#		o_player_rotation = global_rotation
 		dash()
 
 		#stop pathing
@@ -217,6 +218,7 @@ func play_animation(animation,condition):
 			anim_player.set_speed_scale(3)
 			anim_player.play(animation)
 		if animation == "CastUpRight":
+			anim_player.set_speed_scale(2)
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
@@ -313,20 +315,12 @@ func _physics_process(delta):
 		velocity.y -= gravity *delta
 		move_and_slide()
 
-#
+#run animation rules
 	allow_run = not navigationAgent.is_navigation_finished()
 	var animplaying = anim_player.get_current_animation()
-	if animplaying == "RunSlide" or animplaying == "CastUpRight":
+	if activeanimations.has(animplaying):
 		allow_run = false
-	if animplaying == "CastForwardRight":
-		allow_run = false
-	if anim_player.get_current_animation() == "Jump":
-		allow_run = false
-	
 
-	
-	
-	
 	play_animation("NeutralIdle",allow_idle)
 	play_animation("Running",allow_run)
 	#print("animation: ", anim_player.get_current_animation())
@@ -374,27 +368,6 @@ func faceDirection(direction):
 
 #input to move to 
 func _input(event):
-	if Input.is_action_just_pressed("LeftMouse"):
-		var camera = get_tree().get_nodes_in_group("Camera")[0]
-		var mousePos = get_viewport().get_mouse_position()
-		var rayLength = 100
-		var from = camera.project_ray_origin(mousePos)
-		var to = from + camera.project_ray_normal(mousePos) * rayLength
-		var space = get_world_3d().direct_space_state
-		var rayQuery = PhysicsRayQueryParameters3D.new()
-		#rayQuery.set_shape(value)
-		rayQuery.from = from
-		rayQuery.to = to
-		#rayQuery.collide_with_areas = true
-		rayQuery.set_collide_with_areas(false)
-		rayQuery.set_collide_with_bodies(true)
-		#rayQuery.set_collision_mask()
-		var result = space.intersect_ray(rayQuery)
-		
-		#estää crashin jos klikkaa ulos mapista
-		if result.size() < 1:
-			return
-	
 	if Input.is_action_just_pressed("RightMouse") or Input.is_action_pressed("RightMouse"):
 		var camera = get_tree().get_nodes_in_group("Camera")[0]
 		var mousePos = get_viewport().get_mouse_position()
@@ -419,7 +392,7 @@ func _input(event):
 		var suunta = Vector3(xyz[0],global_position.y,xyz[2])
 		collider = result.collider
 		var distance = global_position.distance_to(result.position)
-		
+		var colliderpos = collider.global_position
 
 
 		
@@ -438,22 +411,6 @@ func _input(event):
 		
 		
 		#autoattack
-		var colliderpos = collider.global_position
-		
-#		var colliderstr = str(result.collider)
-#		if colliderstr.substr(0,len(zombie_area)) == zombie_area and autoattacktimer.time_left <= 0.1:
-		#navigationAgent.target_position = result.position
-		#if collider.substr(0,len(zombie_area)) != zombie_area:
-#		if collider is Enemy and distance > aa_range:
-#			navigationAgent.set_path_desired_distance(aa_range)# kusee
-#			if navigationAgent.distance_to_target()
-
-		#if collider is Enemy and collider.get_node("targetmesh") == null: # spawnaa targetmesh
-#			collider.add_child(targetmesh)
-#			targetmesh.billboard = true
-#			targetmesh.global_transform.origin = collider.global_position
-#			targetmesh.global_transform.origin.y = 5
-		
 		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
 			#collider.get_node("targetmesh").visible = true
 			
@@ -540,5 +497,7 @@ func bullet_dmg_returner():
 	return bullet_dmg
 
 
+func cast_up_moment():
+	aoesplash.execute(self)
 
 

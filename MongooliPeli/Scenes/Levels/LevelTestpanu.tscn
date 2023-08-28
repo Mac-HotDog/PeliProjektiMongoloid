@@ -95,12 +95,6 @@ data = {
 [node name="Camera3D" parent="." instance=ExtResource("5_ppwf2")]
 transform = Transform3D(1, 0, 0, 0, 0.640096, 0.768295, 0, -0.768295, 0.640096, 40.1222, 9.27195, 97.5793)
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" groups=["Raycast"]]
-transform = Transform3D(1, 0, 0, 0, 0.64011, 0.768283, 0, -0.768283, 0.64011, 0, 0, 0)
-target_position = Vector3(0, 1, 0)
-collision_mask = 15
-collide_with_areas = true
-
 [node name="DirectionalLight3D" parent="." instance=ExtResource("3_k7qx8")]
 transform = Transform3D(1, 0, 0, 0, 0.985461, 0.169899, 0, -0.169899, 0.985461, -9.07183, 19.8361, 117.769)
 

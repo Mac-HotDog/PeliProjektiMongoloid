@@ -24,14 +24,14 @@ func _ready():
 #	global_transform.basis = player.global_transform.basis
 func mouse_position(pos):
 	mouse_pos = pos
-	return mouse_pos
+	#return mouse_pos
 
 	
 	
 
 
 func execute(node):
-	await get_tree().create_timer(0.1).timeout
+	#await get_tree().create_timer(0.1).timeout
 	top_level = true
 	var aoesplash = instance.instantiate()
 	#aoesplash.mouse_position(mouse_pos)
