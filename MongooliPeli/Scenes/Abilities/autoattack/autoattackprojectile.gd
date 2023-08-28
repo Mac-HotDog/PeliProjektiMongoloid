@@ -2,7 +2,7 @@ extends RigidBody3D
 
 
 
-var speed = 7.0
+var speed = 10.0
 var gravity = 0
 @onready var parent = get_parent()
 var target_pos

@@ -3,6 +3,7 @@ extends Enemy
 
 var player = null
 var state_machine
+var dead = false
 
 const SPEED = 4.0
 const ATTACK_RANGE = 2.0
@@ -13,6 +14,7 @@ const ATTACK_RANGE = 2.0
 @onready var anim_tree = $AnimationTree
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var deathaudio = $audiodeath
 
 
 # Called when the node enters the scene tree for the first time.
@@ -22,6 +24,9 @@ func _ready():
 
 
 func whendead():
+	dead = true
+	deathaudio.play()
+	$CollisionShape3D.disabled = true
 	$Area3DZombie/CollisionShape3D2.disabled = true
 	bar.visible = false
 	#manaBar.visible = false
@@ -38,7 +43,7 @@ func _process(delta):
 #	if manaBar:
 #		manaBar.update_bar(mana)
 	
-	if die():
+	if die() and dead == false:
 		whendead()
 		
 	match state_machine.get_current_node():
@@ -77,4 +82,6 @@ func _hit_finished():
 
 func _on_area_3d_zombie_area_entered(area):
 	if area is autoattack:
-		health += -player.auto_attack_dmg()
+		health += -player.aa_dmg_returner()
+	if area is bullet:
+		health += -player.bullet_dmg_returner()
