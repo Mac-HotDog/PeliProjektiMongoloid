@@ -22,6 +22,9 @@ extends Entity
 
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
+@onready var autoattacktimer = $AutoAttackTimer
+@onready var nodet =  get_node("../UI/Button2")
+@onready var nodet2 =  get_node("../UI/Button3")
 #dashia varten..
 var dash_marker_o_position
 var o_player_position
@@ -49,6 +52,17 @@ var target
 var target_pos 
 
 #var parent = get_parent()
+var qLock = false
+var wLock = false
+var eLock = false
+
+var qTimer 
+var wTimer 
+var eTimer 
+
+
+
+
 var dead = false #flag for whendead()
 var timer
 var liikkeessä
@@ -90,7 +104,22 @@ func _ready():
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
-	#timer.timeout.connect(_on_timer_timeout)
+	timer.timeout.connect(_on_timer_timeout)
+	
+	qTimer = Timer.new()  # create a new Timer
+	add_child(qTimer)  # add it as a child
+	qTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	qTimer.timeout.connect(_on_timer_timeoutq)
+	
+	wTimer = Timer.new()  # create a new Timer
+	add_child(wTimer)  # add it as a child
+	wTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	wTimer.timeout.connect(_on_timer_timeoutw)
+	
+	eTimer = Timer.new()  # create a new Timer
+	add_child(eTimer)  # add it as a child
+	eTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	eTimer.timeout.connect(_on_timer_timeoute)
 	
 func _read_input():
 	#kääntyminen spellin suuntaan
@@ -120,6 +149,7 @@ func _read_input():
 #	if Input.is_action_just_pressed("q"):
 #		look_at(suunta, Vector3.UP)
 #		stealth.execute(self)
+	
 	if Input.is_action_just_pressed("q"):
 		#print("to ",direction)
 		look_at(suunta, Vector3.UP,true)
@@ -128,9 +158,12 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
-	if Input.is_action_just_pressed("w"):
-		look_at(suunta, Vector3.UP,true)
-		play_animation("CastUpRight", true)
+	if wLock == false and Input.is_action_just_pressed("w"):
+		nodet.alotaCDW()
+		wLock = true
+		wTimer.start()
+		if Input.is_action_just_pressed("w"):
+			play_animation("CastUpRight", true)
 		#fireball_cast_sound.play()
 		aoesplash.mouse_position(xyz)
 		aoesplash.execute(self)
@@ -298,17 +331,19 @@ func _physics_process(delta):
 			dash_progress = 0.0
 
 	#hyppy
-	if is_on_floor():
-			is_jumping = false
-	if Input.is_action_just_pressed("r") and not is_jumping:
-		if is_on_floor():
-			is_jumping = true
-			#navigationAgent.is_target_reachable()
-			play_animation("Jump",true)
-			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
-			#print(Vector3.FORWARD)
-			move_and_slide()
+	if eLock == false and Input.is_action_just_pressed("e"):
+		nodet2.alotaCDE()
+		eLock = true
+		eTimer.start()
+		if Input.is_action_just_pressed("e") and not is_jumping:
+			if is_on_floor():
+				is_jumping = true
+				#navigationAgent.is_target_reachable()
+				play_animation("Jump",true)
+				velocity.y +=  jump_speed
+				#velocity.dir = 1.1
+				#print(Vector3.FORWARD)
+				move_and_slide()
 	if not is_on_floor():
 		velocity.y -= gravity *delta
 		move_and_slide()
@@ -504,22 +539,31 @@ func _on_area_3d_area_entered(area):
 #func _on_area_3d_area_exited(area):
 #	timer.stop()
 #
-#func _on_timer_timeout():
-#	health += -5
+func _on_timer_timeout():
+	health += -5
 
 
+func _on_timer_timeoutq():
+	qLock = false
+	qTimer.stop()
+func _on_timer_timeoutw():
+	wLock = false
+	wTimer.stop()
+func _on_timer_timeoute():
+	eLock = false
+	eTimer.stop()
 
-	
-func auto_attack(targetpos):
-	if in_aa_range(targetpos):
-		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
-		#var enemy area = get_tree().add_child(Area3D.new)
-		navigationAgent.set_target_position(self.position)
-		#autoattacktimer.stop()
-		autoattacktimer.start()
-		look_at(suunta, Vector3.UP, true)
-		play_animation("ThrowRight", true)
+func aa_animation_moment(pos):#oikea hetki aa animaatiolle
+	navigationAgent.set_target_position(self.position)
+	autoattack.attack_target_position(target.global_position)
+	autoattack.execute(self)
 
+func _on_timer_timeoutw():
+	wLock = false
+	wTimer.stop()
+func _on_timer_timeoute():
+	eLock = false
+	eTimer.stop()
 
 func aa_animation_moment(pos):#oikea hetki aa animaatiolle
 	navigationAgent.set_target_position(self.position)
@@ -539,6 +583,14 @@ func aa_dmg_returner():
 func bullet_dmg_returner():
 	return bullet_dmg
 
-
+	func auto_attack(targetpos):
+		if in_aa_range(targetpos):
+			var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
+			#var enemy area = get_tree().add_child(Area3D.new)
+			navigationAgent.set_target_position(self.position)
+			#autoattacktimer.stop()
+			autoattacktimer.start()
+			look_at(suunta, Vector3.UP, true)
+			play_animation("ThrowRight", true)
 
 

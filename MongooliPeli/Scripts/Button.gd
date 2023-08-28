@@ -9,7 +9,7 @@ var cd = 100
 func _ready():
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
-	timer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	timer.set_one_shot(true)  # make it a one-shot timer
 	timer.timeout.connect(_on_timer_timeout)
 	#bar.update_bar(100)
@@ -32,4 +32,5 @@ func _input(event):
 
 
 func _on_timer_timeout():
-	pass
+	var bari = $"../TextureProgressBar2"
+	bari.value -= 1
