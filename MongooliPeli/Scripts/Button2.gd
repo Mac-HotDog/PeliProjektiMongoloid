@@ -13,7 +13,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func alotaCDW():
-	bari.value == 0
+	bari.value = 0
 	timer.start()
 	
 func _input(event):

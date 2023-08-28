@@ -13,7 +13,8 @@ extends Entity
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
 @onready var autoattacktimer = $AutoAttackTimer
-
+@onready var nodet =  get_node("../UI/Button2")
+@onready var nodet2 =  get_node("../UI/Button3")
 #dashia varten..
 var dash_marker_o_position
 var o_player_position
@@ -55,7 +56,9 @@ var autoattack = load_ability("autoattack")
 
 
 func _ready():
-	PBAR = get_node("res://Scripts/Button3.gd")
+	
+	
+	
 	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
 	dash_marker_o_position = dash_marker.position
@@ -71,14 +74,14 @@ func _ready():
 	qTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	qTimer.timeout.connect(_on_timer_timeoutq)
 	
-	eTimer = Timer.new()  # create a new Timer
-	add_child(eTimer)  # add it as a child
-	eTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
-	eTimer.timeout.connect(_on_timer_timeoutw)
+	wTimer = Timer.new()  # create a new Timer
+	add_child(wTimer)  # add it as a child
+	wTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	wTimer.timeout.connect(_on_timer_timeoutw)
 	
 	eTimer = Timer.new()  # create a new Timer
 	add_child(eTimer)  # add it as a child
-	eTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	eTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
 	eTimer.timeout.connect(_on_timer_timeoute)
 	
 func _read_input():
@@ -122,8 +125,8 @@ func _read_input():
 #		look_at(suunta, Vector3.UP,true)
 #		fireball_cast_sound.play()
 #		fireball.execute(self)
-	if wLock == false:
-		$"res://Scripts/Button2.gd".alotaCDW()
+	if wLock == false and Input.is_action_just_pressed("w"):
+		nodet.alotaCDW()
 		wLock = true
 		wTimer.start()
 		if Input.is_action_just_pressed("w"):
@@ -227,11 +230,11 @@ func _physics_process(delta):
 		anim_player.play("DramaticDeath")
 	
 	#hyppy
-	if eLock == false:
+	if eLock == false and Input.is_action_just_pressed("e"):
+		nodet2.alotaCDE()
 		eLock = true
 		eTimer.start()
-		if PBAR != null:
-			PBAR.alotaCDE()
+		
 		if Input.is_action_just_pressed("e"):
 			if is_on_floor():
 				#navigationAgent.is_target_reachable()
