@@ -7,7 +7,7 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@onready var raycast = get_tree().get_nodes_in_group("Raycast")[0]
+#@onready var raycast = get_tree().get_nodes_in_group("Raycast")[0]
 @onready var model = $Armature/Skeleton3D
 
 #audio
@@ -22,7 +22,7 @@ extends Entity
 
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
-@onready var autoattacktimer = $AutoAttackTimer
+#@onready var autoattacktimer = $AutoAttackTimer
 @onready var nodet =  get_node("../UI/Button2")
 @onready var nodet2 =  get_node("../UI/Button3")
 #dashia varten..
@@ -158,19 +158,22 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
-	if wLock == false and Input.is_action_just_pressed("w"):
-		nodet.alotaCDW()
-		wLock = true
-		wTimer.start()
-		if Input.is_action_just_pressed("w"):
-			play_animation("CastUpRight", true)
-		#fireball_cast_sound.play()
-		aoesplash.mouse_position(xyz)
-		aoesplash.execute(self)
-	if Input.is_action_just_pressed("e"):
-		o_player_position = global_position
-		o_player_rotation = global_rotation
-		dash()
+#	if wLock == false and Input.is_action_just_pressed("w"):
+#		nodet.alotaCDW()
+#		wLock = true
+#		wTimer.start()
+#		if Input.is_action_just_pressed("w"):
+#			o_player_position = global_position
+#			o_player_rotation = global_rotation
+#			dash()
+#			play_animation("CastUpRight", true)
+#			#fireball_cast_sound.play()
+#			aoesplash.mouse_position(xyz)
+#			aoesplash.execute(self)
+#	if Input.is_action_just_pressed("e"):
+#		o_player_position = global_position
+#		o_player_rotation = global_rotation
+#		dash()
 
 		#stop pathing
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
@@ -308,27 +311,31 @@ func _physics_process(delta):
 #		mesh.global_transform.origin.y = 5
 
 	#uusi dash? vähän paska mut toimii
-	if Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
-		is_dashing = true
-		dash_direction = transform.basis.z.normalized() 
-	#print(is_dashing)
-	if is_dashing:
-		play_animation("RunSlide", true)
-		dash_cast_sound.play()
-		var dash_vector = dash_direction * DASH_DISTANCE
-		var dash_speed = DASH_SPEED
+	if wLock == false and Input.is_action_just_pressed("w"):
+		nodet.alotaCDW()
+		wLock = true
+		wTimer.start()
+		if Input.is_action_just_pressed("w") and is_dashing == false and (is_on_floor() or is_jumping):
+			is_dashing = true
+			dash_direction = transform.basis.z.normalized() 
+		#print(is_dashing)
+		if is_dashing:
+			play_animation("RunSlide", true)
+			dash_cast_sound.play()
+			var dash_vector = dash_direction * DASH_DISTANCE
+			var dash_speed = DASH_SPEED
 
-		if dash_progress < 1.0:
-			#print("h")
-			dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
-			dash_progress += DASH_ACCELERATION * delta
+			if dash_progress < 1.0:
+				#print("h")
+				dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
+				dash_progress += DASH_ACCELERATION * delta
 
-		move_and_collide(dash_vector * dash_speed * delta)
-		#print(dash_speed)
-		if dash_progress >= 1.0:
-			is_dashing = false
-			dash_direction = Vector3.ZERO
-			dash_progress = 0.0
+			move_and_collide(dash_vector * dash_speed * delta)
+			#print(dash_speed)
+			if dash_progress >= 1.0:
+				is_dashing = false
+				dash_direction = Vector3.ZERO
+				dash_progress = 0.0
 
 	#hyppy
 	if eLock == false and Input.is_action_just_pressed("e"):
@@ -558,17 +565,7 @@ func aa_animation_moment(pos):#oikea hetki aa animaatiolle
 	autoattack.attack_target_position(target.global_position)
 	autoattack.execute(self)
 
-func _on_timer_timeoutw():
-	wLock = false
-	wTimer.stop()
-func _on_timer_timeoute():
-	eLock = false
-	eTimer.stop()
 
-func aa_animation_moment(pos):#oikea hetki aa animaatiolle
-	navigationAgent.set_target_position(self.position)
-	autoattack.attack_target_position(target.global_position)
-	autoattack.execute(self)
 
 
 func in_aa_range(targetpos):
@@ -583,14 +580,14 @@ func aa_dmg_returner():
 func bullet_dmg_returner():
 	return bullet_dmg
 
-	func auto_attack(targetpos):
-		if in_aa_range(targetpos):
-			var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
-			#var enemy area = get_tree().add_child(Area3D.new)
-			navigationAgent.set_target_position(self.position)
-			#autoattacktimer.stop()
-			autoattacktimer.start()
-			look_at(suunta, Vector3.UP, true)
-			play_animation("ThrowRight", true)
+func auto_attack(targetpos):
+	if in_aa_range(targetpos):
+		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
+		#var enemy area = get_tree().add_child(Area3D.new)
+		navigationAgent.set_target_position(self.position)
+		#autoattacktimer.stop()
+		autoattacktimer.start()
+		look_at(suunta, Vector3.UP, true)
+		play_animation("ThrowRight", true)
 
 
