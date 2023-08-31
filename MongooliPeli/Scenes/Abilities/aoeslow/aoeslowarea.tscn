@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dkxe4kynkai1e"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/aoeslow/aoeslowarea.gd" id="1_ipxex"]
+[ext_resource type="Script" path="res://Scenes/Abilities/aoeslow/Area3D.gd" id="2_ntj3w"]
+[ext_resource type="Texture2D" uid="uid://80qdwxi30n4" path="res://assetit/kenney particle transparent/circle_01.png" id="3_5hcs7"]
+[ext_resource type="AudioStream" uid="uid://hsmtbo8mjr4j" path="res://audio/effects/wind__artic__cold-6195 (mp3cut.net).mp3" id="4_qmaee"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0570m"]
+albedo_color = Color(0.117647, 0.231373, 1, 1)
+subsurf_scatter_strength = 0.95
+
+[sub_resource type="TorusMesh" id="TorusMesh_qhj5y"]
+material = SubResource("StandardMaterial3D_0570m")
+inner_radius = 0.97
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_75rdx"]
+height = 5.0
+radius = 1.0
+
+[node name="aoesplasharea" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_ipxex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_qhj5y")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
+light_color = Color(0.0901961, 0.14902, 1, 1)
+light_energy = 5.83
+light_volumetric_fog_energy = 2.132
+light_size = 1.0
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_ntj3w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.530206, 0)
+shape = SubResource("CylinderShape3D_75rdx")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0.016502, 0)
+modulate = Color(0.254902, 0.223529, 1, 1)
+axis = 1
+texture = ExtResource("3_5hcs7")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_qmaee")
+volume_db = -30.877
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

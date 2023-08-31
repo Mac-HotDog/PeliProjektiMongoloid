@@ -25,18 +25,18 @@ func attack_target_position(pos):
 	target_pos = pos
 
 func _physics_process(delta):
-
-
-	
 	top_level = true
-	#print(target_pos)
-	var direction = global_position.direction_to(target_pos)
-	var too = Vector3(direction[0], 1.5,direction[2])
-	var to = Vector3(target_pos[0], 1.5,target_pos[2])
-	var movement = too * speed * delta
-	transform.origin[0] += movement[0]
-	transform.origin[1] = 1.5
-	transform.origin[2] += movement[2]
+	if target_pos != null:
+	
+
+		#print(target_pos)
+		var direction = global_position.direction_to(target_pos)
+		var too = Vector3(direction[0], 1.5,direction[2])
+		var to = Vector3(target_pos[0], 1.5,target_pos[2])
+		var movement = too * speed * delta
+		transform.origin[0] += movement[0]
+		transform.origin[1] = 1.5
+		transform.origin[2] += movement[2]
 	
 	
 #	position[0] += movement[0]
@@ -75,8 +75,8 @@ func _physics_process(delta):
 
 func _on_area_3d_area_entered(area):
 	var player_area := Area3D#45030049371    #?????
-	if area:
-#		print(area)
+	if area.get_parent() is Enemy:
+		print(area)
 		#if area != player_area:
 		parent.aa_freed()
 		queue_free()
