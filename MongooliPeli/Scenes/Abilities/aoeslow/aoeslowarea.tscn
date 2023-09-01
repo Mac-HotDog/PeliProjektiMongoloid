@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dkxe4kynkai1e"]
+[gd_scene load_steps=12 format=3 uid="uid://dkxe4kynkai1e"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/aoeslow/aoeslowarea.gd" id="1_ipxex"]
 [ext_resource type="Script" path="res://Scenes/Abilities/aoeslow/Area3D.gd" id="2_ntj3w"]
 [ext_resource type="Texture2D" uid="uid://80qdwxi30n4" path="res://assetit/kenney particle transparent/circle_01.png" id="3_5hcs7"]
 [ext_resource type="AudioStream" uid="uid://hsmtbo8mjr4j" path="res://audio/effects/wind__artic__cold-6195 (mp3cut.net).mp3" id="4_qmaee"]
+[ext_resource type="Texture2D" uid="uid://bo6av7226h2a3" path="res://assetit/kenney particle transparent/star_05.png" id="5_fxhk1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0570m"]
 albedo_color = Color(0.117647, 0.231373, 1, 1)
@@ -16,6 +17,21 @@ inner_radius = 0.97
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_75rdx"]
 height = 5.0
 radius = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kfrdx"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+color = Color(0.223529, 0.235294, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft3hb"]
+transparency = 1
+albedo_texture = ExtResource("5_fxhk1")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mstob"]
+material = SubResource("StandardMaterial3D_ft3hb")
 
 [node name="aoesplasharea" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -48,5 +64,11 @@ texture = ExtResource("3_5hcs7")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_qmaee")
 volume_db = -30.877
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.988768, 0)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_kfrdx")
+draw_pass_1 = SubResource("PlaneMesh_mstob")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
