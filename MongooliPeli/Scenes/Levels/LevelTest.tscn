@@ -794,9 +794,6 @@ environment = SubResource("Environment_erydq")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_2vu7a")
 
-[node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("12_4yol8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.861883, 94)
-
 [node name="Marker" parent="." instance=ExtResource("9_s7iy2")]
 visible = false
 
@@ -808,3 +805,6 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1, 92)
 
 [node name="UI" parent="." instance=ExtResource("17_yfqvx")]
+
+[node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("12_4yol8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41, 1, 93)

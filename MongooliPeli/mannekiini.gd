@@ -109,10 +109,10 @@ func _ready():
 	dash_marker_o_position = dash_marker.position
 	#state_machine = anim_tree.get("parameters/playback")
 	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	timer = Timer.new()  # create a new Timer
-	add_child(timer)  # add it as a child
-	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
-	timer.timeout.connect(_on_timer_timeout)
+#	timer = Timer.new()  # create a new Timer
+#	add_child(timer)  # add it as a child
+#	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
+#	timer.timeout.connect(_on_timer_timeout)
 	
 	qTimer = Timer.new()  # create a new Timer
 	add_child(qTimer)  # add it as a child
@@ -356,12 +356,12 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("e") and not is_jumping:
 			if is_on_floor():
 				nav_target_pos = null
-			is_jumping = true
+				is_jumping = true
 				#navigationAgent.is_target_reachable()
 				play_animation("Jump",true)
 				velocity.y +=  jump_speed
 				#velocity.dir = 1.1
-					move_and_slide()
+				move_and_slide()
 	if not is_on_floor():
 		velocity.y -= gravity *delta
 		move_and_slide()
