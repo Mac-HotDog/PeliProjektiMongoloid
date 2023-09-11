@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://dqg4r51ogu2l0"]
 
-[ext_resource type="Texture2D" uid="uid://xtks8opc8gk3" path="res://animations/deathzombie/deathzombie_mremireh_body__diffuse.png" id="1_15x8n"]
-[ext_resource type="Texture2D" uid="uid://dr8r8tkk16ogt" path="res://animations/deathzombie/deathzombie_mremireh_body_normal.png" id="2_hcrac"]
-[ext_resource type="Texture2D" uid="uid://bp4u5i5plsh4x" path="res://animations/deathzombie/deathzombie_mremireh_shoe_diffuse.png" id="3_2vljf"]
-[ext_resource type="Texture2D" uid="uid://bj2qk1u8wib4q" path="res://animations/deathzombie/deathzombie_mremireh_shoe_normal.png" id="4_txuym"]
+[ext_resource type="Texture2D" uid="uid://xtks8opc8gk3" path="res://assetit/Models/Zombie/deathzombie/deathzombie_mremireh_body__diffuse.png" id="1_15x8n"]
+[ext_resource type="Texture2D" uid="uid://dr8r8tkk16ogt" path="res://assetit/Models/Zombie/deathzombie/deathzombie_mremireh_body_normal.png" id="2_hcrac"]
+[ext_resource type="Texture2D" uid="uid://bp4u5i5plsh4x" path="res://assetit/Models/Zombie/deathzombie/deathzombie_mremireh_shoe_diffuse.png" id="3_2vljf"]
+[ext_resource type="Texture2D" uid="uid://bj2qk1u8wib4q" path="res://assetit/Models/Zombie/deathzombie/deathzombie_mremireh_shoe_normal.png" id="4_txuym"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42pnt"]
 resource_name = "emireh_body_material"

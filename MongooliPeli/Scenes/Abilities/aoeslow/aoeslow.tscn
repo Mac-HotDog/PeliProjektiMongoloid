@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sgixjs7jvm7v"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/aoeslow/aoeslow.gd" id="1_mh8gm"]
+
+[node name="aoesplash" type="Node3D"]
+script = ExtResource("1_mh8gm")

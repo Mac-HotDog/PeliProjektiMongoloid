@@ -4,8 +4,9 @@ extends Enemy
 var player = null
 var state_machine
 var dead = false
+var in_aoeslow = false
 
-const SPEED = 4.0
+var SPEED = 4.0
 const ATTACK_RANGE = 2.0
 
 @export var player_path := "/root/level1/Mannekiini"
@@ -15,12 +16,17 @@ const ATTACK_RANGE = 2.0
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var deathaudio = $audiodeath
+@onready var impactaudio = $audioimpact
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
+	
+func change_health(value):
+	health += value
+	
 
 
 func whendead():
@@ -42,7 +48,7 @@ func _process(delta):
 		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
-	
+
 	if die() and dead == false:
 		whendead()
 		
@@ -76,12 +82,47 @@ func _hit_finished():
 		player.hit(dir)
 		
 
+func take_dot():
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
+	if in_aoeslow:
+		await get_tree().create_timer(0.5).timeout
+		health += -player.aoeslow_dmg_returner()
 
 
 
-
-func _on_area_3d_zombie_area_entered(area):
+func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 	if area is autoattack:
+		impactaudio.play()
 		health += -player.aa_dmg_returner()
 	if area is bullet:
 		health += -player.bullet_dmg_returner()
+	if area is aoeslow:
+		in_aoeslow = true
+		take_dot()
+		SPEED = 1
+
+
+func _on_area_3d_zombie_area_exited(area):
+	if area is aoeslow:
+		in_aoeslow = false
+		SPEED = 4
