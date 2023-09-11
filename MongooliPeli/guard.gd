@@ -1,4 +1,4 @@
-extends Entity
+extends Enemy
 
 
 var player = null
@@ -6,7 +6,7 @@ var state_machine
 var timer
 var dead = false
 const SPEED = 4.0
-const ATTACK_RANGE = 10.0
+const ATTACK_RANGE = 8.0
 
 #@export var player_path : NodePath
 @export var player_path := "/root/level1/Mannekiini"
@@ -15,10 +15,10 @@ const ATTACK_RANGE = 10.0
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var spear_timer = $TimerSpear
-@onready var right_hand = $"Armature/Skeleton3D/Physical Bone mixamorig_RightHand"
-@onready var spearmesh = $SpearMesh
-@onready var skeleton = $Armature/Skeleton3D
-
+@onready var right_hand = $"Armature/Skeleton3D/Physical Bone mixamorig_RightHand"#turha?
+@onready var spearmesh = $SpearMesh#turha?
+@onready var skeleton = $Armature/Skeleton3D#turha?
+@onready var impactaudio = $audioimpact
 #abilities
 var spear = load_ability("spear")
 var spear_cd = 4.0
@@ -140,10 +140,8 @@ func allow_cast_spear():
 		
 func allow_idle():
 		if nav_agent.is_navigation_finished() and _target_in_range():
-
 			return true
 		else:
-
 			return false
 			
 func throw_moment():
@@ -163,11 +161,14 @@ func throw_moment():
 
 
 func _on_area_3d_area_entered(area):
-	if area:
-		#health += -15
-		timer.start()
-		#print(area)
-		change_health(-15)
+#	if area:
+#		#health += -15
+#		timer.start()
+#		#print(area)
+#		change_health(-15)
+	if area is autoattack:
+		impactaudio.play()
+		health += -player.aa_dmg_returner()
 
 		
 

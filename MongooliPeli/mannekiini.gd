@@ -7,7 +7,7 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@onready var model = $Armature/Skeleton3D
+@onready var model = $Armature/Skeleton3D # ei käytössä
 
 #audio
 @onready var bullet_cast_sound = $audiobulletcast
@@ -21,6 +21,7 @@ extends Entity
 #ranges
 @export var aa_range = 8
 @export var aoeslow_range = 15
+var pathing_for_aoeslow = false
 #dashia varten..
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
@@ -39,7 +40,7 @@ var is_jumping = false
 # aa varten
 @onready var targetmeshinstance = preload("res://Scenes/redarrowsprite.tscn")
 @onready var targetmesh = targetmeshinstance.instantiate()
-@onready var autoattacktimer = $AutoAttackTimer
+@onready var autoattacktimer = $AutoAttackTimer # ei käytössä
 var collider
 var aa_target_pos
 var aa_free = true #onko aa olemassa, tällä myös lähetetään vihollisen posia permana
@@ -134,9 +135,10 @@ func _read_input():
 		bullet_cast_sound.play()
 		bullet.execute(self)
 	if Input.is_action_just_pressed("w"):
-		if global_position.distance_to(mouse_pos) > aoeslow_range:# ei toimi viel, pitää tehä muuttujalla physprocessissa 
+		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 			nav_target_pos = mouse_pos
 			navigationAgent.set_path_desired_distance(aoeslow_range)
+			pathing_for_aoeslow = true # tarkistetaan physprosessissa
 		if global_position.distance_to(mouse_pos) <= aoeslow_range:
 			navigationAgent.set_target_position(self.position)
 			aoeslow.mouse_position(mouse_pos)
@@ -198,7 +200,7 @@ func play_animation(animation,condition):
 			allow_idle = false
 			allow_run = false
 			anim_player.stop()
-			anim_player.set_speed_scale(2)
+			anim_player.set_speed_scale(1.9)
 			anim_player.play(animation)
 		if animation == "CastForwardRight":#bullet
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
@@ -250,7 +252,19 @@ func whendead():
 func _physics_process(delta):
 	if die() and dead == false:
 		whendead()
-		
+	
+	if pathing_for_aoeslow:#pathaus rangelle pääsyyn
+		#if navigationAgent.is_target_reached():
+		if navigationAgent.is_navigation_finished() and global_position.distance_to(mouse_pos) <= aoeslow_range:
+			pathing_for_aoeslow = false
+			navigationAgent.set_target_position(self.position)
+			aoeslow.mouse_position(mouse_pos)
+			look_at(mouse_pos, Vector3.UP,true)
+			play_animation("CastUpRight", true)
+			fireball_cast_sound.play()
+			navigationAgent.set_path_desired_distance(0.1)
+
+	
 	if navigationAgent.is_navigation_finished():
 		prev_pos = global_position
 	if (prev_pos-global_position).length() > 0:
@@ -274,18 +288,12 @@ func _physics_process(delta):
 		if target.die():
 			targetmesh.visible = false
 			keep_aa = false
-		if not target.die():
+		if not target.die(): # punainen target nuoli
 			targetmesh.global_transform.origin = target.global_position
 			targetmesh.global_transform.origin.y = 4
 			targetmesh.global_transform.origin.z += -1
 			targetmesh.visible = true
 
-#	if target_found:
-#		target_pos = collider.global_position
-#		var mesh = targetmesh.instantiate()
-#		target.add_child(mesh)
-#		mesh.global_transform.origin = target.global_position
-#		mesh.global_transform.origin.y = 5
 
 	#uusi dash? vähän paska mut toimii
 	if Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
@@ -316,10 +324,11 @@ func _physics_process(delta):
 			is_jumping = false
 	if Input.is_action_just_pressed("r") and not is_jumping:
 		if is_on_floor():
+			play_animation("Jump",true)
+			await get_tree().create_timer(0.2).timeout
 			nav_target_pos = null
 			is_jumping = true
 			#navigationAgent.is_target_reachable()
-			play_animation("Jump",true)
 			velocity.y +=  jump_speed
 			#velocity.dir = 1.1
 			move_and_slide()
@@ -424,7 +433,7 @@ func _input(event):
 			keep_aa = false
 			Speed = 5
 			#if is_dashing == false:
-			navigationAgent.set_path_desired_distance(1)
+			navigationAgent.set_path_desired_distance(0.1)
 			nav_target_pos = result.position
 				#navigationAgent.set_target_position(nav_target_pos)
 		#print("hahmon saama" ,result.collider)
@@ -432,9 +441,11 @@ func _input(event):
 		
 		#autoattack
 		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
+			#print(collider)
 			target = collider
 			keep_aa = true
 			target_found = true
+			
 			#aa_target_pos = collider.global_position
 
 

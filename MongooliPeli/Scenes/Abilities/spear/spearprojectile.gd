@@ -1,5 +1,5 @@
 extends RigidBody3D
-#
+class_name Spear
 #
 var target_pos
 var speed = 3
@@ -7,7 +7,7 @@ var gravity = 0
 var timer
 var parent = get_parent()
 var despawn_distance = 20
-@onready var initial_position = position
+@onready var initial_position = global_position
 #
 ##func _ready():
 ##	timer = Timer.new()  # create a new Timer
@@ -31,12 +31,12 @@ func target_position(pos):
 func _physics_process(delta):
 	top_level = true
 
-	#var to = global_position.direction_to(target_pos)
-	#var to = Vector3(target_pos[0], 1,target_pos[2])
+#	var to = global_position.direction_to(target_pos)
+#	#var to = Vector3(target_pos[0], 1,target_pos[2])
 #	var movement = to * speed * delta
-#	transform.origin[0] = transform.origin[0] + movement[0]
-#	transform.origin[1] = 1
-#	transform.origin[2] = transform.origin[2] + movement[2]
+#	transform.origin[0] += transform.origin[0] + movement[0]
+#	transform.origin[1] += 1
+#	transform.origin[2] += transform.origin[2] + movement[2]
 #	var displacement = position - initial_position
 #	var traveled_distance = displacement.length()
 #	if traveled_distance >= despawn_distance:
@@ -49,11 +49,12 @@ func _physics_process(delta):
 #		queue_free()
 
 
-#	# eri tavat
+	# eri tavat
+	#print(position)
 	var forward_vector = global_position.direction_to(target_pos)
 	var velocity = forward_vector * speed
 	apply_central_impulse(velocity)
-	var displacement = position - initial_position
+	var displacement = global_position - initial_position
 	var traveled_distance = displacement.length()
 
 	if traveled_distance >= despawn_distance:
@@ -70,10 +71,11 @@ func _physics_process(delta):
 
 
 func _on_area_3d_area_entered(area):
-	if area:
-		#print(area)
+	if area is Entity:
+		print(area)
 		queue_free()
 
 
 func _on_area_3_dspearprojectile_body_entered(body):
+	#print(body)
 	queue_free()
