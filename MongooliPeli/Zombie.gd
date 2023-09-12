@@ -117,7 +117,7 @@ func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 	if area is bullet:
 		health += -player.bullet_dmg_returner()
 	if area is aoeslow:
-		in_aoeslow = true
+		in_aoeslow = true#turha
 		take_dot()
 		SPEED = 1
 

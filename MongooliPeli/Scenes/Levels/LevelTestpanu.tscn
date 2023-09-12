@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="9_8v5oo"]
 [ext_resource type="PackedScene" uid="uid://dwlrg7i1p0yga" path="res://laava.tscn" id="10_lvyvr"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="12_hcsjj"]
-[ext_resource type="AudioStream" uid="uid://bmd6ftx18guvh" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="12_m22wy"]
+[ext_resource type="AudioStream" uid="uid://dk55l5q3x28cm" path="res://audio/effects/horror-background-atmosphere-156462.mp3" id="12_x1gjw"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="15_j2j3n"]
 [ext_resource type="PackedScene" uid="uid://dnh5ay23lbkol" path="res://Scenes/Others/Zombie.tscn" id="17_l6aos"]
 [ext_resource type="PackedScene" uid="uid://c7uihborwxy2l" path="res://guard.tscn" id="18_iks6k"]
@@ -801,7 +801,9 @@ skeleton = NodePath("../../laavaAllas1")
 environment = SubResource("Environment_erydq")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_m22wy")
+stream = ExtResource("12_x1gjw")
+volume_db = -43.789
+autoplay = true
 
 [node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("2_igpqx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.861883, 94)

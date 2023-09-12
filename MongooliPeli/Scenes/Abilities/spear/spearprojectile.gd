@@ -2,11 +2,11 @@ extends RigidBody3D
 class_name Spear
 #
 var target_pos
-var speed = 3
+var speed = 2
 var gravity = 0
 var timer
 var parent = get_parent()
-var despawn_distance = 20
+var despawn_distance = 25
 @onready var initial_position = global_position
 #
 ##func _ready():

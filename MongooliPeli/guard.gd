@@ -5,7 +5,7 @@ var player = null
 var state_machine
 var timer
 var dead = false
-const SPEED = 4.0
+var SPEED = 4.0
 const ATTACK_RANGE = 8.0
 
 #@export var player_path : NodePath
@@ -52,20 +52,20 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var vittu = $Armature/Skeleton3D.global_transform * $Armature/Skeleton3D.get_bone_global_pose(22)
-	var perse = $Armature/Skeleton3D.get_bone_global_pose(22)
-	var saatana = $Armature/Skeleton3D.get_bone_pose(22)
-	#spearmesh.set_transform(perse)
-	#spearmesh.top_level = true
-	#spearmesh.global_transform.origin = right_hand.global_transform.origin
-	#spearmesh.set_global_transform(saatana)
-	var skeleton_global_transform = skeleton.get_global_transform()
-	var right_hand_local_transform = skeleton.get_bone_pose(22)
-	var right_hand_global_transform = (skeleton_global_transform * right_hand_local_transform)
+#	var vittu = $Armature/Skeleton3D.global_transform * $Armature/Skeleton3D.get_bone_global_pose(22)
+#	var perse = $Armature/Skeleton3D.get_bone_global_pose(22)
+#	var saatana = $Armature/Skeleton3D.get_bone_pose(22)
+#	#spearmesh.set_transform(perse)
+#	#spearmesh.top_level = true
+#	#spearmesh.global_transform.origin = right_hand.global_transform.origin
+#	#spearmesh.set_global_transform(saatana)
+#	var skeleton_global_transform = skeleton.get_global_transform()
+#	var right_hand_local_transform = skeleton.get_bone_pose(22)
+#	var right_hand_global_transform = (skeleton_global_transform * right_hand_local_transform)
 
 	#spearmesh.transform = right_hand_local_transform
 	#print(right_hand_local_transform.origin)
-	
+	#print(nav_agent.is_target_reached())
 
 	if bar:
 		bar.update_bar(health)
@@ -91,11 +91,13 @@ func _process(delta):
 	match state_machine.get_current_node():
 		"Run":
 			# Navigation
+			if die():
+				return
 			if _target_not_in_range():
 				#print(self.global_rotation)
 					
 				nav_agent.set_target_position(player.global_transform.origin)
-				nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
+				#nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
 				#print(nav_agent.distance_to_target())
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
@@ -104,8 +106,11 @@ func _process(delta):
 				var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 				look_at(kohta,Vector3.UP,true)
 		"Throw":
+			if die():
+				return
 			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 			look_at(kohta,Vector3.UP,true)
+
 			#cast_spear()
 			
 
@@ -139,7 +144,7 @@ func allow_cast_spear():
 		return false
 		
 func allow_idle():
-		if nav_agent.is_navigation_finished() and _target_in_range():
+		if _target_in_range():
 			return true
 		else:
 			return false
@@ -157,7 +162,23 @@ func throw_moment():
 #		var melee = true
 #		player.hit(melee)
 
-
+func take_dot():
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
+	await get_tree().create_timer(0.5).timeout
+	health += -player.aoeslow_dmg_returner()
 
 
 func _on_area_3d_area_entered(area):
@@ -169,11 +190,17 @@ func _on_area_3d_area_entered(area):
 	if area is autoattack:
 		impactaudio.play()
 		health += -player.aa_dmg_returner()
-
+	if area is bullet:
+		health += -player.bullet_dmg_returner()
+	if area is aoeslow:
+		take_dot()
+		SPEED = 1
 		
 
 func _on_area_3d_area_exited(area):
 	timer.stop()
+	if area is aoeslow:
+		SPEED = 4
 	
 func _on_timer_timeout():
 	health += -5

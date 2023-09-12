@@ -241,7 +241,6 @@ func play_animation(animation,condition):
 	#print(anim_player.current_animation)
 
 func _on_animation_player_animation_finished(anim_name):
-	#set_physics_process_internal(true)
 	allow_idle = true
 
 func whendead():
@@ -325,10 +324,14 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("r") and not is_jumping:
 		if is_on_floor():
 			play_animation("Jump",true)
-			await get_tree().create_timer(0.2).timeout
+			await get_tree().create_timer(0.17).timeout
 			nav_target_pos = null
 			is_jumping = true
 			#navigationAgent.is_target_reachable()
+			Speed = 10
+			var suunta = Vector3.FORWARD.normalized()
+			#velocity += suunta[1] + 10
+			#nav_target_pos = suunta
 			velocity.y +=  jump_speed
 			#velocity.dir = 1.1
 			move_and_slide()
@@ -381,8 +384,8 @@ func moveToPoint(delta, speed):
 		var targetPos = navigationAgent.get_next_path_position()
 		#navigationAgent.path_max_distance()
 		var direction = global_position.direction_to(targetPos)
-		if activeanimationplaying:
-			direction = global_position.direction_to(mouse_pos)
+#		if activeanimationplaying:
+#			direction = global_position.direction_to(mouse_pos)
 		faceDirection(targetPos)
 		velocity = direction * speed
 #		print(self.global_rotation)
@@ -433,7 +436,7 @@ func _input(event):
 			keep_aa = false
 			Speed = 5
 			#if is_dashing == false:
-			navigationAgent.set_path_desired_distance(0.1)
+			navigationAgent.set_path_desired_distance(1)
 			nav_target_pos = result.position
 				#navigationAgent.set_target_position(nav_target_pos)
 		#print("hahmon saama" ,result.collider)
