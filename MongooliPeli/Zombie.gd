@@ -5,11 +5,14 @@ var player = null
 var state_machine
 var dead = false
 var in_aoeslow = false
+var last_hitter #kuka teki dmg vikana
 
 var SPEED = 4.0
 const ATTACK_RANGE = 2.0
-
+@export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
+var dmg_number
 @export var player_path := "/root/level1/Mannekiini"
+@export var gold_value = 15
 
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
@@ -25,16 +28,21 @@ func _ready():
 	state_machine = anim_tree.get("parameters/playback")
 	
 func change_health(value):
+	dmg_number = dmg_number_scene.instantiate()
+	add_child(dmg_number)#sqpawnaa ja deletoid koko ajan, vie varmaa tehoja
+	dmg_number.add_dmg_numbers(str(value), self.global_position,1,1)
 	health += value
 	
-
+#add_dmg_numbers()
 
 func whendead():
+	dmg_number.queue_free()
+	last_hitter.change_gold(gold_value)
 	dead = true
 	deathaudio.play()
 	$CollisionShape3D.disabled = true
 	$Area3DZombie/CollisionShape3D2.disabled = true
-	bar.visible = false
+	#bar.visible = false
 	#manaBar.visible = false
 	await get_tree().create_timer(5).timeout
 	queue_free()
@@ -44,8 +52,8 @@ func whendead():
 func _process(delta):
 	velocity = Vector3.ZERO
 	
-	if bar:
-		bar.update_bar(health)
+#	if bar:
+#		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
 
@@ -111,13 +119,21 @@ func take_dot():
 
 
 func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
-	if area is autoattack:
+	#koitin tehdä koodista järkevämpää, ei toimi vielä
+	var area_source = area.get_parent()
+	var spawner_source = area_source.get_parent()
+#	var dmg_source = area_source.name_returner()
+#	health += -player.dmg_returner(dmg_source)
+
+	if spawner_source.get_parent() is Entity:
+		last_hitter = spawner_source.get_parent()
+	if area is autoattack or area.get_parent() is autoattack:
 		impactaudio.play()
-		health += -player.aa_dmg_returner()
-	if area is bullet:
-		health += -player.bullet_dmg_returner()
-	if area is aoeslow:
-		in_aoeslow = true#turha
+		change_health(-player.aa_dmg_returner())
+	if area is bullet or area.get_parent() is bullet:
+		change_health(-player.bullet_dmg_returner())
+		#print(area.class)
+	if area is aoeslow:  
 		take_dot()
 		SPEED = 1
 

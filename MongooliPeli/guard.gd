@@ -5,8 +5,10 @@ var player = null
 var state_machine
 var timer
 var dead = false
+var last_hitter #kuka teki dmg vikana
 var SPEED = 4.0
 const ATTACK_RANGE = 8.0
+@export var gold_value = 10
 
 #@export var player_path : NodePath
 @export var player_path := "/root/level1/Mannekiini"
@@ -15,9 +17,8 @@ const ATTACK_RANGE = 8.0
 @onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 @onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var spear_timer = $TimerSpear
-@onready var right_hand = $"Armature/Skeleton3D/Physical Bone mixamorig_RightHand"#turha?
-@onready var spearmesh = $SpearMesh#turha?
-@onready var skeleton = $Armature/Skeleton3D#turha?
+@export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
+var dmg_number
 @onready var impactaudio = $audioimpact
 #abilities
 var spear = load_ability("spear")
@@ -29,9 +30,10 @@ var spear_cd = 4.0
 
 func whendead():
 	dead = true
+	last_hitter.change_gold(gold_value)
 	#deathaudio.play()
-	$HealthBar3D.visible = false
-	$ManaBar3D.visible = false
+	#$HealthBar3D.visible = false
+	#$ManaBar3D.visible = false
 	$Area3D/CollisionShape3D.disabled = true
 	#anim_tree.set("parameters/conditions/death",true)
 	await get_tree().create_timer(5).timeout
@@ -47,8 +49,16 @@ func _ready():
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	timer.timeout.connect(_on_timer_timeout)
-	var right_hand_bone_index = skeleton.get_bone_name(22)
+
 	
+func change_health(value):
+	dmg_number = dmg_number_scene.instantiate()
+	add_child(dmg_number)#sqpawnaa ja deletoid koko ajan, vie varmaa tehoja
+	dmg_number.add_dmg_numbers(str(value), self.global_position,1,1)
+	health += value
+	
+func gold_value_returner():
+	return gold_value
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -66,11 +76,11 @@ func _process(delta):
 	#spearmesh.transform = right_hand_local_transform
 	#print(right_hand_local_transform.origin)
 	#print(nav_agent.is_target_reached())
-
-	if bar:
-		bar.update_bar(health)
-	if manaBar:
-		manaBar.update_bar(mana)
+#
+#	if bar:
+#		bar.update_bar(health)
+#	if manaBar:
+#		manaBar.update_bar(mana)
 
 		
 	velocity = Vector3.ZERO#?
@@ -96,7 +106,7 @@ func _process(delta):
 			if _target_not_in_range():
 				#print(self.global_rotation)
 					
-				nav_agent.set_target_position(player.global_transform.origin)
+				nav_agent.set_target_position(player.global_position)#transform.origin)
 				#nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
 				#print(nav_agent.distance_to_target())
 				var next_nav_point = nav_agent.get_next_path_position()
@@ -105,6 +115,9 @@ func _process(delta):
 				rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 				var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 				look_at(kohta,Vector3.UP,true)
+#				var direction = global_position.direction_to(player.global_position)
+#				velocity = direction * 3
+#				move_and_slide()
 		"Throw":
 			if die():
 				return
@@ -187,11 +200,16 @@ func _on_area_3d_area_entered(area):
 #		timer.start()
 #		#print(area)
 #		change_health(-15)
-	if area is autoattack:
+	var area_source = area.get_parent()
+	var spawner_source = area_source.get_parent()
+	if spawner_source.get_parent() is Entity:
+		last_hitter = spawner_source.get_parent()
+	if area is autoattack or area.get_parent() is autoattack:
 		impactaudio.play()
-		health += -player.aa_dmg_returner()
-	if area is bullet:
-		health += -player.bullet_dmg_returner()
+		change_health(-player.aa_dmg_returner())
+	if area is bullet or area.get_parent() is bullet:
+		change_health(-player.bullet_dmg_returner())
+		#print(area.class)
 	if area is aoeslow:
 		take_dot()
 		SPEED = 1

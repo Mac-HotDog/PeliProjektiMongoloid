@@ -13,6 +13,9 @@ var mana_regen: int = 1  # Mana regenerated per second
 
 var _regen_timer: float = 0  # Timer to keep track of regeneration interval
 
+
+
+
 # Basic stat modifying functions
 func change_health(value: int) -> void:
 	self.health += value

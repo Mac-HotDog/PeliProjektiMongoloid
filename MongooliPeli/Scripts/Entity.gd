@@ -7,12 +7,26 @@ var mana: int = 100
 var strength: int = 10
 var agility: int = 10
 var intelligence: int = 10
+var gold = 0 #current gold
+var level = 1
+#@onready var inventoryscene = preload("res://Scenes/inventory.tscn")
+#var inventory
 
 var health_regen: int = 1  # Health regenerated per second
 var mana_regen: int = 1  # Mana regenerated per second
 
 var _regen_timer: float = 0  # Timer to keep track of regeneration interval
 
+#func _on_ready():
+#	inventory = inventoryscene.instantiate()
+#	add_child(inventory)
+
+#func change_gold(value):
+#	gold += value
+#	if inventory != null:
+#		inventory.change_gold(gold)
+#		print(gold)
+	
 # Basic stat modifying functions
 func change_health(value: int) -> void:
 	self.health += value

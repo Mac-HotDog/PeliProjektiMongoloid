@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://wuai1kgeb5d1"]
-
-[ext_resource type="Texture2D" uid="uid://dpbg7jwuwxfou" path="res://assetit/images/red-arrow-downew.png" id="1_w7hot"]
-
-[node name="redarrowsprite" type="Sprite3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-top_level = true
-billboard = 1
-texture = ExtResource("1_w7hot")

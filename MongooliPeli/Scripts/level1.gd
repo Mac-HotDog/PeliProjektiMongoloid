@@ -29,7 +29,8 @@ func _input(event):
 		var rayQuery = PhysicsRayQueryParameters3D.new()
 		rayQuery.from = from
 		rayQuery.to = to
-		rayQuery.collide_with_areas = true
+		#rayQuery.collide_with_areas = true
+		rayQuery.set_collide_with_areas(false)
 		rayQuery.set_collide_with_bodies(true)
 		var result = space.intersect_ray(rayQuery)
 		if result.size() < 1:
@@ -38,17 +39,19 @@ func _input(event):
 #		var mihin = result.collider
 #		if mihin is Entity:
 #			print("jumpe")
-
-		if result.position.y > 0:
-			edited_result[1] = 0.5
-		if result.position.y > 1.5:
-			edited_result[1] = 0.5
-
-		$Marker.visible = true         
-		$Marker.transform.origin = edited_result
-		await get_tree().create_timer(1).timeout
-		$Marker.visible = false 
 		
+		if not (result.collider is Enemy):
+			if result.position.y > 0:
+				edited_result[1] = 1
+			if result.position.y > 1.7:
+				edited_result[1] = 1
+
+			$Marker.visible = true         
+			$Marker.transform.origin = edited_result
+			await get_tree().create_timer(1).timeout
+			$Marker.visible = false 
+		if result.collider is Enemy:
+			$Marker.visible = false 
 
 
 

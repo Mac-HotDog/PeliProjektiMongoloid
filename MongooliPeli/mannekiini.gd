@@ -2,21 +2,24 @@ extends Entity
 
 @export var Speed = 5
 @export var gravity = 6
-@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
-@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var bar = $Resourcebar
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@onready var model = $Armature/Skeleton3D # ei käytössä
-
+@export var inventoryscene = preload("res://Scenes/HUD/inventory.tscn")
+@onready var inventory = inventoryscene.instantiate()
+@export var salesman_path := "/root/level1/salesman"
+var salesman
 #audio
 @onready var bullet_cast_sound = $audiobulletcast
-@onready var fireball_cast_sound =$audiofireballcast
+@onready var fireball_cast_sound =$audiofireballcast #nykyään lumimyrsky
 @onready var death_sound = $audiodeath
 
 #dmg numbers
 @export var bullet_dmg = 30
-@export var aa_dmg = 15
+@export var autoattack_dmg = 15
 @export var aoeslow_dmg = 5
 #ranges
 @export var aa_range = 8
@@ -25,9 +28,6 @@ var pathing_for_aoeslow = false
 #dashia varten..
 @onready var dash_marker = $Marker3Ddash
 @onready var dash_cast_sound = $audiodashcast
-var dash_marker_o_position
-var o_player_position
-var o_player_rotation
 const DASH_SPEED = 10.0
 const DASH_DISTANCE = 5.0
 const DASH_ACCELERATION = 10.0
@@ -38,7 +38,7 @@ var dash_progress: float = 0.0
 var is_jumping = false
 
 # aa varten
-@onready var targetmeshinstance = preload("res://Scenes/redarrowsprite.tscn")
+@onready var targetmeshinstance = preload("res://Scenes/HUD/redarrowsprite.tscn")
 @onready var targetmesh = targetmeshinstance.instantiate()
 @onready var autoattacktimer = $AutoAttackTimer # ei käytössä
 var collider
@@ -75,24 +75,25 @@ var zombie_area = "Area3DZombie"
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
-var bullet = load_ability("bullet")#parent scene for projectile
+var bullet = load_ability("bullet")#spawner scene for projectile
 var acidBall = load_ability("acidBall")
-var autoattack = load_ability("autoattack")#parent scene for projectile
+var autoattack = load_ability("autoattack")#spawner scene for projectile
 var aoeslow = load_ability("aoeslow")
 
-#animaatiot jotka estää uoksun ja idlen
+#animaatiot jotka estää juoksun ja idlen, cancellaus
 var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight"]
 var animplaying
 var activeanimationplaying
-signal noactiveanimationplaying
+
 
 func _ready():
 	#navigationAgent.set_target_position(global_position)
+	add_child(inventory)
+	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
-	autoattacktimer.start()
+#	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
-	dash_marker_o_position = dash_marker.position
 	#state_machine = anim_tree.get("parameters/playback")
 	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	timer = Timer.new()  # create a new Timer
@@ -149,7 +150,7 @@ func _read_input():
 	if Input.is_action_just_pressed("e"):
 #		o_player_position = global_position #vanhaa dashia varten
 #		o_player_rotation = global_rotation
-		dash()
+		pass
 
 		#stop pathing
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
@@ -160,32 +161,6 @@ func _read_input():
 		keep_aa = false
 		#allow_run = false
 
-
-func dash():
-#		var player_pos = global_position
-#		var vector_to_marker = dash_marker.global_position - global_position
-#		var vektori = vector_to_marker.normalized()
-#		var max_range = vector_to_marker.length()
-#		var marker_location = dash_marker.global_position
-#		var direction_to = global_position.direction_to(dash_marker.position)
-#
-#		play_animation("RunSlide",true)
-#		Speed = 28
-#		navigationAgent.set_target_position(marker_location)
-#		await get_tree().create_timer(0.001).timeout
-#		if abs(global_rotation[1] - o_player_rotation[1]) > 2:
-#			global_position = o_player_position
-#			global_rotation = o_player_rotation
-#			navigationAgent.set_target_position(self.position)
-#			#dash_marker.transform_origin[2] += -1
-#			#navigationAgent.set_target_position(marker_location)
-#		else:
-#			#navigationAgent.set_target_position(dash_marker_o_position)#????
-#			navigationAgent.set_path_desired_distance(3)
-#			dash_cast_sound.play()
-#			await get_tree().create_timer(0.3).timeout
-#			navigationAgent.set_target_position(self.position)
-		pass
 
 #animation_list = []
 func play_animation(animation,condition):
@@ -247,8 +222,14 @@ func whendead():
 		dead = true
 		death_sound.play()
 		anim_player.play("DramaticDeath")
+		
+func change_gold(value):
+	gold += value
+	inventory.change_gold(value)
 
 func _physics_process(delta):
+
+	
 	if die() and dead == false:
 		whendead()
 	
@@ -263,7 +244,7 @@ func _physics_process(delta):
 			fireball_cast_sound.play()
 			navigationAgent.set_path_desired_distance(0.1)
 
-	
+	#liikkeessä olemisen tunnistus, spagettia
 	if navigationAgent.is_navigation_finished():
 		prev_pos = global_position
 	if (prev_pos-global_position).length() > 0:
@@ -340,9 +321,11 @@ func _physics_process(delta):
 		move_and_slide()
 
 	if bar:
+		bar.global_position = self.global_position
+		bar.global_position[1] = 3.5
 		bar.update_bar(health)
-	if manaBar:
-		manaBar.update_bar(mana)
+#	if manaBar:
+#		manaBar.update_bar(mana)
 
 
 		
@@ -399,7 +382,7 @@ func faceDirection(direction):
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
-#input to move to 
+#rightclick
 func _input(event):
 	if Input.is_action_just_pressed("RightMouse") or Input.is_action_pressed("RightMouse"):
 		var camera = get_tree().get_nodes_in_group("Camera")[0]
@@ -448,10 +431,13 @@ func _input(event):
 			target = collider
 			keep_aa = true
 			target_found = true
+			#print(collider)
+			autoattack.target_getter(collider)#nyt aa menee vihun läpi ja tekee kumpaanki dmg : D
 			
 			#aa_target_pos = collider.global_position
-
-
+		
+		if collider is Salesman:
+			pass
 
 
 #zombie melee hit
@@ -470,7 +456,8 @@ func _on_area_3d_area_entered(area):
 		if is_spear == spear:
 			health += -20
 			allow_idle = false
-			play_animation("PunchedFace",true)
+			if !activeanimationplaying:
+				play_animation("PunchedFace",true)
 		var ryhmat = area.get_groups()
 		for x in ryhmat:
 			if x == "tappo":
@@ -492,17 +479,17 @@ func auto_attack(targetpos):
 		#var enemy area = get_tree().add_child(Area3D.new)
 		navigationAgent.set_target_position(self.position)
 		#autoattacktimer.stop()
-		autoattacktimer.start()
+		#autoattacktimer.start()
 		look_at(suunta, Vector3.UP, true)
 		play_animation("ThrowRight", true)
 
 
-func aa_animation_moment(pos):#aa animaation h hetki
+func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
 	navigationAgent.set_target_position(self.position)
 	autoattack.attack_target_position(target.global_position)
 	autoattack.execute(self)
 	
-func cast_up_moment():
+func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
 
 func in_aa_range(targetpos):
@@ -512,12 +499,22 @@ func aa_freed():
 	aa_free = false
 
 func aa_dmg_returner():
-	return aa_dmg
+	return autoattack_dmg
 
 func bullet_dmg_returner():
 	return bullet_dmg
 
 func aoeslow_dmg_returner():
 	return aoeslow_dmg
+	
+#func dmg_returner(dmgsource):
+#	#koitin tehdä koodista järkevämpää, ei toimi vielä
+#	return dmgsource + "_dmg"
+#	if dmgsource == bullet:
+#		return bullet_dmg
+#	if dmgsource == aoeslow:
+#		return aoeslow_dmg
+#	if dmgsource == autoattack:
+#		return autoattack_dmg
 
 

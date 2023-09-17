@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4bmarl6y6vgw"]
+
+[ext_resource type="Texture2D" uid="uid://cc8sloxjvwuxl" path="res://assetit/images/inv_bg-removebg-preview.png" id="1_oc2wk"]
+[ext_resource type="Script" path="res://Scenes/HUD/inventory.gd" id="1_s15ll"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_miw5k"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2oroq"]
+font_size = 24
+font_color = Color(0.968627, 0.937255, 0.541176, 1)
+
+[node name="Inventory" type="Node2D"]
+script = ExtResource("1_s15ll")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 694.0
+offset_top = 416.0
+offset_right = 1360.0
+offset_bottom = 791.0
+scale = Vector2(0.909412, 0.887278)
+texture = ExtResource("1_oc2wk")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_left = 904.0
+offset_top = 511.0
+offset_right = 944.0
+offset_bottom = 551.0
+scale = Vector2(6.16474, 3.46305)
+columns = 3
+
+[node name="Slot1" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Slot2" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Slot3" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Slot4" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Slot5" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Slot6" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(10, 15)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_miw5k")
+
+[node name="Control" type="Node2D" parent="."]
+
+[node name="Gold" type="Label" parent="Control"]
+offset_left = 895.0
+offset_top = 461.0
+offset_right = 935.0
+offset_bottom = 498.0
+text = "0"
+label_settings = SubResource("LabelSettings_2oroq")

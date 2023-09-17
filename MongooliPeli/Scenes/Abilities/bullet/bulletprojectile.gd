@@ -1,5 +1,5 @@
 extends RigidBody3D
-
+class_name bullet
 
 
 var speed = 14
@@ -26,6 +26,9 @@ var despawn_distance = 12
 	#enemmäkin suunta
 func mouse_position(pos):
 	mouse_pos = pos
+
+func name_returner():
+	return "bullet"
 
 func _physics_process(delta):
 

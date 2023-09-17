@@ -1,2 +1,2 @@
 extends Area3D
-class_name bullet
+#class_name bullet
