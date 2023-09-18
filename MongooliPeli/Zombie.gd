@@ -16,8 +16,9 @@ var dmg_number
 
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
-@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
-@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var bar = $Resourcebar
 @onready var deathaudio = $audiodeath
 @onready var impactaudio = $audioimpact
 
@@ -26,6 +27,7 @@ var dmg_number
 func _ready():
 	player = get_node(player_path)
 	state_machine = anim_tree.get("parameters/playback")
+	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
 func change_health(value):
 	dmg_number = dmg_number_scene.instantiate()
@@ -42,7 +44,7 @@ func whendead():
 	deathaudio.play()
 	$CollisionShape3D.disabled = true
 	$Area3DZombie/CollisionShape3D2.disabled = true
-	#bar.visible = false
+	bar.visible = false
 	#manaBar.visible = false
 	await get_tree().create_timer(5).timeout
 	queue_free()
@@ -52,8 +54,10 @@ func whendead():
 func _process(delta):
 	velocity = Vector3.ZERO
 	
-#	if bar:
-#		bar.update_bar(health)
+	if bar:
+		bar.global_position = self.global_position
+		bar.global_position[1] = 3.5
+		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
 
@@ -61,8 +65,8 @@ func _process(delta):
 		whendead()
 		
 	match state_machine.get_current_node():
-		"GetUp":
-			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+		#"GetUp":
+			#look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 		"Run":
 			# Navigation
 			nav_agent.set_target_position(player.global_transform.origin)

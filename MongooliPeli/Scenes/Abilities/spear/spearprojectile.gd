@@ -9,21 +9,8 @@ var parent = get_parent()
 var despawn_distance = 25
 @onready var initial_position = global_position
 #
-##func _ready():
-##	timer = Timer.new()  # create a new Timer
-##	add_child(timer)  # add it as a child
-##	timer.set_wait_time(2.0)  # set the wait time to 5 seconds
-##	#timer.set_one_shot(true)  # make it a one-shot timer
-##	#putkipommi
-##	timer.timeout.connect(_on_timer_timeout)
-##	timer.start()
-##
-##func _on_timer_timeout():
-##	self.queue_free()
-##
-#	#enemmäkin suunta
-#func mouse_position(pos):
-#	mouse_pos = pos
+#func _ready():
+#	self.global_transform.basis = target_pos-self.global_position
 
 func target_position(pos):
 	target_pos = pos
@@ -52,7 +39,7 @@ func _physics_process(delta):
 	# eri tavat
 	#print(position)
 	var forward_vector = global_position.direction_to(target_pos)
-	var velocity = forward_vector * speed
+	var velocity = forward_vector * speed * 1.1
 	apply_central_impulse(velocity)
 	var displacement = global_position - initial_position
 	var traveled_distance = displacement.length()

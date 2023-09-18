@@ -2,6 +2,7 @@ extends Entity
 
 @export var Speed = 5
 @export var gravity = 6
+@export var jump_speed = 3.5
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
 #@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var bar = $Resourcebar
@@ -20,13 +21,13 @@ var salesman
 #dmg numbers
 @export var bullet_dmg = 30
 @export var autoattack_dmg = 15
-@export var aoeslow_dmg = 5
+@export var aoeslow_dmg = 7
 #ranges
 @export var aa_range = 8
 @export var aoeslow_range = 15
 var pathing_for_aoeslow = false
 #dashia varten..
-@onready var dash_marker = $Marker3Ddash
+#@onready var dash_marker = $Marker3Ddash #turha
 @onready var dash_cast_sound = $audiodashcast
 const DASH_SPEED = 10.0
 const DASH_DISTANCE = 5.0
@@ -61,7 +62,6 @@ var prev_pos
 var allow_idle
 var allow_run
 var player_navigating
-var jump_speed = 3
 var mouse_pos
 
 
@@ -177,11 +177,13 @@ func play_animation(animation,condition):
 			anim_player.stop()
 			anim_player.set_speed_scale(1.9)
 			anim_player.play(animation)
+			await get_tree().create_timer(0.2).timeout
+			anim_player.set_speed_scale(1.3)
 		if animation == "CastForwardRight":#bullet
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(10)
+			anim_player.set_speed_scale(8)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
 			allow_idle = false
@@ -322,7 +324,7 @@ func _physics_process(delta):
 
 	if bar:
 		bar.global_position = self.global_position
-		bar.global_position[1] = 3.5
+		bar.global_position[1] = 3.2
 		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
@@ -378,7 +380,8 @@ func moveToPoint(delta, speed):
 
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
-	look_at(kohta, Vector3.UP, true)
+	#look_at(kohta, Vector3.UP, true)
+	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 

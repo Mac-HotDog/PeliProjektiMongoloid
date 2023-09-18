@@ -2,24 +2,28 @@ extends Enemy
 
 
 var player = null
+var player_pos #viiveellinen pelaajn sijainti
+#var allow_getting_pos = false #lippu pelaaja posille
 var state_machine
 var timer
 var dead = false
 var last_hitter #kuka teki dmg vikana
 var SPEED = 4.0
-const ATTACK_RANGE = 8.0
+var ATTACK_RANGE = 8.0
 @export var gold_value = 10
 
 #@export var player_path : NodePath
 @export var player_path := "/root/level1/Mannekiini"
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
-@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
-@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var bar = $Resourcebar
 @onready var spear_timer = $TimerSpear
 @export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
 var dmg_number
 @onready var impactaudio = $audioimpact
+@onready var deathaudio = $audiodeath
 #abilities
 var spear = load_ability("spear")
 var spear_cd = 4.0
@@ -34,8 +38,9 @@ func whendead():
 	#deathaudio.play()
 	#$HealthBar3D.visible = false
 	#$ManaBar3D.visible = false
+	deathaudio.play()
 	$Area3D/CollisionShape3D.disabled = true
-	#anim_tree.set("parameters/conditions/death",true)
+	bar.visible = false
 	await get_tree().create_timer(5).timeout
 	queue_free()
 	#manaBar.visible = false
@@ -77,8 +82,10 @@ func _process(delta):
 	#print(right_hand_local_transform.origin)
 	#print(nav_agent.is_target_reached())
 #
-#	if bar:
-#		bar.update_bar(health)
+	if bar:
+		bar.global_position = self.global_position
+		bar.global_position[1] = 3.5
+		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
 
@@ -101,8 +108,7 @@ func _process(delta):
 	match state_machine.get_current_node():
 		"Run":
 			# Navigation
-			if die():
-				return
+			await get_tree().create_timer(0.2).timeout
 			if _target_not_in_range():
 				#print(self.global_rotation)
 					
@@ -112,22 +118,24 @@ func _process(delta):
 				var next_nav_point = nav_agent.get_next_path_position()
 				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 			
-				rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
+				rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z), delta * 10.0)
 				var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
-				look_at(kohta,Vector3.UP,true)
+				#look_at(kohta,Vector3.UP,true)
 #				var direction = global_position.direction_to(player.global_position)
 #				velocity = direction * 3
 #				move_and_slide()
-		"Throw":
-			if die():
-				return
-			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
-			look_at(kohta,Vector3.UP,true)
+		#"Throw":
+#			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
+#			look_at(kohta,Vector3.UP,true)
+
 
 			#cast_spear()
 			
-
-			
+		"Idle":
+			spear.target_position(player.position)#pelaajan on helppo väistää keihäs jos tämä on idlessä
+			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
+			look_at(kohta,Vector3.UP,true)
+			#rotation.y = lerp_angle(rotation.y, -player.global_position.z, delta * 10.0)
 
 
 #	print("nav " , nav_agent.is_navigation_finished())
@@ -149,6 +157,9 @@ func _target_not_in_range():
 	var x = global_position.distance_to(player.global_position) > ATTACK_RANGE
 	return x
 	
+#func allow_getting_pos():
+#	pass
+	
 func allow_cast_spear():
 	var in_range = global_position.distance_to(player.global_position) < ATTACK_RANGE
 	if in_range and spear_timer.time_left < 0.1:
@@ -165,7 +176,7 @@ func allow_idle():
 func throw_moment():
 	#if spear_timer.time_left < 0.1: ##hojojoo timer alkaa ina alu
 	spear_timer.start(spear_cd)
-	spear.target_position(player.position)
+	#spear.target_position(player.position)
 	spear.execute(self)
 
 #tällä saadaan melee osumisen tieto
