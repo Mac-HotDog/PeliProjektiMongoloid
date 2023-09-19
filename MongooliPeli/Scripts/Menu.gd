@@ -5,7 +5,7 @@ extends Control
 
 func _on_button_button_down():
 	
-	get_tree().change_scene_to_file("res://Scenes/Levels/LevelTest.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Levels/LevelTestpanu.tscn")
 
 
 func _on_h_slider_value_changed(value):

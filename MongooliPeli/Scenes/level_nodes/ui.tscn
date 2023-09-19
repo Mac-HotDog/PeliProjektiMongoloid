@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyalyehgjbgq6"]
+[gd_scene load_steps=7 format=3 uid="uid://dyalyehgjbgq6"]
 
-[ext_resource type="Script" path="res://Scripts/Button.gd" id="1_epue7"]
 [ext_resource type="Script" path="res://Scripts/Button2.gd" id="2_5h3f6"]
+[ext_resource type="Script" path="res://Scenes/level_nodes/Button4.gd" id="3_dfysv"]
 [ext_resource type="Script" path="res://Scripts/Button3.gd" id="3_ffk1o"]
-[ext_resource type="Script" path="res://Scripts/Button4.gd" id="4_lv4mm"]
 [ext_resource type="Texture2D" uid="uid://teaf1x6y2dhb" path="res://assetit/images/barHorizontal_yellow.png" id="5_2tmll"]
 [ext_resource type="Texture2D" uid="uid://ugl4dxtbdphy" path="res://assetit/images/barHorizontal_green.png" id="6_5k48v"]
 [ext_resource type="Script" path="res://Scenes/level_nodes/TextureProgressBar1.gd" id="7_657ur"]
@@ -30,7 +29,6 @@ offset_bottom = 593.0
 scale = Vector2(2.94604, 1.85862)
 toggle_mode = true
 text = "Q"
-script = ExtResource("1_epue7")
 
 [node name="Button2" type="Button" parent="."]
 layout_mode = 0
@@ -62,15 +60,18 @@ offset_bottom = 593.0
 scale = Vector2(3.29226, 1.81459)
 text = "R
 "
-script = ExtResource("4_lv4mm")
+script = ExtResource("3_dfysv")
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 354.0
 offset_top = 544.0
 offset_right = 554.0
 offset_bottom = 584.0
 scale = Vector2(0.303085, 0.45052)
+max_value = 6.0
+value = 6.0
 texture_under = ExtResource("5_2tmll")
 texture_progress = ExtResource("6_5k48v")
 script = ExtResource("7_657ur")
@@ -82,6 +83,8 @@ offset_top = 544.0
 offset_right = 629.0
 offset_bottom = 584.0
 scale = Vector2(0.303085, 0.45052)
+max_value = 6.0
+value = 6.0
 texture_under = ExtResource("5_2tmll")
 texture_progress = ExtResource("6_5k48v")
 script = ExtResource("7_657ur")
@@ -93,6 +96,8 @@ offset_top = 544.0
 offset_right = 702.0
 offset_bottom = 584.0
 scale = Vector2(0.303085, 0.45052)
+max_value = 6.0
+value = 6.0
 texture_under = ExtResource("5_2tmll")
 texture_progress = ExtResource("6_5k48v")
 script = ExtResource("7_657ur")
@@ -104,6 +109,8 @@ offset_top = 544.0
 offset_right = 771.0
 offset_bottom = 584.0
 scale = Vector2(0.303085, 0.45052)
+max_value = 6.0
+value = 6.0
 texture_under = ExtResource("5_2tmll")
 texture_progress = ExtResource("6_5k48v")
 script = ExtResource("7_657ur")

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bqbttdtbnr1sl" path="res://assetit/Models/kenttaPropit/rocks.tscn" id="8_jf5at"]
 [ext_resource type="AudioStream" uid="uid://bmd6ftx18guvh" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="8_kq5o8"]
 [ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://assetit/Models/kenttaPropit/wall-half.glb" id="9_uxpic"]
-[ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/laava_lattia.tscn" id="10_3hadv"]
+[ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/piikit.tscn" id="10_3hadv"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="10_w0wr2"]
 [ext_resource type="PackedScene" uid="uid://ncn3e7kjvvnu" path="res://assetit/Models/GLTF format/barrel.glb" id="12_n3ls8"]
 [ext_resource type="AudioStream" uid="uid://mu1ynrsdq4pm" path="res://audio/effects/warp-sfx-6897.mp3" id="15_qcgx8"]

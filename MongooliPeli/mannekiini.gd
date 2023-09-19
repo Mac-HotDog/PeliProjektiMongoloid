@@ -42,6 +42,10 @@ var is_jumping = false
 @onready var targetmeshinstance = preload("res://Scenes/HUD/redarrowsprite.tscn")
 @onready var targetmesh = targetmeshinstance.instantiate()
 @onready var autoattacktimer = $AutoAttackTimer # ei käytössä
+@onready var nodet =  get_node("../UI/Button2")
+@onready var nodet2 =  get_node("../UI/Button3")
+@onready var nodet3 =  get_node("../UI/Button4")
+@onready var havisit =  get_node("res://Scenes/Levels/HavisitPelinScene.tscn")
 var collider
 var aa_target_pos
 var aa_free = true #onko aa olemassa, tällä myös lähetetään vihollisen posia permana
@@ -63,6 +67,17 @@ var allow_idle
 var allow_run
 var player_navigating
 var mouse_pos
+
+#var parent = get_parent()
+var qLock = false
+var wLock = false
+var eLock = false
+var rLock = false
+
+var qTimer 
+var wTimer 
+var eTimer 
+var rTimer 
 
 
 #enemy projectiles areas
@@ -100,6 +115,25 @@ func _ready():
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	#timer.timeout.connect(_on_timer_timeout)
+	qTimer = Timer.new()  # create a new Timer
+	add_child(qTimer)  # add it as a child
+	qTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
+	qTimer.timeout.connect(_on_timer_timeoutq)
+	
+	wTimer = Timer.new()  # create a new Timer
+	add_child(wTimer)  # add it as a child
+	wTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	wTimer.timeout.connect(_on_timer_timeoutw)
+	
+	eTimer = Timer.new()  # create a new Timer
+	add_child(eTimer)  # add it as a child
+	eTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	eTimer.timeout.connect(_on_timer_timeoute)
+	
+	rTimer = Timer.new()  # create a new Timer
+	add_child(rTimer)  # add it as a child
+	rTimer.set_wait_time(10.0)  # set the wait time to 5 seconds
+	rTimer.timeout.connect(_on_timer_timeoute)
 	
 func _read_input():
 	#kääntyminen spellin suuntaan
@@ -135,7 +169,10 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
-	if Input.is_action_just_pressed("w"):
+	if Input.is_action_just_pressed("r"):
+		nodet3.alotaCDR()
+		rLock = true
+		rTimer.start()
 		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 			nav_target_pos = mouse_pos
 			navigationAgent.set_path_desired_distance(aoeslow_range)
@@ -147,10 +184,10 @@ func _read_input():
 			play_animation("CastUpRight", true)
 			fireball_cast_sound.play()
 		#aoesplash.mouse_position(mouse_pos)
-	if Input.is_action_just_pressed("e"):
-#		o_player_position = global_position #vanhaa dashia varten
-#		o_player_rotation = global_rotation
-		pass
+#	if Input.is_action_just_pressed("e"):
+##		o_player_position = global_position #vanhaa dashia varten
+##		o_player_rotation = global_rotation
+#		pass
 
 		#stop pathing
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
@@ -231,7 +268,8 @@ func change_gold(value):
 
 func _physics_process(delta):
 
-	
+	if health <= 0:
+		get_tree().change_scene_to_file("res://Scenes/Levels/HavisitPelinScene.tscn")
 	if die() and dead == false:
 		whendead()
 	
@@ -278,10 +316,14 @@ func _physics_process(delta):
 
 
 	#uusi dash? vähän paska mut toimii
-	if Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
-		is_dashing = true
-		dash_direction = transform.basis.z.normalized() 
-	#print(is_dashing)
+	if eLock == false and Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
+			nodet2.alotaCDE()
+			eLock = true
+			eTimer.start()
+			is_dashing = true
+			dash_direction = transform.basis.z.normalized() 
+		
+		#print(is_dashing)
 	if is_dashing:
 		play_animation("RunSlide", true)
 		dash_cast_sound.play()
@@ -295,29 +337,33 @@ func _physics_process(delta):
 			dash_progress += DASH_ACCELERATION * delta
 
 		move_and_collide(dash_vector * dash_speed * delta)
-		#print(dash_speed)
-		if dash_progress >= 1.0:
-			is_dashing = false
-			dash_direction = Vector3.ZERO
-			dash_progress = 0.0
+	#print(dash_speed)
+	if dash_progress >= 1.0:
+		is_dashing = false
+		dash_direction = Vector3.ZERO
+		dash_progress = 0.0
 
 	#hyppy
 	if is_on_floor():
 			is_jumping = false
-	if Input.is_action_just_pressed("r") and not is_jumping:
-		if is_on_floor():
-			play_animation("Jump",true)
-			await get_tree().create_timer(0.17).timeout
-			nav_target_pos = null
-			is_jumping = true
-			#navigationAgent.is_target_reachable()
-			Speed = 10
-			var suunta = Vector3.FORWARD.normalized()
-			#velocity += suunta[1] + 10
-			#nav_target_pos = suunta
-			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
-			move_and_slide()
+	if wLock == false and Input.is_action_just_pressed("w"):
+		nodet.alotaCDW()
+		wLock = true
+		wTimer.start()
+		if Input.is_action_just_pressed("w") and not is_jumping:
+			if is_on_floor():
+				play_animation("Jump",true)
+				await get_tree().create_timer(0.17).timeout
+				nav_target_pos = null
+				is_jumping = true
+				#navigationAgent.is_target_reachable()
+				Speed = 10
+				var suunta = Vector3.FORWARD.normalized()
+				#velocity += suunta[1] + 10
+				#nav_target_pos = suunta
+				velocity.y +=  jump_speed
+				#velocity.dir = 1.1
+				move_and_slide()
 	if not is_on_floor():
 		velocity.y -= gravity *delta
 		move_and_slide()
@@ -521,3 +567,12 @@ func aoeslow_dmg_returner():
 #		return autoattack_dmg
 
 
+func _on_timer_timeoutq():
+	qLock = false
+	qTimer.stop()
+func _on_timer_timeoutw():
+	wLock = false
+	wTimer.stop()
+func _on_timer_timeoute():
+	eLock = false
+	eTimer.stop()
