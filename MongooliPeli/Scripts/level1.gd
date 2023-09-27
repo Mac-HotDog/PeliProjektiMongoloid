@@ -11,7 +11,7 @@ const CAMERA_ZOOM_SPEED = 0.4
 
 @onready var camera_o_pos = $Camera3D.position
 @onready var player_o_pos = $Mannekiini.position
-
+@onready var mannekiini = $Mannekiini
 func _ready():
 	#bgm
 	var audioplayer = $AudioStreamPlayer
@@ -29,7 +29,7 @@ func _input(event):
 		var rayQuery = PhysicsRayQueryParameters3D.new()
 		rayQuery.from = from
 		rayQuery.to = to
-		rayQuery.exclude.append($Mannekiini)
+		rayQuery.exclude = [mannekiini]
 		#rayQuery.collide_with_areas = true
 		rayQuery.set_collide_with_areas(false)
 		rayQuery.set_collide_with_bodies(true)

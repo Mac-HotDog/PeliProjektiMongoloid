@@ -127,7 +127,7 @@ func _ready():
 	
 	eTimer = Timer.new()  # create a new Timer
 	add_child(eTimer)  # add it as a child
-	eTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	eTimer.set_wait_time(2.0)  # set the wait time to 5 seconds
 	eTimer.timeout.connect(_on_timer_timeoute)
 	
 	rTimer = Timer.new()  # create a new Timer
@@ -442,7 +442,7 @@ func _input(event):
 		var space = get_world_3d().direct_space_state
 		var rayQuery = PhysicsRayQueryParameters3D.new()
 		#rayQuery.set_shape(value)
-
+		rayQuery.exclude = [self]
 		rayQuery.from = from
 		rayQuery.to = to
 		#rayQuery.collide_with_areas = true
@@ -468,7 +468,7 @@ func _input(event):
 			keep_aa = false
 			Speed = 5
 			#if is_dashing == false:
-			navigationAgent.set_path_desired_distance(1)
+			navigationAgent.set_path_desired_distance(0.2)
 			nav_target_pos = result.position
 				#navigationAgent.set_target_position(nav_target_pos)
 		#print("hahmon saama" ,result.collider)

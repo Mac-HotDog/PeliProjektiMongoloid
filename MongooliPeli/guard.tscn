@@ -2857,7 +2857,7 @@ height = 2.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ihuvu"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_d21jt"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_gb7ps"]
 viewport_path = NodePath("SubViewport")
 
 [node name="guard" type="CharacterBody3D"]
@@ -3719,6 +3719,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04668, 0)
 shape = SubResource("CapsuleShape3D_ihuvu")
 
 [node name="Resourcebar" parent="." instance=ExtResource("5_c77lt")]
-texture = SubResource("ViewportTexture_d21jt")
+texture = SubResource("ViewportTexture_gb7ps")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
