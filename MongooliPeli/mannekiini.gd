@@ -21,8 +21,8 @@ var salesman
 @onready var death_sound = $audiodeath
 
 #dmg numbers
-@export var bullet_dmg = 30
-@export var autoattack_dmg = 15
+@export var attack_dmg = 12
+@export var bullet_dmg = 20 * level + attack_dmg * 0.7
 @export var aoeslow_dmg = 7
 #ranges
 @export var aa_range = 8
@@ -64,6 +64,7 @@ var allow_idle
 var allow_run
 var player_navigating
 var mouse_pos
+var aoeslow_cast_pos
 
 
 #enemy projectiles areas
@@ -140,6 +141,8 @@ func _read_input():
 	if Input.is_action_just_pressed("w"):
 		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 			nav_target_pos = mouse_pos
+			aoeslow_cast_pos = mouse_pos
+			#navigationAgent.set_target_position(aoeslow_cast_pos)
 			navigationAgent.set_path_desired_distance(aoeslow_range)
 			pathing_for_aoeslow = true # tarkistetaan physprosessissa
 		if global_position.distance_to(mouse_pos) <= aoeslow_range:
@@ -232,21 +235,22 @@ func change_gold(value):
 	inventory.change_gold(value)
 
 func _physics_process(delta):
+	animplaying = anim_player.get_current_animation()
 
-	
 	if die() and dead == false:
 		whendead()
-	
+
+
 	if pathing_for_aoeslow:#pathaus rangelle pääsyyn
 		#if navigationAgent.is_target_reached():
 		if navigationAgent.is_navigation_finished() and global_position.distance_to(mouse_pos) <= aoeslow_range:
-			pathing_for_aoeslow = false
-			navigationAgent.set_target_position(self.position)
-			aoeslow.mouse_position(mouse_pos)
-			look_at(mouse_pos, Vector3.UP,true)
+			nav_target_pos = null
+			aoeslow.mouse_position(aoeslow_cast_pos)
+			look_at(aoeslow_cast_pos, Vector3.UP,true)
 			play_animation("CastUpRight", true)
 			fireball_cast_sound.play()
-			navigationAgent.set_path_desired_distance(0.1)
+			pathing_for_aoeslow = false
+			navigationAgent.set_path_desired_distance(1)
 
 	#liikkeessä olemisen tunnistus, spagettia
 	if navigationAgent.is_navigation_finished():
@@ -259,24 +263,26 @@ func _physics_process(delta):
 		allow_idle = true
 	
 	#########===========autoattack==============##########
-	if not aa_free and not target == null:#lähettää vihun pos permana, aa ohjautuu
+	if not aa_free and target != null:#lähettää vihun pos permana, aa ohjautuu
 			autoattack.attack_target_position(target.global_position)
-	if target_found and not target == null:
+	if target_found and target != null:
 		nav_target_pos = global_position
 		if keep_aa and not in_aa_range(target.global_position):
 			#navigationAgent.set_target_position(target.global_position)
 			nav_target_pos = target.global_position
 			navigationAgent.set_path_desired_distance(aa_range)
-		if keep_aa:
+		if keep_aa and animplaying != "CastForwardRight":#tärkeä
 			auto_attack(target.global_position)
 		if target.die():
 			targetmesh.visible = false
 			keep_aa = false
-		if not target.die(): # punainen target nuoli
-			targetmesh.global_transform.origin = target.global_position
-			targetmesh.global_transform.origin.y = 4
-			targetmesh.global_transform.origin.z += -1
-			targetmesh.visible = true
+			target = null
+		if target != null: # punainen target nuoli
+			if not target.die():
+				targetmesh.global_transform.origin = target.global_position
+				targetmesh.global_transform.origin.y = 4
+				targetmesh.global_transform.origin.z += -1
+				targetmesh.visible = true
 
 
 	#uusi dash? vähän paska mut toimii
@@ -331,9 +337,8 @@ func _physics_process(delta):
 
 
 		
-#run animation rules 3===D
+#ranimation rules 3===D
 	allow_run = not navigationAgent.is_navigation_finished()
-	animplaying = anim_player.get_current_animation()
 	activeanimationplaying = activeanimations.has(animplaying)
 
 	if activeanimationplaying: #or anim_player.get_current_animation() == "ThrowRight":
@@ -341,8 +346,7 @@ func _physics_process(delta):
 
 	play_animation("NeutralIdle",allow_idle)
 	play_animation("Running",allow_run)
-	#print("animation: ", anim_player.get_current_animation())
-	#print("allowrun: ", allow_run)
+
 	#estää liikkumisen animaation aikana mutta liikkuu sen jälkeen
 	if nav_target_pos == null:
 		navigationAgent.set_target_position(global_position)
@@ -350,11 +354,13 @@ func _physics_process(delta):
 		navigationAgent.set_target_position(global_position)
 	if not activeanimationplaying and nav_target_pos != null:
 		navigationAgent.set_target_position(nav_target_pos)
-		
+
+
 	if (Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or 
 	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")
 	or Input.is_action_just_pressed("s")):
 		_read_input()
+
 	if shop.visible == true:
 		salesman.shop_open(true)
 	if shop.visible == false:
@@ -381,8 +387,8 @@ func moveToPoint(delta, speed):
 
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
-	#look_at(kohta, Vector3.UP, true)
-	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
+	look_at(kohta, Vector3.UP, true)
+	#rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
@@ -432,10 +438,10 @@ func _input(event):
 			keep_aa = true
 			target_found = true
 			#print(collider)
+			#lähettää aa projektilelle tiedon 
 			autoattack.target_getter(collider)#nyt aa menee vihun läpi ja tekee kumpaanki dmg : D
 			
 			#aa_target_pos = collider.global_position
-		
 		if collider is Salesman:
 			#navigationAgent.set_target_position(self.position)
 			nav_target_pos = global_position
@@ -444,6 +450,9 @@ func _input(event):
 func buy_item(cost):#testaa jos rahat riittää shop skenestä
 	if gold >= int(cost):
 		shop.buy_from_shop()
+
+func shop_was_closed():
+	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
 
 func add_item(item):
 	var item_name
@@ -455,10 +464,10 @@ func add_item(item):
 	if item is String and not items.has(item):
 		items.append(item)
 		salesman.item_bought()#hieno kolikke audio
+		update_stats(item)
 	
-func shop_was_closed():
-	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
-	
+func update_stats(item):
+	pass
 
 #zombie melee hit
 func hit(hit):
@@ -491,10 +500,8 @@ func _on_area_3d_area_entered(area):
 #
 #func _on_timer_timeout():
 #	health += -5
-func target_killed():#enimmäkseen aa varten, saa tiedon että kohde kuoli :
-	target = null
-	
 
+	
 func auto_attack(targetpos):
 	if in_aa_range(targetpos): #and target != null and not activeanimationplaying:
 		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
@@ -522,7 +529,7 @@ func aa_freed():
 	aa_free = false
 
 func aa_dmg_returner():#nämä returnerit vois varmaan siirtää entity scriptiin(muuttujat mukana)
-	return autoattack_dmg
+	return attack_dmg
 
 func bullet_dmg_returner():
 	return bullet_dmg

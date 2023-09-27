@@ -7,6 +7,7 @@ var mana: int = 100
 var strength: int = 10
 var agility: int = 10
 var intelligence: int = 10
+#var attack_damage = 10
 var gold = 0 #current gold
 var level = 1
 var items = []

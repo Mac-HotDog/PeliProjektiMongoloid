@@ -40,7 +40,7 @@ func change_health(value):
 func whendead():
 	dmg_number.queue_free()
 	last_hitter.change_gold(gold_value)
-	last_hitter.target_killed()
+	#last_hitter.target_killed()
 	dead = true
 	deathaudio.play()
 	$CollisionShape3D.disabled = true

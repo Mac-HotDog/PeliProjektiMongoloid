@@ -37,7 +37,7 @@ func execute(node):
 	#aoesplash.mouse_position(mouse_pos)
 	add_child(aoesplash)
 	aoesplash.global_position = mouse_pos
-	aoesplash.global_position.y = 0.8
+	aoesplash.global_position.y = 0.9
 #	global_transform.origin = marker.global_transform.origin
 #	global_transform.basis = marker.global_transform.basis
  

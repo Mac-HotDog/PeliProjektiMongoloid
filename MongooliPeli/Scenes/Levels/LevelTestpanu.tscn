@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c5skbuk4l0t7o"]
+[gd_scene load_steps=26 format=3 uid="uid://c5skbuk4l0t7o"]
 
 [ext_resource type="Script" path="res://Scripts/level1.gd" id="1_lvat2"]
 [ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiini.tscn" id="2_igpqx"]
@@ -15,8 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://dwlrg7i1p0yga" path="res://laava.tscn" id="10_lvyvr"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="12_hcsjj"]
 [ext_resource type="AudioStream" uid="uid://dk55l5q3x28cm" path="res://audio/effects/horror-background-atmosphere-156462.mp3" id="12_x1gjw"]
-[ext_resource type="PackedScene" uid="uid://dua63m0ajek34" path="res://Scenes/HUD/inventorynew.tscn" id="14_gk13t"]
-[ext_resource type="PackedScene" uid="uid://c6ir1ldvanmwy" path="res://Scenes/HUD/shop.tscn" id="15_aqqpx"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="15_j2j3n"]
 [ext_resource type="PackedScene" uid="uid://dnh5ay23lbkol" path="res://Scenes/Others/Zombie.tscn" id="17_l6aos"]
 [ext_resource type="PackedScene" uid="uid://c7uihborwxy2l" path="res://guard.tscn" id="18_iks6k"]
@@ -816,17 +814,6 @@ autoplay = true
 
 [node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("2_igpqx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.861883, 94)
-Speed = 4.5
-gravity = 6
-jump_speed = 3.5
-inventoryscene = ExtResource("14_gk13t")
-shopscene = ExtResource("15_aqqpx")
-salesman_path = "/root/level1/salesman"
-bullet_dmg = 30
-autoattack_dmg = 15
-aoeslow_dmg = 7
-aa_range = 8
-aoeslow_range = 15
 
 [node name="Marker" parent="." instance=ExtResource("7_mr8ek")]
 visible = false

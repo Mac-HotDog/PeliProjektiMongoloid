@@ -45,7 +45,7 @@ func _ready():
 func whendead():
 	dead = true
 	last_hitter.change_gold(gold_value)
-	last_hitter.target_killed()
+	#last_hitter.target_killed()
 	deathaudio.play()
 	#deathaudio.play()
 	#$HealthBar3D.visible = false
