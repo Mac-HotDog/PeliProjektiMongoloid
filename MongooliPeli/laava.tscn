@@ -45,8 +45,8 @@ autoplay = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00293252, -0.645064, -0.00887972)
 lifetime = 0.8
 explosiveness = 1.0
-randomness = 1.0
-trail_enabled = true
+randomness = 0.65
+interpolate = false
 process_material = SubResource("ParticleProcessMaterial_2d4ku")
 draw_pass_1 = SubResource("PlaneMesh_ubhsv")
 

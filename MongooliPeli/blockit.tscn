@@ -178,6 +178,7 @@ visible = false
 visible = false
 
 [node name="rocks" type="Node3D" parent="."]
+visible = false
 
 [node name="rocks2" type="MeshInstance3D" parent="rocks"]
 mesh = SubResource("ArrayMesh_cuvax")
@@ -214,7 +215,6 @@ visible = false
 visible = false
 
 [node name="wall" type="Node3D" parent="."]
-visible = false
 
 [node name="wall2" type="MeshInstance3D" parent="wall"]
 mesh = SubResource("ArrayMesh_k0ex6")
@@ -226,13 +226,15 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_gwo4t")
 
 [node name="wall2" type="Node3D" parent="."]
-visible = false
 
 [node name="wall2" type="MeshInstance3D" parent="wall2"]
 mesh = SubResource("ArrayMesh_k0ex6")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="wall2/wall2"]
+transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 2048
+collision_mask = 2048
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wall2/wall2/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_elfty")

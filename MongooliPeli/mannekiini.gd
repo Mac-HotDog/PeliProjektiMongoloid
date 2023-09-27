@@ -353,7 +353,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("w") and not is_jumping:
 			if is_on_floor():
 				play_animation("Jump",true)
-				await get_tree().create_timer(0.17).timeout
+				#await get_tree().create_timer(0.17).timeout
 				nav_target_pos = null
 				is_jumping = true
 				#navigationAgent.is_target_reachable()
@@ -497,7 +497,7 @@ func hit(hit):
 		change_health(-15)
 		#play_animation("PunchedFace",true)
 
-
+#damagen otto
 func _on_area_3d_area_entered(area):
 	if area:
 		var string = (str(area))
