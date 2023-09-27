@@ -16,7 +16,7 @@ var autoattackprojectile
 
 var target_pos
 var target
-var ready_to_execute
+var ready_to_execute#alkuflag?
 var aa_free = false
 var laskuri = 0
 var delay = 0.3
@@ -54,7 +54,7 @@ func aa_freed():
 	player.aa_freed()
 
 func _physics_process(delta):
-	if ready_to_execute and aa_free == false:
+	if ready_to_execute and aa_free == false and target != null:
 		autoattackprojectile.attack_target_position(target_pos)
 		#print(target_pos)
 

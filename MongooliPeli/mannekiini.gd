@@ -1,6 +1,6 @@
 extends Entity
 
-@export var Speed = 5
+@export var Speed = 4.5
 @export var gravity = 6
 @export var jump_speed = 3.5
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -9,8 +9,10 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@export var inventoryscene = preload("res://Scenes/HUD/inventory.tscn")
+@export var inventoryscene = preload("res://Scenes/HUD/inventorynew.tscn")
 @onready var inventory = inventoryscene.instantiate()
+@export var shopscene = preload("res://Scenes/HUD/shop.tscn")
+@onready var shop = shopscene.instantiate()
 @export var salesman_path := "/root/level1/salesman"
 var salesman
 #audio
@@ -25,9 +27,8 @@ var salesman
 #ranges
 @export var aa_range = 8
 @export var aoeslow_range = 15
-var pathing_for_aoeslow = false
+var pathing_for_aoeslow = false#tarviiko päästä w rangelle
 #dashia varten..
-#@onready var dash_marker = $Marker3Ddash #turha
 @onready var dash_cast_sound = $audiodashcast
 const DASH_SPEED = 10.0
 const DASH_DISTANCE = 5.0
@@ -89,6 +90,7 @@ var activeanimationplaying
 func _ready():
 	#navigationAgent.set_target_position(global_position)
 	add_child(inventory)
+	add_child(shop)
 	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
@@ -179,15 +181,15 @@ func play_animation(animation,condition):
 			anim_player.play(animation)
 			await get_tree().create_timer(0.2).timeout
 			anim_player.set_speed_scale(1.3)
-		if animation == "CastForwardRight":#bullet
+		if animation == "CastForwardRight":#bullet, ezreal q
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(8)
+			anim_player.set_speed_scale(7)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
 			allow_idle = false
-			anim_player.set_speed_scale(1.5)
+			anim_player.set_speed_scale(1.3)
 			anim_player.play(animation)
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
@@ -211,9 +213,9 @@ func play_animation(animation,condition):
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
-	if not condition and anim_player.get_current_animation() == animation:
-		anim_player.stop()
-		allow_idle = true
+#	if not condition and anim_player.get_current_animation() == animation:
+#		anim_player.stop()
+#		allow_idle = true
 		
 	#print(anim_player.current_animation)
 
@@ -253,7 +255,7 @@ func _physics_process(delta):
 		liikkeessä = true
 	if (prev_pos-global_position).length() <= 0:
 		liikkeessä = false
-	if liikkeessä == false and anim_player.get_current_animation() == "":
+	if liikkeessä == false and anim_player.get_current_animation() == "Running":
 		allow_idle = true
 	
 	#########===========autoattack==============##########
@@ -311,13 +313,11 @@ func _physics_process(delta):
 			nav_target_pos = null
 			is_jumping = true
 			#navigationAgent.is_target_reachable()
-			Speed = 10
+			#Speed = 10
 			var suunta = Vector3.FORWARD.normalized()
-			#velocity += suunta[1] + 10
-			#nav_target_pos = suunta
 			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
 			move_and_slide()
+			#move_and_collide(Vector3.FORWARD)
 	if not is_on_floor():
 		velocity.y -= gravity *delta
 		move_and_slide()
@@ -336,7 +336,7 @@ func _physics_process(delta):
 	animplaying = anim_player.get_current_animation()
 	activeanimationplaying = activeanimations.has(animplaying)
 
-	if activeanimationplaying:
+	if activeanimationplaying: #or anim_player.get_current_animation() == "ThrowRight":
 		allow_run = false
 
 	play_animation("NeutralIdle",allow_idle)
@@ -355,7 +355,11 @@ func _physics_process(delta):
 	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")
 	or Input.is_action_just_pressed("s")):
 		_read_input()
-	
+	if shop.visible == true:
+		salesman.shop_open(true)
+	if shop.visible == false:
+		salesman.shop_open(false)
+	#print(navigationAgent.is_target_reachable())
 	if(navigationAgent.is_navigation_finished()):
 		return
 	
@@ -365,7 +369,6 @@ func _physics_process(delta):
 
 func moveToPoint(delta, speed):
 	if is_on_floor(): #and not activeanimations.has(animplaying):
-		#navigationAgent.set_target_position(nav_target_pos)
 		var targetPos = navigationAgent.get_next_path_position()
 		#navigationAgent.path_max_distance()
 		var direction = global_position.direction_to(targetPos)
@@ -373,8 +376,6 @@ func moveToPoint(delta, speed):
 #			direction = global_position.direction_to(mouse_pos)
 		faceDirection(targetPos)
 		velocity = direction * speed
-#		print(self.global_rotation)
-		#allow_run = true
 		#navigationAgent.set_target_position(nav_target_pos)
 		move_and_slide()
 
@@ -399,12 +400,10 @@ func _input(event):
 
 		rayQuery.from = from
 		rayQuery.to = to
-		#rayQuery.collide_with_areas = true
 		rayQuery.set_collide_with_areas(false)
 		rayQuery.set_collide_with_bodies(true)
 		var result = space.intersect_ray(rayQuery)
-		#estää crashin jos klikkaa ulos mapista
-		if result.size() < 1:
+		if result.size() < 1:#estää crashin jos klikkaa ulos mapista
 			return
 		var xyz = result.position
 		var suunta = Vector3(xyz[0],global_position.y,xyz[2])
@@ -413,7 +412,7 @@ func _input(event):
 		var colliderpos = collider.global_position
 
 
-		if not (collider is Enemy):
+		if not (collider is Enemy or collider.get_parent() is TextureRect):
 			#var mesh = target.get_node("targetmesh")
 			if target_found and not target == null:
 				targetmesh.visible = false
@@ -427,10 +426,8 @@ func _input(event):
 				#navigationAgent.set_target_position(nav_target_pos)
 		#print("hahmon saama" ,result.collider)
 		
-		
 		#autoattack
 		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
-			#print(collider)
 			target = collider
 			keep_aa = true
 			target_found = true
@@ -440,14 +437,34 @@ func _input(event):
 			#aa_target_pos = collider.global_position
 		
 		if collider is Salesman:
-			pass
+			#navigationAgent.set_target_position(self.position)
+			nav_target_pos = global_position
+			shop.visible = true
 
+func buy_item(cost):#testaa jos rahat riittää shop skenestä
+	if gold >= int(cost):
+		shop.buy_from_shop()
+
+func add_item(item):
+	var item_name
+	if not item is String:#object
+		inventory.add_item_to_inventory(item)#tulee kokonainen itemin skene instance inventory skeneen
+	#items = inventory.check_inventory()#lisää omat itemit pelaajalla olevaan listaan
+	#print(items)
+	#print(item)
+	if item is String and not items.has(item):
+		items.append(item)
+		salesman.item_bought()#hieno kolikke audio
+	
+func shop_was_closed():
+	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
+	
 
 #zombie melee hit
 func hit(hit):
 	#emit_signal("player_hit")
 	#velocity += dir * HIT_STAGGER
-	if hit: #vain melee
+	if hit: #vain zombie? melee
 		change_health(-15)
 		#play_animation("PunchedFace",true)
 
@@ -459,7 +476,7 @@ func _on_area_3d_area_entered(area):
 		if is_spear == spear:
 			health += -20
 			allow_idle = false
-			if !activeanimationplaying:
+			if !activeanimationplaying and keep_aa == false:
 				play_animation("PunchedFace",true)
 		var ryhmat = area.get_groups()
 		for x in ryhmat:
@@ -474,23 +491,26 @@ func _on_area_3d_area_entered(area):
 #
 #func _on_timer_timeout():
 #	health += -5
-
+func target_killed():#enimmäkseen aa varten, saa tiedon että kohde kuoli :
+	target = null
+	
 
 func auto_attack(targetpos):
-	if in_aa_range(targetpos):
+	if in_aa_range(targetpos): #and target != null and not activeanimationplaying:
 		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
 		#var enemy area = get_tree().add_child(Area3D.new)
 		navigationAgent.set_target_position(self.position)
 		#autoattacktimer.stop()
 		#autoattacktimer.start()
 		look_at(suunta, Vector3.UP, true)
-		play_animation("ThrowRight", true)
+		play_animation("ThrowRight", true)#aloittaa animaation joka spawnaa aa
 
 
 func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
-	navigationAgent.set_target_position(self.position)
-	autoattack.attack_target_position(target.global_position)
-	autoattack.execute(self)
+	if target != null:
+		navigationAgent.set_target_position(self.position)
+		autoattack.attack_target_position(target.global_position)
+		autoattack.execute(self)
 	
 func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
@@ -501,7 +521,7 @@ func in_aa_range(targetpos):
 func aa_freed():
 	aa_free = false
 
-func aa_dmg_returner():
+func aa_dmg_returner():#nämä returnerit vois varmaan siirtää entity scriptiin(muuttujat mukana)
 	return autoattack_dmg
 
 func bullet_dmg_returner():

@@ -1,5 +1,5 @@
 extends Enemy
-
+#vissiin vaan tällä toimii hp regen toistaseks
 
 var player = null
 var player_pos #viiveellinen pelaajn sijainti
@@ -9,7 +9,7 @@ var timer
 var dead = false
 var last_hitter #kuka teki dmg vikana
 var SPEED = 4.0
-var ATTACK_RANGE = 8.0
+var ATTACK_RANGE = 9.0
 @export var gold_value = 10
 
 #@export var player_path : NodePath
@@ -32,19 +32,6 @@ var spear_cd = 4.0
 #	if spear_timer.time_left < 0.1:
 #		spear_timer.start(spear_cd)
 
-func whendead():
-	dead = true
-	last_hitter.change_gold(gold_value)
-	#deathaudio.play()
-	#$HealthBar3D.visible = false
-	#$ManaBar3D.visible = false
-	deathaudio.play()
-	$Area3D/CollisionShape3D.disabled = true
-	bar.visible = false
-	await get_tree().create_timer(5).timeout
-	queue_free()
-	#manaBar.visible = false
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,6 +41,20 @@ func _ready():
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	timer.timeout.connect(_on_timer_timeout)
+	
+func whendead():
+	dead = true
+	last_hitter.change_gold(gold_value)
+	last_hitter.target_killed()
+	deathaudio.play()
+	#deathaudio.play()
+	#$HealthBar3D.visible = false
+	#$ManaBar3D.visible = false
+	$Area3D/CollisionShape3D.disabled = true
+	bar.visible = false
+	await get_tree().create_timer(5).timeout
+	queue_free()
+	#manaBar.visible = false
 
 	
 func change_health(value):
@@ -67,6 +68,8 @@ func gold_value_returner():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	#turhaa paskaa mitä en saanu toimii
 #	var vittu = $Armature/Skeleton3D.global_transform * $Armature/Skeleton3D.get_bone_global_pose(22)
 #	var perse = $Armature/Skeleton3D.get_bone_global_pose(22)
 #	var saatana = $Armature/Skeleton3D.get_bone_pose(22)
@@ -96,9 +99,10 @@ func _process(delta):
 	anim_tree.set("parameters/conditions/death",die())
 	if die() == true and dead == false:
 		whendead()
+
 	
 	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
-
+	anim_tree.set("parameters/conditions/death", die())
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())
 	
 	anim_tree.set("parameters/conditions/idle", allow_idle())
@@ -124,7 +128,9 @@ func _process(delta):
 #				var direction = global_position.direction_to(player.global_position)
 #				velocity = direction * 3
 #				move_and_slide()
-		#"Throw":
+		"Throw":
+			if die():
+				return
 #			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 #			look_at(kohta,Vector3.UP,true)
 
@@ -136,6 +142,9 @@ func _process(delta):
 			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 			look_at(kohta,Vector3.UP,true)
 			#rotation.y = lerp_angle(rotation.y, -player.global_position.z, delta * 10.0)
+		
+		"Death":
+			pass
 
 
 #	print("nav " , nav_agent.is_navigation_finished())
@@ -162,13 +171,13 @@ func _target_not_in_range():
 	
 func allow_cast_spear():
 	var in_range = global_position.distance_to(player.global_position) < ATTACK_RANGE
-	if in_range and spear_timer.time_left < 0.1:
+	if in_range and spear_timer.time_left < 0.1 and not die():
 		return true
 	else:
 		return false
 		
 func allow_idle():
-		if _target_in_range():
+		if _target_in_range() and not die():
 			return true
 		else:
 			return false
@@ -188,21 +197,21 @@ func throw_moment():
 
 func take_dot():
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 	await get_tree().create_timer(0.5).timeout
-	health += -player.aoeslow_dmg_returner()
+	change_health(-player.aoeslow_dmg_returner())
 
 
 func _on_area_3d_area_entered(area):

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://b52xqi3fc58qn"]
+
+[ext_resource type="Script" path="res://Scenes/items/dagger.gd" id="1_1bvy3"]
+[ext_resource type="Texture2D" uid="uid://bvlwce5din1af" path="res://assetit/images/items/dagger.png" id="2_jw3rc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3yq7s"]
+texture = ExtResource("2_jw3rc")
+
+[node name="Dagger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1bvy3")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_3yq7s")

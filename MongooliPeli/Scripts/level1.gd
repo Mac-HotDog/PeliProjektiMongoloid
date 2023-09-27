@@ -66,7 +66,6 @@ func _input(event):
 func _on_mouse_near_edge(edge):
 	var camera = $Camera3D
 	
-	
 	if edge == "left":
 
 		move_camera(-CAMERA_MOVE_SPEED, 0, 0)
@@ -87,7 +86,7 @@ func _on_mouse_near_edge(edge):
 
 
 func move_camera(x, y, z):
-	set_physics_process(true)#koitin saada kamera lagin pois mutta joutuu tekemään enemmän
+	#set_physics_process(true)#koitin saada kamera lagin pois mutta joutuu tekemään enemmän
 	var camera = $Camera3D
 	var new_origin = camera.transform.origin + Vector3(x, y, z)
 	camera.transform.origin = new_origin

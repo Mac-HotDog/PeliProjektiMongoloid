@@ -60,6 +60,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="SubViewport/Control2"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 7.0
 offset_right = 34.0

@@ -8,3 +8,8 @@ func change_gold(value):
 	
 #func gold_returner():
 #	return gold
+
+func add_item_to_inventory(item):
+	if $GridContainer/Slot1.get_child(0) == null:
+		var instance = item.instantiate()
+		$GridContainer/Slot1.add_child(instance)

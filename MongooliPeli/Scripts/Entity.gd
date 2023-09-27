@@ -9,6 +9,7 @@ var agility: int = 10
 var intelligence: int = 10
 var gold = 0 #current gold
 var level = 1
+var items = []
 #@onready var inventoryscene = preload("res://Scenes/inventory.tscn")
 #var inventory
 

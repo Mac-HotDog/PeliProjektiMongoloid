@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bo6av7226h2a3" path="res://assetit/kenney particle transparent/star_05.png" id="5_fxhk1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0570m"]
-albedo_color = Color(0.117647, 0.231373, 1, 1)
 subsurf_scatter_strength = 0.95
 
 [sub_resource type="TorusMesh" id="TorusMesh_qhj5y"]
@@ -32,6 +31,7 @@ albedo_texture = ExtResource("5_fxhk1")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mstob"]
 material = SubResource("StandardMaterial3D_ft3hb")
+size = Vector2(0.5, 0.5)
 
 [node name="aoesplasharea" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

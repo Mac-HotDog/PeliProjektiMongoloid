@@ -21,8 +21,8 @@ func _ready():
 		sb.border_color = Color("000000")
 	global_position = parent.global_position
 	bar.value = 100
-	var tween = get_tree().create_tween()
-	tween.tween_property(bar,"value", 100,3).set_trans(Tween.TRANS_LINEAR)# ei taida toimia
+#	var tween = get_tree().create_tween()
+#	tween.tween_property(bar,"value", 100,3).set_trans(Tween.TRANS_LINEAR)# ei taida toimia
 	
 
 func update_bar(x):#x on tämän hetken hp määrä
