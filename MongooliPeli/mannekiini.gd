@@ -3,8 +3,7 @@ extends Entity
 @export var Speed = 4.5
 @export var gravity = 6
 @export var jump_speed = 3.5
-#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
-#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var gold_label = $Label3DGold
 @onready var bar = $Resourcebar
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
@@ -21,8 +20,8 @@ var salesman
 @onready var death_sound = $audiodeath
 
 #dmg numbers
-@export var attack_dmg = 12
-@export var bullet_dmg = 20 * level + attack_dmg * 0.7
+@export var base_attack_dmg = 12
+var attack_dmg = base_attack_dmg
 @export var aoeslow_dmg = 7
 #ranges
 @export var aa_range = 8
@@ -95,6 +94,7 @@ func _ready():
 	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
+	gold_label.visible = false
 #	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
 	#state_machine = anim_tree.get("parameters/playback")
@@ -188,7 +188,7 @@ func play_animation(animation,condition):
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(7)
+			anim_player.set_speed_scale(6.5)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
 			allow_idle = false
@@ -233,6 +233,11 @@ func whendead():
 func change_gold(value):
 	gold += value
 	inventory.change_gold(value)
+	if value > 0:
+		gold_label.text = "+" + str(value) + "g"
+		gold_label.visible = true
+		await get_tree().create_timer(1).timeout
+		gold_label.visible = false
 
 func _physics_process(delta):
 	animplaying = anim_player.get_current_animation()
@@ -450,24 +455,23 @@ func _input(event):
 func buy_item(cost):#testaa jos rahat riittää shop skenestä
 	if gold >= int(cost):
 		shop.buy_from_shop()
+		change_gold(-cost)
+
+
+func add_item(item_scene,item_name):#item skene menee inventoryyn ja nimi omaan listaan
+	#if not item_list.has(item_name):
+		inventory.add_item_to_inventory(item_scene)#tulee kokonainen itemin skene instance inventory skeneen
+		#items = inventory.check_inventory()#lisää omat itemit pelaajalla olevaan listaan
+		item_list.append(item_name)
+		salesman.item_bought()#hieno kolikke audio
+		### ja lisää statsit #####
+		attack_dmg = base_attack_dmg + inventory.return_stats("attack damage")#saadaan statsit inventory skenestä
+		#print(item_list)
+
+
 
 func shop_was_closed():
 	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
-
-func add_item(item):
-	var item_name
-	if not item is String:#object
-		inventory.add_item_to_inventory(item)#tulee kokonainen itemin skene instance inventory skeneen
-	#items = inventory.check_inventory()#lisää omat itemit pelaajalla olevaan listaan
-	#print(items)
-	#print(item)
-	if item is String and not items.has(item):
-		items.append(item)
-		salesman.item_bought()#hieno kolikke audio
-		update_stats(item)
-	
-func update_stats(item):
-	pass
 
 #zombie melee hit
 func hit(hit):
@@ -532,6 +536,7 @@ func aa_dmg_returner():#nämä returnerit vois varmaan siirtää entity scriptii
 	return attack_dmg
 
 func bullet_dmg_returner():
+	var bullet_dmg = 20 * level + attack_dmg * 0.7
 	return bullet_dmg
 
 func aoeslow_dmg_returner():

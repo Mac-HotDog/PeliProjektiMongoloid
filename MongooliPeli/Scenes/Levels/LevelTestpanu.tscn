@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c5skbuk4l0t7o"]
+[gd_scene load_steps=27 format=3 uid="uid://c5skbuk4l0t7o"]
 
 [ext_resource type="Script" path="res://Scripts/level1.gd" id="1_lvat2"]
 [ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiini.tscn" id="2_igpqx"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="15_j2j3n"]
 [ext_resource type="PackedScene" uid="uid://dnh5ay23lbkol" path="res://Scenes/Others/Zombie.tscn" id="17_l6aos"]
 [ext_resource type="PackedScene" uid="uid://c7uihborwxy2l" path="res://guard.tscn" id="18_iks6k"]
+[ext_resource type="PackedScene" uid="uid://bkf2n2w5eyf2f" path="res://Scenes/torch.tscn" id="20_4ayfl"]
 [ext_resource type="PackedScene" uid="uid://c6aggoicvs8g0" path="res://Scenes/Others/salesman.tscn" id="20_ceko2"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_r6oif"]
@@ -46,7 +47,7 @@ ambient_light_source = 3
 reflected_light_source = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tq8yi"]
-albedo_color = Color(0.113725, 0.113725, 0.113725, 1)
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ig3xj"]
 material = SubResource("StandardMaterial3D_tq8yi")
@@ -837,3 +838,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.6545, 0.6066, 94.1033)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_ig3xj")
+
+[node name="Torch" parent="." instance=ExtResource("20_4ayfl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.7158, 2.19874, 91.9836)

@@ -9,7 +9,7 @@ var wavenow = false
 @onready var anim_tree = $AnimationTree
 @onready var laughaudio = $AudioStreamPlayer3D
 @onready var coinaudio = $AudioStreamPlayer3D2
-var audioflag = true
+var audioflag = true#naurua varten
 
 func _ready():
 	player = get_node(player_path)
