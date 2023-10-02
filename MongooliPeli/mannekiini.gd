@@ -1,5 +1,6 @@
 extends Entity
 
+var exp = 0
 @export var Speed = 4.5
 @export var gravity = 6
 @export var jump_speed = 3.5
@@ -14,6 +15,7 @@ extends Entity
 @onready var shop = shopscene.instantiate()
 @export var salesman_path := "/root/level1/salesman"
 var salesman
+
 #audio
 @onready var bullet_cast_sound = $audiobulletcast
 @onready var fireball_cast_sound =$audiofireballcast #nykyään lumimyrsky
@@ -238,6 +240,14 @@ func change_gold(value):
 		gold_label.visible = true
 		await get_tree().create_timer(1).timeout
 		gold_label.visible = false
+
+func change_exp(value):
+	exp += value
+	#level1
+	if exp > 100:
+		level = 2
+		bar.update_level(level)
+		health += 20 #paska tää koko systeemi
 
 func _physics_process(delta):
 	animplaying = anim_player.get_current_animation()

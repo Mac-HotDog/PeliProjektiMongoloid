@@ -11,6 +11,7 @@ var last_hitter #kuka teki dmg vikana
 var SPEED = 4.0
 var ATTACK_RANGE = 9.0
 @export var gold_value = 10
+@export var exp_value = 10
 
 #@export var player_path : NodePath
 @export var player_path := "/root/level1/Mannekiini"
@@ -45,6 +46,7 @@ func _ready():
 func whendead():
 	dead = true
 	last_hitter.change_gold(gold_value)
+	last_hitter.change_exp(exp_value)
 	#last_hitter.target_killed()
 	deathaudio.play()
 	#deathaudio.play()

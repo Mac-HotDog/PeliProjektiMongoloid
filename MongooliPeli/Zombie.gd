@@ -13,7 +13,7 @@ var SPEED = 4.0
 var dmg_number
 @export var player_path := "/root/level1/Mannekiini"
 @export var gold_value = 15
-
+@export var exp_value = 10
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -40,6 +40,7 @@ func change_health(value):
 func whendead():
 	dmg_number.queue_free()
 	last_hitter.change_gold(gold_value)
+	last_hitter.change_exp(exp_value)
 	#last_hitter.target_killed()
 	dead = true
 	deathaudio.play()
