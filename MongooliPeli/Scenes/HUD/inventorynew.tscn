@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://dua63m0ajek34"]
+
+[ext_resource type="Texture2D" uid="uid://c4df18nxicgry" path="res://assetit/images/brownrec.png" id="1_10f30"]
+[ext_resource type="Script" path="res://Scenes/HUD/inventorynew.gd" id="1_qmosg"]
+[ext_resource type="Texture2D" uid="uid://dpjkkjn4vceq" path="res://assetit/images/85225_square-outline-png.png" id="2_m7nis"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pq7y5"]
+texture = ExtResource("2_m7nis")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qmosg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -247.0
+offset_top = -120.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("1_10f30")
+expand_mode = 1
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -216.0
+offset_top = -112.0
+offset_right = -26.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/h_separation = 20
+columns = 3
+
+[node name="slot1" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="slot2" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="slot3" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="slot4" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="slot5" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="slot6" type="Panel" parent="GridContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 1056.0
+offset_top = 496.0
+offset_right = 1096.0
+offset_bottom = 536.0
+scale = Vector2(1.72, 0.599482)
+color = Color(0.184314, 0.184314, 0.184314, 1)
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 1072.0
+offset_top = 496.0
+offset_right = 1112.0
+offset_bottom = 522.0
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+text = "0"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dodplv35ohhbx"]
+[gd_scene load_steps=7 format=3 uid="uid://dodplv35ohhbx"]
 
 [ext_resource type="Script" path="res://Scenes/Others/resourcebar.gd" id="1_vpbex"]
 
@@ -22,6 +22,9 @@ border_width_bottom = 2
 border_color = Color(0.0313726, 0.0313726, 0.0313726, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rex78"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hc6b5"]
+viewport_path = NodePath("Level/SubViewport2")
 
 [node name="Resourcebar" type="Sprite3D"]
 cast_shadow = 0
@@ -60,9 +63,33 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="SubViewport/Control2"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 7.0
 offset_right = 34.0
 offset_bottom = 33.0
 text = "100"
 label_settings = SubResource("LabelSettings_rex78")
+
+[node name="Level" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1016, 0, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_hc6b5")
+
+[node name="SubViewport2" type="SubViewport" parent="Level"]
+size = Vector2i(30, 30)
+
+[node name="Control" type="Control" parent="Level/SubViewport2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 2.0
+offset_right = 10.0
+offset_bottom = 12.0
+
+[node name="LevelLabel" type="Label" parent="Level/SubViewport2/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "1
+"
