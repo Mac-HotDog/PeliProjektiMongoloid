@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bkf2n2w5eyf2f"]
+
+[ext_resource type="Texture2D" uid="uid://xcx5qclcd7ov" path="res://assetit/kenney particle transparent/flame_02.png" id="1_lmioo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7tcwi"]
+albedo_color = Color(0.219608, 0.101961, 0.0627451, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5tam7"]
+material = SubResource("StandardMaterial3D_7tcwi")
+top_radius = 0.07
+bottom_radius = 0.07
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83nq8"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pdv0k"]
+material = SubResource("StandardMaterial3D_83nq8")
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.15
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0djfh"]
+gravity = Vector3(0, 10, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kpg6m"]
+transparency = 1
+albedo_color = Color(0.94902, 0.160784, 0.290196, 1)
+albedo_texture = ExtResource("1_lmioo")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jy5lg"]
+material = SubResource("StandardMaterial3D_kpg6m")
+orientation = 2
+
+[node name="Torch" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_5tam7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.591086, 0)
+light_color = Color(1, 0.929412, 0.870588, 1)
+omni_range = 3.695
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.548167, 0)
+mesh = SubResource("CylinderMesh_pdv0k")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16169, 0)
+amount = 25
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_0djfh")
+draw_pass_1 = SubResource("PlaneMesh_jy5lg")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1ijcfjc88fur"]
+
+[ext_resource type="Script" path="res://Scripts/arrow.gd" id="1_52qa5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_axt8j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bf5ai"]
+
+[node name="arrow" type="RigidBody3D" groups=["arrow"]]
+mass = 0.01
+gravity_scale = 0.0
+script = ExtResource("1_52qa5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.65561, 0, 0, 0, -3.08313e-08, -0.715348, 0, 0.705339, -3.12689e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_axt8j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.65561, 0, 0, 0, -3.08313e-08, -0.715348, 0, 0.705339, -3.12689e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_bf5ai")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.65561, 0, 0, 0, -3.08313e-08, -0.715348, 0, 0.705339, -3.12689e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_bf5ai")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

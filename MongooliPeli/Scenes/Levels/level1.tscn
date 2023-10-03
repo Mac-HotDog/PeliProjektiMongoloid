@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://mu1ynrsdq4pm" path="res://audio/effects/warp-sfx-6897.mp3" id="15_qcgx8"]
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="15_sju1s"]
 [ext_resource type="Script" path="res://Scenes/Others/spawn_points.gd" id="16_03h4g"]
-[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiini.tscn" id="17_nqjgq"]
+[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Scenes/characters/Mannekiini.tscn" id="17_nqjgq"]
 [ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="17_w7oas"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_jp660"]

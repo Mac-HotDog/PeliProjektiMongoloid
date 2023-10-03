@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/Levels/Menu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://assetit/images/doge.png"
 
+[audio]
+
+buses/default_bus_layout="res://audio/default_bus_layout.tres"
+
 [autoload]
 
 SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"

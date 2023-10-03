@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyt847vhr7ivc"]
+
+[ext_resource type="Script" path="res://Scripts/arrowShooter.gd" id="1_hvxpx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5nhhw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y78sx"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_hvxpx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5nhhw")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.442777, 0, 0, 0, 0.357376, 0, 0, 0, 0.412005, 0.717537, 0.321475, 0)
+mesh = SubResource("BoxMesh_y78sx")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxnbwesxriqpl"]
+
+[ext_resource type="Script" path="res://Scripts/enemyPoks.gd" id="1_1ae4w"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0d1r6"]
+
+[node name="Node3D" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_0d1r6")
+script = ExtResource("1_1ae4w")
