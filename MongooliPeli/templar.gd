@@ -103,8 +103,8 @@ func _process(delta):
 	if _target_in_range():
 		pass
 	
-	allow_run = not navigationAgent.is_navigation_finished()
-	activeanimationplaying = activeanimations.has(animplaying)
+#	allow_run = not navigationAgent.is_navigation_finished()
+#	activeanimationplaying = activeanimations.has(animplaying)
 
 	move_and_slide()
 	
