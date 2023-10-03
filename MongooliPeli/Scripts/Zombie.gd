@@ -8,12 +8,12 @@ var in_aoeslow = false
 var last_hitter #kuka teki dmg vikana
 
 var SPEED = 4.0
-const ATTACK_RANGE = 2.0
+@export var ATTACK_RANGE = 2.0#enemmänkin targettaus range
 @export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
 var dmg_number
 @export var player_path := "/root/level1/Mannekiini"
 @export var gold_value = 15
-
+@export var exp_value = 10
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -40,6 +40,8 @@ func change_health(value):
 func whendead():
 	dmg_number.queue_free()
 	last_hitter.change_gold(gold_value)
+	last_hitter.change_exp(exp_value)
+	#last_hitter.target_killed()
 	dead = true
 	deathaudio.play()
 	$CollisionShape3D.disabled = true
@@ -88,40 +90,30 @@ func _target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
 
 
-func _hit_finished():
-	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 1.0:
-		var dir = global_position.direction_to(player.global_position)
-		player.hit(dir)
+func _hit_finished():#jos on 
+	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 0.5:
+		#var dir = global_position.direction_to(player.global_position)#tutoriaalista
+		player.hit(true)
 		
 
 func take_dot():
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-	if in_aoeslow:
-		await get_tree().create_timer(0.5).timeout
-		health += -player.aoeslow_dmg_returner()
-
-
-
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	await get_tree().create_timer(0.5).timeout
+	change_health(-player.aoeslow_dmg_returner())
+	
 func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 	#koitin tehdä koodista järkevämpää, ei toimi vielä
 	var area_source = area.get_parent()
@@ -137,7 +129,7 @@ func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 	if area is bullet or area.get_parent() is bullet:
 		change_health(-player.bullet_dmg_returner())
 		#print(area.class)
-	if area is aoeslow:  
+	if area is aoeslow or area.get_parent() is aoeslow:  
 		take_dot()
 		SPEED = 1
 

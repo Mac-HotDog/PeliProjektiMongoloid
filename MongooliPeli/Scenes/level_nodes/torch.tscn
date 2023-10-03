@@ -21,7 +21,10 @@ bottom_radius = 0.09
 height = 0.15
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0djfh"]
+direction = Vector3(0, 1, 0)
 gravity = Vector3(0, 10, 0)
+scale_min = 0.1
+scale_max = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kpg6m"]
 transparency = 1
@@ -40,6 +43,7 @@ mesh = SubResource("CylinderMesh_5tam7")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.591086, 0)
 light_color = Color(1, 0.929412, 0.870588, 1)
+shadow_enabled = true
 omni_range = 3.695
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
@@ -47,8 +51,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.548167, 0)
 mesh = SubResource("CylinderMesh_pdv0k")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16169, 0)
-amount = 25
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.777649, 0)
+amount = 14
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_0djfh")
 draw_pass_1 = SubResource("PlaneMesh_jy5lg")

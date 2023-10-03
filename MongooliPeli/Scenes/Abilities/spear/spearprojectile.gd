@@ -39,12 +39,14 @@ func _physics_process(delta):
 	# eri tavat
 	#print(position)
 	var forward_vector = global_position.direction_to(target_pos)
-	var velocity = forward_vector * speed * 1.1
-	apply_central_impulse(velocity)
+	var velocity = forward_vector * speed * 1.
+	apply_central_impulse(velocity)# ei tarkoitettu phys prosessiin
 	var displacement = global_position - initial_position
 	var traveled_distance = displacement.length()
 
 	if traveled_distance >= despawn_distance:
+		queue_free()
+	if global_position.y <= 0.8:
 		queue_free()
 #
 #	move_and_collide(velocity)
@@ -58,11 +60,11 @@ func _physics_process(delta):
 
 
 func _on_area_3d_area_entered(area):
-	if area is Entity:
-		print(area)
+	if area is Entity: #or area.get_parent() is Entity:
+		#print(area)
 		queue_free()
 
 
-func _on_area_3_dspearprojectile_body_entered(body):
-	#print(body)
-	queue_free()
+#func _on_area_3_dspearprojectile_body_entered(body):#despanwaa jos osuu bodyyn
+#	print(body)
+#	queue_free()

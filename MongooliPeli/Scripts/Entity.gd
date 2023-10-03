@@ -2,13 +2,15 @@ extends CharacterBody3D
 
 class_name Entity
 
-var health: int = 100
+var level = 1
+var health: int = 100 + 20 * level
 var mana: int = 100
 var strength: int = 10
 var agility: int = 10
 var intelligence: int = 10
+#var attack_damage = 10
 var gold = 0 #current gold
-var level = 1
+var item_list = []
 #@onready var inventoryscene = preload("res://Scenes/inventory.tscn")
 #var inventory
 

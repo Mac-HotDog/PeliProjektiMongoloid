@@ -14,11 +14,17 @@ font_color = Color(0.968627, 0.937255, 0.541176, 1)
 script = ExtResource("1_s15ll")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_left = 694.0
-offset_top = 416.0
-offset_right = 1360.0
-offset_bottom = 791.0
-scale = Vector2(0.909412, 0.887278)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 589.0
+offset_top = 309.0
+offset_right = 1255.0
+offset_bottom = 684.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.1247, 1.3223)
 texture = ExtResource("1_oc2wk")
 
 [node name="GridContainer" type="GridContainer" parent="."]

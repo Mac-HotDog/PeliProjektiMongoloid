@@ -1,30 +1,39 @@
 extends Entity
 
-@export var Speed = 5
+var exp = 0
+@export var Speed = 4.5
 @export var gravity = 6
 @export var jump_speed = 3.5
-#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
-#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var gold_label = $Label3DGold
 @onready var bar = $Resourcebar
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@export var inventoryscene = preload("res://Scenes/HUD/inventory.tscn")
+@export var inventoryscene = preload("res://Scenes/HUD/inventorynew.tscn")
 @onready var inventory = inventoryscene.instantiate()
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 @export var salesman_path := "res://Scenes/Others/salesman.tscn"
+=======
+@export var shopscene = preload("res://Scenes/HUD/shop.tscn")
+@onready var shop = shopscene.instantiate()
+@export var salesman_path := "/root/level1/salesman"
+var salesman
+
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 #audio
 @onready var bullet_cast_sound = $audiot/audiobulletcast
 @onready var fireball_cast_sound =$audiot/audiofireballcast #nykyään lumimyrsky
 @onready var death_sound = $audiot/audiodeath
 
 #dmg numbers
-@export var bullet_dmg = 30
-@export var autoattack_dmg = 15
+@export var base_attack_dmg = 12
+var attack_dmg = base_attack_dmg
 @export var aoeslow_dmg = 7
 
 #ranges
 @export var aa_range = 8
 @export var aoeslow_range = 15
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 
 
 #dashia varten..
@@ -44,6 +53,11 @@ extends Entity
 # havisit pelin scene
 @onready var havisit =  get_node("res://Scenes/Levels/HavisitPelinScene.tscn")
 
+=======
+var pathing_for_aoeslow = false#tarviiko päästä w rangelle
+#dashia varten..
+@onready var dash_cast_sound = $audiodashcast
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 const DASH_SPEED = 10.0
 const DASH_DISTANCE = 5.0
 const DASH_ACCELERATION = 10.0
@@ -79,6 +93,7 @@ var allow_idle
 var allow_run
 var player_navigating
 var mouse_pos
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 #var parent = get_parent()
 
 # abilitien käyttämisen lukitus tila. Cd funktiot säätelevät näitä
@@ -92,6 +107,9 @@ var qTimer
 var wTimer 
 var eTimer 
 var rTimer 
+=======
+var aoeslow_cast_pos
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 
 
 #enemy projectiles areas
@@ -118,9 +136,11 @@ var activeanimationplaying
 func _ready():
 	#navigationAgent.set_target_position(global_position)
 	add_child(inventory)
+	add_child(shop)
 	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
+	gold_label.visible = false
 #	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
 	#state_machine = anim_tree.get("parameters/playback")
@@ -189,6 +209,8 @@ func _read_input():
 		rTimer.start()
 		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 			nav_target_pos = mouse_pos
+			aoeslow_cast_pos = mouse_pos
+			#navigationAgent.set_target_position(aoeslow_cast_pos)
 			navigationAgent.set_path_desired_distance(aoeslow_range)
 			pathing_for_aoeslow = true # tarkistetaan physprosessissa
 		if global_position.distance_to(mouse_pos) <= aoeslow_range:
@@ -230,15 +252,15 @@ func play_animation(animation,condition):
 			anim_player.play(animation)
 			await get_tree().create_timer(0.2).timeout
 			anim_player.set_speed_scale(1.3)
-		if animation == "CastForwardRight":#bullet
+		if animation == "CastForwardRight":#bullet, ezreal q
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(8)
+			anim_player.set_speed_scale(6.5)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
 			allow_idle = false
-			anim_player.set_speed_scale(1.5)
+			anim_player.set_speed_scale(1.3)
 			anim_player.play(animation)
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
@@ -262,9 +284,9 @@ func play_animation(animation,condition):
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
-	if not condition and anim_player.get_current_animation() == animation:
-		anim_player.stop()
-		allow_idle = true
+#	if not condition and anim_player.get_current_animation() == animation:
+#		anim_player.stop()
+#		allow_idle = true
 		
 	#print(anim_player.current_animation)
 
@@ -279,15 +301,46 @@ func whendead():
 func change_gold(value):
 	gold += value
 	inventory.change_gold(value)
+	if value > 0:
+		gold_label.text = "+" + str(value) + "g"
+		gold_label.visible = true
+		await get_tree().create_timer(1).timeout
+		gold_label.visible = false
+
+func change_exp(value):
+	exp += value
+	#level1
+	if exp > 100:
+		level = 2
+		bar.update_level(level)
+		health += 20 #paska tää koko systeemi
 
 #sisältää liika paskaa jonka vois laittaa omiin funktiohin imo
 func _physics_process(delta):
+	animplaying = anim_player.get_current_animation()
 
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 	if health <= 0:
 		kuolema()
 	
 	if pathing_for_aoeslow: #pathaus rangelle pääsyyn
 		pathToGetToRange()
+=======
+	if die() and dead == false:
+		whendead()
+
+
+	if pathing_for_aoeslow:#pathaus rangelle pääsyyn
+		#if navigationAgent.is_target_reached():
+		if navigationAgent.is_navigation_finished() and global_position.distance_to(mouse_pos) <= aoeslow_range:
+			nav_target_pos = null
+			aoeslow.mouse_position(aoeslow_cast_pos)
+			look_at(aoeslow_cast_pos, Vector3.UP,true)
+			play_animation("CastUpRight", true)
+			fireball_cast_sound.play()
+			pathing_for_aoeslow = false
+			navigationAgent.set_path_desired_distance(1)
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 
 	#liikkeessä olemisen tunnistus, spagettia
 	detectSelfMovement()
@@ -352,28 +405,36 @@ func detectSelfMovement():
 		liikkeessä = true
 	if (prev_pos-global_position).length() <= 0:
 		liikkeessä = false
-	if liikkeessä == false and anim_player.get_current_animation() == "":
+	if liikkeessä == false and anim_player.get_current_animation() == "Running":
 		allow_idle = true
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 
 func autoAttack():
 	if not aa_free and not target == null:#lähettää vihun pos permana, aa ohjautuu
+=======
+	
+	#########===========autoattack==============##########
+	if not aa_free and target != null:#lähettää vihun pos permana, aa ohjautuu
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 			autoattack.attack_target_position(target.global_position)
-	if target_found and not target == null:
+	if target_found and target != null:
 		nav_target_pos = global_position
 		if keep_aa and not in_aa_range(target.global_position):
 			#navigationAgent.set_target_position(target.global_position)
 			nav_target_pos = target.global_position
 			navigationAgent.set_path_desired_distance(aa_range)
-		if keep_aa:
+		if keep_aa and animplaying != "CastForwardRight":#tärkeä
 			auto_attack(target.global_position)
 		if target.die():
 			targetmesh.visible = false
 			keep_aa = false
-		if not target.die(): # punainen target nuoli
-			targetmesh.global_transform.origin = target.global_position
-			targetmesh.global_transform.origin.y = 4
-			targetmesh.global_transform.origin.z += -1
-			targetmesh.visible = true
+			target = null
+		if target != null: # punainen target nuoli
+			if not target.die():
+				targetmesh.global_transform.origin = target.global_position
+				targetmesh.global_transform.origin.y = 4
+				targetmesh.global_transform.origin.z += -1
+				targetmesh.visible = true
 
 func runningLogic():
 	allow_run = not navigationAgent.is_navigation_finished()
@@ -399,13 +460,17 @@ func hyppyLogiikkaa():
 			nav_target_pos = null
 			is_jumping = true
 			#navigationAgent.is_target_reachable()
-			Speed = 10
+			#Speed = 10
 			var suunta = Vector3.FORWARD.normalized()
-			#velocity += suunta[1] + 10
-			#nav_target_pos = suunta
 			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
 			move_and_slide()
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
+=======
+			#move_and_collide(Vector3.FORWARD)
+	if not is_on_floor():
+		velocity.y -= gravity *delta
+		move_and_slide()
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 
 func dashJuttuja(delta):
 	play_animation("RunSlide", true)
@@ -419,6 +484,7 @@ func dashJuttuja(delta):
 		dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
 		dash_progress += DASH_ACCELERATION * delta
 
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
 	move_and_collide(dash_vector * dash_speed * delta)
 
 func pathToGetToRange():
@@ -435,6 +501,43 @@ func kuolema():
 	get_tree().change_scene_to_file("res://Scenes/Levels/HavisitPelinScene.tscn")
 	if die() and dead == false:
 		whendead()
+=======
+		
+#ranimation rules 3===D
+	allow_run = not navigationAgent.is_navigation_finished()
+	activeanimationplaying = activeanimations.has(animplaying)
+
+	if activeanimationplaying: #or anim_player.get_current_animation() == "ThrowRight":
+		allow_run = false
+
+	play_animation("NeutralIdle",allow_idle)
+	play_animation("Running",allow_run)
+
+	#estää liikkumisen animaation aikana mutta liikkuu sen jälkeen
+	if nav_target_pos == null:
+		navigationAgent.set_target_position(global_position)
+	if activeanimationplaying:
+		navigationAgent.set_target_position(global_position)
+	if not activeanimationplaying and nav_target_pos != null:
+		navigationAgent.set_target_position(nav_target_pos)
+
+
+	if (Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or 
+	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")
+	or Input.is_action_just_pressed("s")):
+		_read_input()
+
+	if shop.visible == true:
+		salesman.shop_open(true)
+	if shop.visible == false:
+		salesman.shop_open(false)
+	#print(navigationAgent.is_target_reachable())
+	if(navigationAgent.is_navigation_finished()):
+		return
+	
+
+	moveToPoint(delta, Speed)
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 
 func newDash():
 	nodet2.alotaCDE()
@@ -445,7 +548,6 @@ func newDash():
 
 func moveToPoint(delta, speed):
 	if is_on_floor(): #and not activeanimations.has(animplaying):
-		#navigationAgent.set_target_position(nav_target_pos)
 		var targetPos = navigationAgent.get_next_path_position()
 		#navigationAgent.path_max_distance()
 		var direction = global_position.direction_to(targetPos)
@@ -453,15 +555,13 @@ func moveToPoint(delta, speed):
 #			direction = global_position.direction_to(mouse_pos)
 		faceDirection(targetPos)
 		velocity = direction * speed
-#		print(self.global_rotation)
-		#allow_run = true
 		#navigationAgent.set_target_position(nav_target_pos)
 		move_and_slide()
 
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
-	#look_at(kohta, Vector3.UP, true)
-	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
+	look_at(kohta, Vector3.UP, true)
+	#rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
@@ -479,12 +579,10 @@ func _input(event):
 		rayQuery.exclude = [self]
 		rayQuery.from = from
 		rayQuery.to = to
-		#rayQuery.collide_with_areas = true
 		rayQuery.set_collide_with_areas(false)
 		rayQuery.set_collide_with_bodies(true)
 		var result = space.intersect_ray(rayQuery)
-		#estää crashin jos klikkaa ulos mapista
-		if result.size() < 1:
+		if result.size() < 1:#estää crashin jos klikkaa ulos mapista
 			return
 		var xyz = result.position
 		var suunta = Vector3(xyz[0],global_position.y,xyz[2])
@@ -493,7 +591,7 @@ func _input(event):
 		var colliderpos = collider.global_position
 
 
-		if not (collider is Enemy):
+		if not (collider is Enemy or collider.get_parent() is TextureRect):
 			#var mesh = target.get_node("targetmesh")
 			if target_found and not target == null:
 				targetmesh.visible = false
@@ -507,27 +605,47 @@ func _input(event):
 				#navigationAgent.set_target_position(nav_target_pos)
 		#print("hahmon saama" ,result.collider)
 		
-		
 		#autoattack
 		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
-			#print(collider)
 			target = collider
 			keep_aa = true
 			target_found = true
 			#print(collider)
+			#lähettää aa projektilelle tiedon 
 			autoattack.target_getter(collider)#nyt aa menee vihun läpi ja tekee kumpaanki dmg : D
 			
 			#aa_target_pos = collider.global_position
-		
 		if collider is Salesman:
-			pass
+			#navigationAgent.set_target_position(self.position)
+			nav_target_pos = global_position
+			shop.visible = true
 
+func buy_item(cost):#testaa jos rahat riittää shop skenestä
+	if gold >= int(cost):
+		shop.buy_from_shop()
+		change_gold(-cost)
+
+
+func add_item(item_scene,item_name):#item skene menee inventoryyn ja nimi omaan listaan
+	#if not item_list.has(item_name):
+		inventory.add_item_to_inventory(item_scene)#tulee kokonainen itemin skene instance inventory skeneen
+		#items = inventory.check_inventory()#lisää omat itemit pelaajalla olevaan listaan
+		item_list.append(item_name)
+		salesman.item_bought()#hieno kolikke audio
+		### ja lisää statsit #####
+		attack_dmg = base_attack_dmg + inventory.return_stats("attack damage")#saadaan statsit inventory skenestä
+		#print(item_list)
+
+
+
+func shop_was_closed():
+	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
 
 #zombie melee hit
 func hit(hit):
 	#emit_signal("player_hit")
 	#velocity += dir * HIT_STAGGER
-	if hit: #vain melee
+	if hit: #vain zombie? melee
 		change_health(-15)
 		#play_animation("PunchedFace",true)
 
@@ -539,7 +657,7 @@ func _on_area_3d_area_entered(area):
 		if is_spear == spear:
 			health += -20
 			allow_idle = false
-			if !activeanimationplaying:
+			if !activeanimationplaying and keep_aa == false:
 				play_animation("PunchedFace",true)
 		var ryhmat = area.get_groups()
 		for x in ryhmat:
@@ -551,20 +669,31 @@ func _on_area_3d_area_entered(area):
 				health -= 10
 		
 
+<<<<<<< HEAD:MongooliPeli/Scripts/mannekiini.gd
+=======
+#func _on_area_3d_area_exited(area):
+#	timer.stop()
+#
+#func _on_timer_timeout():
+#	health += -5
+
+	
+>>>>>>> origin/auto-rikki-ja-shop:MongooliPeli/mannekiini.gd
 func auto_attack(targetpos):
-	if in_aa_range(targetpos):
+	if in_aa_range(targetpos): #and target != null and not activeanimationplaying:
 		var suunta = Vector3(targetpos[0],global_position.y,targetpos[2])
 		#var enemy area = get_tree().add_child(Area3D.new)
 		navigationAgent.set_target_position(self.position)
 		#autoattacktimer.stop()
 		#autoattacktimer.start()
 		look_at(suunta, Vector3.UP, true)
-		play_animation("ThrowRight", true)
+		play_animation("ThrowRight", true)#aloittaa animaation joka spawnaa aa
 
 func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
-	navigationAgent.set_target_position(self.position)
-	autoattack.attack_target_position(target.global_position)
-	autoattack.execute(self)
+	if target != null:
+		navigationAgent.set_target_position(self.position)
+		autoattack.attack_target_position(target.global_position)
+		autoattack.execute(self)
 	
 func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
@@ -575,10 +704,11 @@ func in_aa_range(targetpos):
 func aa_freed():
 	aa_free = false
 
-func aa_dmg_returner():
-	return autoattack_dmg
+func aa_dmg_returner():#nämä returnerit vois varmaan siirtää entity scriptiin(muuttujat mukana)
+	return attack_dmg
 
 func bullet_dmg_returner():
+	var bullet_dmg = 20 * level + attack_dmg * 0.7
 	return bullet_dmg
 
 func aoeslow_dmg_returner():
