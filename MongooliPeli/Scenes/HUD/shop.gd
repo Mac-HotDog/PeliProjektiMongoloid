@@ -22,6 +22,7 @@ var item_cost
 var target_item
 var target_item_name
 var slot_selected
+var mouse_in_shop 
 
 func _ready():
 	tooltip.visible = false
@@ -66,3 +67,4 @@ func _on_area_for_tooltip_mouse_entered():
 
 func _on_area_for_tooltip_mouse_exited():
 	tooltip.visible = false
+

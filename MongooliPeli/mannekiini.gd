@@ -15,6 +15,7 @@ var exp = 0
 @onready var shop = shopscene.instantiate()
 @export var salesman_path := "/root/level1/salesman"
 var salesman
+var mouse_in_shop = false
 
 #audio
 @onready var bullet_cast_sound = $audiobulletcast
@@ -171,7 +172,6 @@ func _read_input():
 
 #animation_list = []
 func play_animation(animation,condition):
-	#set_physics_process_internal(true)
 	if condition:
 		if animation == "Running":
 			allow_idle = false
@@ -433,7 +433,7 @@ func _input(event):
 		var colliderpos = collider.global_position
 
 
-		if not (collider is Enemy or collider.get_parent() is TextureRect):
+		if not (collider is Enemy or mouse_in_shop):
 			#var mesh = target.get_node("targetmesh")
 			if target_found and not target == null:
 				targetmesh.visible = false
@@ -448,7 +448,7 @@ func _input(event):
 		#print("hahmon saama" ,result.collider)
 		
 		#autoattack
-		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
+		if collider is Enemy and !mouse_in_shop:# autoattacktimer.time_left <= 0.1:
 			target = collider
 			keep_aa = true
 			target_found = true
@@ -462,11 +462,16 @@ func _input(event):
 			nav_target_pos = global_position
 			shop.visible = true
 
+#func is_mouse_in_shop(inshop):
+#	if inshop != true:
+#		mouse_in_shop = false
+#	if inshop == true:
+#		mouse_in_shop = true
+
 func buy_item(cost):#testaa jos rahat riittää shop skenestä
 	if gold >= int(cost):
 		shop.buy_from_shop()
 		change_gold(-cost)
-
 
 func add_item(item_scene,item_name):#item skene menee inventoryyn ja nimi omaan listaan
 	#if not item_list.has(item_name):

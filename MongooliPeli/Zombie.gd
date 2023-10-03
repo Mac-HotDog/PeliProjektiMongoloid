@@ -21,6 +21,7 @@ var dmg_number
 @onready var bar = $Resourcebar
 @onready var deathaudio = $audiodeath
 @onready var impactaudio = $audioimpact
+var test
 
 
 # Called when the node enters the scene tree for the first time.
