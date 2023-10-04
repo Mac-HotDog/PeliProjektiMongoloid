@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://1itqjb3oylio"]
+
+[ext_resource type="Script" path="res://presurePlateAnsa.gd" id="1_mdk0x"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_caqd5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gf82"]
+albedo_color = Color(1, 0.423529, 0.360784, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cop3c"]
+material = SubResource("StandardMaterial3D_5gf82")
+
+[node name="plesurePlateAnsa" type="Node3D"]
+script = ExtResource("1_mdk0x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.95379, 0, 0, 0, 0.131668, 0, 0, 0, 0.636795, 0, 0, 0)
+mesh = SubResource("BoxMesh_caqd5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.140386, 0, 0, 0, 1.04918, 0, 0, 0, 0.636795, 0.912786, 0.567676, 0)
+mesh = SubResource("BoxMesh_caqd5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.24376e-08, -1.02746, 0, 0.513313, -4.49115e-08, 0, 0, 0, 0.636795, 0.0349091, 0.567676, 0)
+mesh = SubResource("CapsuleMesh_cop3c")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
