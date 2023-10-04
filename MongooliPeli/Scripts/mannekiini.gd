@@ -547,8 +547,7 @@ func _on_area_3d_area_entered(area):
 				health += -500
 			if x == "piikit":
 				health -= 5
-			if x == "arrow":
-				health -= 10
+			
 		
 
 func auto_attack(targetpos):
@@ -604,3 +603,10 @@ func _on_timer_timeoutw():
 func _on_timer_timeoute():
 	eLock = false
 	eTimer.stop()
+
+
+func _on_area_3d_body_entered(body):
+	var ryhmat = body.get_groups()
+	for x in ryhmat:
+		if x == "arrow":
+			health -= 10

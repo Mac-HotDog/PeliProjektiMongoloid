@@ -26,3 +26,4 @@ transform = Transform3D(0.65561, 0, 0, 0, -3.08313e-08, -0.715348, 0, 0.705339, 
 shape = SubResource("CapsuleShape3D_bf5ai")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
