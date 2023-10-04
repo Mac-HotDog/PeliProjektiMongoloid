@@ -102,11 +102,9 @@ func _process(delta):
 	if die() == true and dead == false:
 		whendead()
 
-	
-	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
 	anim_tree.set("parameters/conditions/death", die())
+	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())
-	
 	anim_tree.set("parameters/conditions/idle", allow_idle())
 
 	
@@ -135,9 +133,7 @@ func _process(delta):
 				return
 #			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 #			look_at(kohta,Vector3.UP,true)
-
-
-			#cast_spear()
+			#cast_spear()#turhia
 			
 		"Idle":
 			spear.target_position(player.position)#pelaajan on helppo väistää keihäs jos tämä on idlessä
@@ -173,7 +169,7 @@ func _target_not_in_range():
 	
 func allow_cast_spear():
 	var in_range = global_position.distance_to(player.global_position) < ATTACK_RANGE
-	if in_range and spear_timer.time_left < 0.1 and not die():
+	if in_range and spear_timer.time_left < 0.1 and die() == false:
 		return true
 	else:
 		return false

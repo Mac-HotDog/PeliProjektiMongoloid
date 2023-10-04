@@ -9,16 +9,21 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@export var inventoryscene = preload("res://Scenes/HUD/inventory.tscn")
+@export var inventoryscene = preload("res://Scenes/HUD/inventorynew.tscn")
 @onready var inventory = inventoryscene.instantiate()
-@export var salesman_path := "res://Scenes/Others/salesman.tscn"
+@onready var gold_label =$Label3DGold
+@export var salesman_path := "/root/level1/salesman"
+@onready var shopscene = preload("res://Scenes/HUD/shop.tscn")
+@onready var shop = shopscene.instantiate()
 #audio
 @onready var bullet_cast_sound = $audiot/audiobulletcast
 @onready var fireball_cast_sound =$audiot/audiofireballcast #nykyään lumimyrsky
 @onready var death_sound = $audiot/audiodeath
 
 #dmg numbers
-@export var bullet_dmg = 30
+var base_attack_dmg = 7
+var attack_dmg = base_attack_dmg
+@export var bullet_dmg = 30#returner funtiossa uusi kaava tälle
 @export var autoattack_dmg = 15
 @export var aoeslow_dmg = 7
 
@@ -118,13 +123,13 @@ var activeanimationplaying
 func _ready():
 	#navigationAgent.set_target_position(global_position)
 	add_child(inventory)
+	add_child(shop)
 	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
+	gold_label.visible = false
 #	autoattacktimer.start()
 	play_animation("GetUpFromLayingOnBack",true)
-	#state_machine = anim_tree.get("parameters/playback")
-	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
 	timer.set_wait_time(1.0)  # set the wait time to 5 seconds
@@ -279,8 +284,24 @@ func whendead():
 func change_gold(value):
 	gold += value
 	inventory.change_gold(value)
+	if value > 0:
+		gold_label.text = "+" + str(value) + "g"
+		gold_label.visible = true
+		await get_tree().create_timer(1).timeout
+		gold_label.visible = false
 
-#sisältää liika paskaa jonka vois laittaa omiin funktiohin imo
+func change_exp(value):
+	exp += value
+	#level1
+	if exp > 100:
+		level = 2
+		bar.update_level(level)
+		health += 20 #paska tää koko systeemi
+
+
+
+
+#sisältää liika paskaa jonka vois laittaa omiin funktiohin imo     -jep hyvää duunia
 func _physics_process(delta):
 
 	if health <= 0:
@@ -496,7 +517,7 @@ func _input(event):
 		if not (collider is Enemy):
 			#var mesh = target.get_node("targetmesh")
 			if target_found and not target == null:
-				targetmesh.visible = false
+				targetmesh.visible = false#?
 			aa_free = true
 			target_found = false
 			keep_aa = false
@@ -505,8 +526,6 @@ func _input(event):
 			navigationAgent.set_path_desired_distance(0.2)
 			nav_target_pos = result.position
 				#navigationAgent.set_target_position(nav_target_pos)
-		#print("hahmon saama" ,result.collider)
-		
 		
 		#autoattack
 		if collider is Enemy:# autoattacktimer.time_left <= 0.1:
@@ -520,8 +539,26 @@ func _input(event):
 			#aa_target_pos = collider.global_position
 		
 		if collider is Salesman:
-			pass
+			shop.visible = true
+			nav_target_pos = global_position
 
+func buy_item(cost):#testaa jos rahat riittää shop skenestä
+	if gold >= int(cost):
+		shop.buy_from_shop()
+		change_gold(-cost)
+
+func add_item(item_scene,item_name):#item skene menee inventoryyn ja nimi omaan listaan
+	#if not item_list.has(item_name):
+		inventory.add_item_to_inventory(item_scene)#tulee kokonainen itemin skene instance inventory skeneen
+		#items = inventory.check_inventory()#lisää omat itemit pelaajalla olevaan listaan
+		item_list.append(item_name)
+		salesman.item_bought()#hieno kolikke audio
+		### ja lisää statsit #####
+		attack_dmg = base_attack_dmg + inventory.return_stats("attack damage")#saadaan statsit inventory skenestä
+		#print(item_list)
+
+func shop_was_closed():
+	salesman.shop_was_closed()#myyjä tekee hienon heilutuksen
 
 #zombie melee hit
 func hit(hit):
@@ -579,6 +616,7 @@ func aa_dmg_returner():
 	return autoattack_dmg
 
 func bullet_dmg_returner():
+	var bullet_dmg = 20 * level + attack_dmg * 0.7 #onko hyvä ratio?
 	return bullet_dmg
 
 func aoeslow_dmg_returner():

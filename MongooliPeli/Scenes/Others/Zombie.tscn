@@ -3603,7 +3603,7 @@ material = SubResource("StandardMaterial3D_n3c8g")
 
 [sub_resource type="Skin" id="Skin_0nps4"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2iu5h"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_f4es3"]
 viewport_path = NodePath("SubViewport")
 
 [node name="Zombie" type="CharacterBody3D"]
@@ -4242,7 +4242,7 @@ stream = ExtResource("10_gqw7r")
 volume_db = -18.713
 
 [node name="Resourcebar" parent="." instance=ExtResource("9_4vfew")]
-texture = SubResource("ViewportTexture_2iu5h")
+texture = SubResource("ViewportTexture_f4es3")
 
 [connection signal="area_entered" from="Area3DZombie" to="." method="_on_area_3d_zombie_area_entered"]
 [connection signal="area_exited" from="Area3DZombie" to="." method="_on_area_3d_zombie_area_exited"]

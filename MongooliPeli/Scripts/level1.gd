@@ -51,8 +51,9 @@ func _input(event):
 			$Marker.transform.origin = edited_result
 			await get_tree().create_timer(1).timeout
 			$Marker.visible = false 
-		if result.collider is Enemy:
-			$Marker.visible = false 
+		if result.collider != null:
+			if result.collider is Enemy:
+				$Marker.visible = false 
 
 
 
