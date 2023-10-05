@@ -303,7 +303,7 @@ func change_exp(value):
 
 #sisältää liika paskaa jonka vois laittaa omiin funktiohin imo     -jep hyvää duunia
 func _physics_process(delta):
-
+	#print(health)
 	if health <= 0:
 		kuolema()
 	
@@ -433,7 +433,7 @@ func dashJuttuja(delta):
 	dash_cast_sound.play()
 	var dash_vector = dash_direction * DASH_DISTANCE
 	var dash_speed = DASH_SPEED
-	nav_target_pos = null
+	#nav_target_pos = mouse_pos
 
 	if dash_progress < 1.0:
 		#print("h")
@@ -582,8 +582,12 @@ func _on_area_3d_area_entered(area):
 		for x in ryhmat:
 			if x == "tappo":
 				health += -500
-			if x == "piikit":
+			elif x == "piikit":
 				health -= 5
+			elif x == "dildo":
+				print("mitä vittua")
+				health -= 50
+			
 			
 		
 
@@ -644,7 +648,9 @@ func _on_timer_timeoute():
 
 
 func _on_area_3d_body_entered(body):
-	var ryhmat = body.get_groups()
-	for x in ryhmat:
+	var ryhmat2 = body.get_groups()
+	for x in ryhmat2:
 		if x == "arrow":
+			print("osu")
 			health -= 10
+		

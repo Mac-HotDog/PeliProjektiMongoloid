@@ -3,7 +3,7 @@ extends Node3D
 # Threshold distance from the edge
 const EDGE_THRESHOLD = 50
 
-const CAMERA_MOVE_SPEED = 0.2
+const CAMERA_MOVE_SPEED = 0.3
 
 const CAMERA_ZOOM_SPEED = 0.4
 
@@ -15,6 +15,7 @@ const CAMERA_ZOOM_SPEED = 0.4
 func _ready():
 	#bgm
 	var audioplayer = $AudioStreamPlayer
+	
 	#audioplayer.play()
 	
 
@@ -75,7 +76,7 @@ func _on_mouse_near_edge(edge):
 	if edge == "right":
 
 		move_camera(CAMERA_MOVE_SPEED, 0, 0)
-		#print("Mouse near right edge")
+		print("Mouse near right edge")
 	if edge == "top":
 
 		move_camera(0,0,-CAMERA_MOVE_SPEED)
@@ -83,7 +84,7 @@ func _on_mouse_near_edge(edge):
 	if edge == "bottom":
 
 		move_camera(0,0,CAMERA_MOVE_SPEED)
-		#print("Mouse near bottom edge")
+		print("Mouse near bottom edge")
 		
 
 
@@ -121,7 +122,9 @@ func _physics_process(delta):
 		# Get the mouse position
 		var mouse_pos = get_viewport().get_mouse_position()
 		var viewport_size = get_viewport().size
-
+#		if NOTIFICATION_WM_RESIZED:
+#			mouse_pos = get_viewport().get_mouse_position()
+#			viewport_size = get_viewport().size
 		# Calculate the distance from the mouse position to the edges
 		var distance_left = mouse_pos.x
 		var distance_right = viewport_size.x - mouse_pos.x

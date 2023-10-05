@@ -7,7 +7,7 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_y78sx"]
 
-[node name="Node3D" type="Node3D"]
+[node name="arrowShooter" type="Node3D"]
 script = ExtResource("1_hvxpx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
