@@ -146,7 +146,7 @@ func _ready():
 	
 	eTimer = Timer.new()  # create a new Timer
 	add_child(eTimer)  # add it as a child
-	eTimer.set_wait_time(5.0)  # set the wait time to 5 seconds
+	eTimer.set_wait_time(1.0)  # set the wait time to 5 seconds
 	eTimer.timeout.connect(_on_timer_timeoute)
 	
 	rTimer = Timer.new()  # create a new Timer
@@ -306,7 +306,9 @@ func _physics_process(delta):
 	#print(health)
 	if health <= 0:
 		kuolema()
-	
+#	for area in get_overlapping_areas():
+#		if area == "":
+			#_on_area_3d_area_entered(area)
 	if pathing_for_aoeslow: #pathaus rangelle pääsyyn
 		pathToGetToRange()
 
@@ -569,24 +571,7 @@ func hit(hit):
 		#play_animation("PunchedFace",true)
 
 #damagen ottamine
-func _on_area_3d_area_entered(area):
-	if area:
-		var string = (str(area))
-		var is_spear = string.substr(0,len(spear))
-		if is_spear == spear:
-			health += -20
-			allow_idle = false
-			if !activeanimationplaying:
-				play_animation("PunchedFace",true)
-		var ryhmat = area.get_groups()
-		for x in ryhmat:
-			if x == "tappo":
-				health += -500
-			elif x == "piikit":
-				health -= 5
-			elif x == "dildo":
-				print("mitä vittua")
-				health -= 50
+
 			
 			
 		
@@ -646,6 +631,26 @@ func _on_timer_timeoute():
 	eLock = false
 	eTimer.stop()
 
+func _on_area_3d_area_entered(area):
+	if area:
+		print("tänne päästiin")
+		var string = (str(area))
+		var is_spear = string.substr(0,len(spear))
+		if is_spear == spear:
+			health += -20
+			allow_idle = false
+			if !activeanimationplaying:
+				play_animation("PunchedFace",true)
+		var ryhmat = area.get_groups()
+		for x in ryhmat:
+			print(x)
+			if x == "tappo":
+				health += -500
+			if x == "piikit":
+				health -= 5
+			if x == "dildo":
+				print("mitä vittua")
+				health -= 50
 
 func _on_area_3d_body_entered(body):
 	var ryhmat2 = body.get_groups()

@@ -76,7 +76,7 @@ func _on_mouse_near_edge(edge):
 	if edge == "right":
 
 		move_camera(CAMERA_MOVE_SPEED, 0, 0)
-		print("Mouse near right edge")
+		#print("Mouse near right edge")
 	if edge == "top":
 
 		move_camera(0,0,-CAMERA_MOVE_SPEED)
@@ -84,7 +84,7 @@ func _on_mouse_near_edge(edge):
 	if edge == "bottom":
 
 		move_camera(0,0,CAMERA_MOVE_SPEED)
-		print("Mouse near bottom edge")
+		#print("Mouse near bottom edge")
 		
 
 

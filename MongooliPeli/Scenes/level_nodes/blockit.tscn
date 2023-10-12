@@ -52,8 +52,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wjn8w")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_csn7t"]
-points = PackedVector3Array(-0.30002, 0, -0.5, -0.450078, 0, -0.450078, -0.30002, 0.5, -0.5, 0.299922, 0, -0.5, -0.5, 0, -0.30002, -0.450078, 0.5, -0.450078, -0.150059, 0.5, -0.450078, 0.44998, 0.44998, -0.450078, 0.299922, 0.44998, -0.5, 0.44998, 0, -0.450078, -0.5, 0.5, -0.30002, -0.5, 0, 0.299922, 0.44998, 0.5, 0.149961, 0.5, 0.5, 0.299922, 0.5, 0.44998, -0.30002, 0.5, 0, -0.30002, -0.5, 0.44998, 0.299922, -0.450078, 0.44998, 0.44998, -0.450078, 0.5, -0.150059, -0.450078, 0, 0.44998, 0.5, 0, 0.299922, 0.44998, 0.5, 0.44998, -0.30002, 0.44998, 0.5, 0.299922, 0.5, 0.5, 0.149961, 0.5, 0.44998, -0.30002, 0, 0.5, 0.44998, 0, 0.44998, 0.299922, 0, 0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_lsrea"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwtds"]
 resource_name = "grey-light"
@@ -142,11 +141,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ej8nq")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gwo4t"]
-points = PackedVector3Array(-0.5, 0, -0.5, 0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 1.1, -0.5, 0.5, 0, 0.5, 0.5, 1.1, -0.5, -0.5, 1.1, 0.5, 0.5, 1.1, 0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_x4hq7"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfty"]
-points = PackedVector3Array(-0.49998, 0.00101149, -0.5, 0.496056, 1.1, 0.496056, 0.495238, 1.0991, -0.5, 0.496057, 1.11022e-16, 0.496155, -0.5, 1.09901, 0.495258, 0.495141, 0.00101149, -0.5, -0.5, 0.000989066, 0.495258, -0.49998, 1.09899, -0.5, 0.5, 0.0996069, 0.5, 0.5, 0.0996069, 0.361324)
+[sub_resource type="BoxShape3D" id="BoxShape3D_02dsk"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -178,13 +175,14 @@ visible = false
 visible = false
 
 [node name="rocks" type="Node3D" parent="."]
+visible = false
 
 [node name="rocks2" type="MeshInstance3D" parent="rocks"]
+visible = false
 mesh = SubResource("ArrayMesh_cuvax")
 skeleton = NodePath("")
 
 [node name="rocks2" type="Node3D" parent="."]
-visible = false
 
 [node name="rocks2" type="MeshInstance3D" parent="rocks2"]
 mesh = SubResource("ArrayMesh_cuvax")
@@ -193,12 +191,14 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="rocks2/rocks2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="rocks2/rocks2/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_csn7t")
+transform = Transform3D(1, 0, 0, 0, 0.504523, 0, 0, 0, 1, 0, 0.262313, 0)
+shape = SubResource("BoxShape3D_lsrea")
 
 [node name="spikes" parent="." instance=ExtResource("12_pvwhw")]
 visible = false
 
 [node name="spikes2" parent="." instance=ExtResource("13_qw6mo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 
 [node name="treePine" parent="." instance=ExtResource("14_gs4vy")]
@@ -223,7 +223,8 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="wall/wall2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wall/wall2/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_gwo4t")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.504745, 0)
+shape = SubResource("BoxShape3D_x4hq7")
 
 [node name="wall2" type="Node3D" parent="."]
 visible = false
@@ -235,4 +236,5 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="wall2/wall2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wall2/wall2/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_elfty")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505425, 0)
+shape = SubResource("BoxShape3D_02dsk")

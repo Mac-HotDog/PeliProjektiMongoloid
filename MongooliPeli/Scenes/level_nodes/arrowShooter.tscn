@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyt847vhr7ivc"]
 
 [ext_resource type="Script" path="res://Scripts/arrowShooter.gd" id="1_hvxpx"]
-[ext_resource type="Script" path="res://Scenes/level_nodes/Timer.gd" id="2_hte4r"]
+[ext_resource type="AudioStream" uid="uid://jt1spx3gj5vh" path="res://209399__samulis__bow-release.mp3" id="3_sp8cr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5nhhw"]
 
@@ -12,20 +12,16 @@ script = ExtResource("1_hvxpx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_5nhhw")
-skeleton = NodePath("StaticBody3D")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+skeleton = NodePath("")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.442777, 0, 0, 0, 0.357376, 0, 0, 0, 0.412005, 0.717537, 0.321475, 0)
 mesh = SubResource("BoxMesh_y78sx")
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-script = ExtResource("2_hte4r")
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.000890211, 0, -1, 0, 1, 0, 1, 0, 0.000890211, 1.57151, 0, 0)
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_sp8cr")
+volume_db = -2.0
+max_distance = 18.0

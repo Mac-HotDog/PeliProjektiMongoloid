@@ -26,5 +26,5 @@ func _input(event):
 func _on_timer_timeout():
 	
 	bari2.value += 1
-	if bari2.value == 6:
+	if bari2.value == 1:
 		timer.stop

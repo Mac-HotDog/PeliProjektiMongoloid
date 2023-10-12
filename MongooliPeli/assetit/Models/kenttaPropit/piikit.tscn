@@ -10,10 +10,6 @@ size = Vector3(0.662324, 1, 0.597897)
 transform = Transform3D(3.46438, 0, 0, 0, -0.865077, 0, 0, 0, 3.29941, 0, 0, 0)
 script = ExtResource("1_6xmhv")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.493
-autostart = true
-
 [node name="Area3D" type="Area3D" parent="." groups=["piikit"]]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
@@ -25,5 +21,3 @@ transform = Transform3D(-1, 2.58415e-07, 0, -8.74228e-08, -2.95592, 0, 0, 0, 1, 
 [node name="StaticBody3D" type="StaticBody3D" parent="spikesLarge"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="spikesLarge/StaticBody3D"]
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
