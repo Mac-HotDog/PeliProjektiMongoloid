@@ -78,25 +78,26 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_pq7y5")
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 48.0
-offset_bottom = 48.0
+offset_left = 896.0
+offset_top = 456.0
+offset_right = 936.0
+offset_bottom = 496.0
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
-layout_mode = 0
-offset_left = 1056.0
-offset_top = 496.0
-offset_right = 1096.0
-offset_bottom = 536.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(1.72, 0.599482)
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 1072.0
-offset_top = 496.0
-offset_right = 1112.0
-offset_bottom = 522.0
+offset_left = 32.0
+offset_right = 72.0
+offset_bottom = 26.0
 theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
 text = "0"
+justification_flags = 162

@@ -7,13 +7,15 @@ extends Sprite3D
 @onready var lvl_viewport = $Level/SubViewport2
 @onready var lvl_label = $Level/SubViewport2/Control/LevelLabel
 @onready var parent = get_parent()
-var value = 100
+#var value = 100
+var max_hp_gotten = false
 
 
 
 func _ready():
 	lvl_viewport.set_update_mode(SubViewport.UPDATE_WHEN_PARENT_VISIBLE)
 	viewport.set_update_mode(SubViewport.UPDATE_WHEN_PARENT_VISIBLE)
+	#bar.value = 100
 	if parent is Enemy:
 		var sb = StyleBoxFlat.new()
 		bar.add_theme_stylebox_override("fill", sb)
@@ -24,7 +26,7 @@ func _ready():
 		sb.border_width_top = 2
 		sb.border_color = Color("000000")
 	global_position = parent.global_position
-	bar.value = 100
+
 #	var tween = get_tree().create_tween()
 #	tween.tween_property(bar,"value", 100,3).set_trans(Tween.TRANS_LINEAR)# ei taida toimia
 
@@ -37,6 +39,9 @@ func _physics_process(delta):
 func update_bar(x):#x on tämän hetken hp määrä
 	bar.value = x
 	label.text =str(x)#scuffed ik # "                  "+
+	if max_hp_gotten == false:
+		bar.max_value = x
+		max_hp_gotten = true
 
 func update_level(x):
 	lvl_label.text = str(x)

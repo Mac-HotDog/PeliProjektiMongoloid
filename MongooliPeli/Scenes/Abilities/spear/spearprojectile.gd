@@ -39,14 +39,14 @@ func _physics_process(delta):
 	# eri tavat
 	#print(position)
 	var forward_vector = global_position.direction_to(target_pos)
-	var velocity = forward_vector * speed * 1.
+	var velocity = forward_vector * speed * 1.1
 	apply_central_impulse(velocity)# ei tarkoitettu phys prosessiin
 	var displacement = global_position - initial_position
 	var traveled_distance = displacement.length()
 
 	if traveled_distance >= despawn_distance:
 		queue_free()
-	if global_position.y <= 0.8:
+	if global_position.y <= 0.1:
 		queue_free()
 #
 #	move_and_collide(velocity)

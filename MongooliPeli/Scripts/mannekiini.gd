@@ -19,7 +19,7 @@ extends Entity
 @onready var bullet_cast_sound = $audiot/audiobulletcast
 @onready var fireball_cast_sound =$audiot/audiofireballcast #nykyään lumimyrsky
 @onready var death_sound = $audiot/audiodeath
-
+@onready var dash_cast_sound = $audiot/audiodashcast
 #dmg numbers
 var base_attack_dmg = 7
 var attack_dmg = base_attack_dmg
@@ -31,10 +31,6 @@ var attack_dmg = base_attack_dmg
 @export var aa_range = 8
 @export var aoeslow_range = 15
 
-
-#dashia varten..
-#@onready var dash_marker = $Marker3Ddash #turha
-@onready var dash_cast_sound = $audiot/audiodashcast
 
 # aa varten
 @onready var targetmeshinstance = preload("res://Scenes/HUD/redarrowsprite.tscn")
@@ -433,10 +429,11 @@ func dashJuttuja(delta):
 	dash_cast_sound.play()
 	var dash_vector = dash_direction * DASH_DISTANCE
 	var dash_speed = DASH_SPEED
-	nav_target_pos = null
+	#nav_target_pos = mouse_pos
 
 	if dash_progress < 1.0:
 		#print("h")
+		navigationAgent.set_target_position(global_position)
 		dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
 		dash_progress += DASH_ACCELERATION * delta
 
@@ -578,6 +575,8 @@ func _on_area_3d_area_entered(area):
 			allow_idle = false
 			if !activeanimationplaying:
 				play_animation("PunchedFace",true)
+		if area.get_parent() is Flamethrower:
+			health += -40
 		var ryhmat = area.get_groups()
 		for x in ryhmat:
 			if x == "tappo":

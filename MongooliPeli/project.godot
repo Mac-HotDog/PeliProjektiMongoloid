@@ -25,7 +25,9 @@ SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 
 [display]
 
-window/stretch/mode="canvas_items"
+window/size/viewport_width=1000
+window/size/viewport_height=600
+window/stretch/mode="viewport"
 
 [editor_plugins]
 

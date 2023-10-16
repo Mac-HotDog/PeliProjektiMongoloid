@@ -36,7 +36,7 @@ func change_intelligence(value: int) -> void:
 
 # Health and mana regen functions
 func regenerate_health() -> void:
-	self.health = min(self.health + self.health_regen, 100)
+	self.health = min(self.health + self.health_regen, health)
 
 func regenerate_mana() -> void:
 	self.mana = min(self.mana + self.mana_regen, 100)

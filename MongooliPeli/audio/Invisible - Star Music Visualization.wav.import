@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmd6ftx18guvh"
+path="res://.godot/imported/Invisible - Star Music Visualization.wav-97ba5454cf3dca64f4851182e12e0247.sample"
+
+[deps]
+
+source_file="res://audio/Invisible - Star Music Visualization.wav"
+dest_files=["res://.godot/imported/Invisible - Star Music Visualization.wav-97ba5454cf3dca64f4851182e12e0247.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
