@@ -17,7 +17,7 @@ var itemslot5
 var itemslot6
 
 var attack_damage_amount = 0
-var health_amount
+var health_amount = 0
 
 func change_gold(value):
 	gold += value
@@ -70,7 +70,11 @@ func check_stats(item_scene):#ottaa statsit talteen
 	#print(item_scene.stat_and_value_returner("stat"))
 	if item_scene.stat_and_value_returner("stat") == "attack damage":
 		attack_damage_amount += item_scene.stat_and_value_returner("value")
+	if item_scene.stat_and_value_returner("stat") == "health":
+		health_amount += item_scene.stat_and_value_returner("value")
 
 func return_stats(stat):#statsit pelaajalle
 	if stat == "attack damage":
 		return attack_damage_amount
+	if stat == "health":
+		return health_amount

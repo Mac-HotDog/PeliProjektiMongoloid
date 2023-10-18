@@ -9,3 +9,4 @@ func _ready():
 
 #func cast_direction(dir):
 #	$GPUParticles3D.gravity = dir
+

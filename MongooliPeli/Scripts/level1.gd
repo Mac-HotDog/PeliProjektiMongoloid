@@ -15,6 +15,13 @@ const CAMERA_ZOOM_SPEED = 0.4
 func _ready():
 	#bgm
 	var audioplayer = $AudioStreamPlayer
+	
+	$Camera3D.global_position[1] = $Mannekiini.global_position[1] + 7
+	$Camera3D.global_position[0] = $Mannekiini.global_position[0] + 2
+	$Camera3D.global_position[2] = $Mannekiini.global_position[2] + 5
+	camera_o_pos = $Camera3D.global_position
+	
+	
 	#audioplayer.play()
 	
 

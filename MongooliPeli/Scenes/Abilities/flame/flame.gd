@@ -49,11 +49,10 @@ func execute(node):
 #	global_transform.origin = marker.global_transform.origin
 #	global_transform.basis = marker.global_transform.basis
  
+func _physics_process(delta):
+	if parent.die():
+		end_flame()
 
 
-	
 
-	#bullet.linear_velocity = Vector3(10,0,0)
-
-	
 

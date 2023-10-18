@@ -1067,6 +1067,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1339, 0.75, 93.8796)
 
 [node name="Marker3D" parent="." instance=ExtResource("21_38j52")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.1858, 0.75, 79.8088)
+collision_layer = 1
+collision_mask = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(300, 0, 0, 0, 1, 0, 0, 0, 300, 0, 0, 0)
