@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://dlpabi0ekpr7m"]
+
+[ext_resource type="Script" path="res://presurePlateAnsa.gd" id="1_08blh"]
+[ext_resource type="AudioStream" uid="uid://d1gs816elxys" path="res://audio/412294__jaklocke__gun-trigger-pull-1.mp3" id="2_fjps0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdyum"]
+albedo_color = Color(1, 0.580392, 0.419608, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_caqd5"]
+material = SubResource("StandardMaterial3D_jdyum")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_doqly"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4xaw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gf82"]
+albedo_color = Color(1, 0.423529, 0.360784, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cop3c"]
+material = SubResource("StandardMaterial3D_5gf82")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_16pi5"]
+
+[node name="plesurePlateAnsa" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.60361, 0, 0, 0)
+script = ExtResource("1_08blh")
+
+[node name="plate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.132, 0, 0, 0, 0.637, 0, 0, 0)
+mesh = SubResource("BoxMesh_caqd5")
+
+[node name="Area3D" type="Area3D" parent="plate"]
+transform = Transform3D(1, 0, 0, 0, 2.6859, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="plate/Area3D"]
+shape = SubResource("BoxShape3D_doqly")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.140386, 0, 0, 0, 1.04918, 0, 0, 0, 0.636795, 0.571638, 0.567676, 0)
+mesh = SubResource("BoxMesh_caqd5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_w4xaw")
+
+[node name="dildo" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.24376e-08, -0.467262, 0, 0.513313, -2.04246e-08, 0, 0, 0, 0.636795, 0.0349091, 0.567676, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_cop3c")
+
+[node name="Area3D" type="Area3D" parent="dildo" groups=["dildo"]]
+transform = Transform3D(1, -7.10543e-15, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dildo/Area3D" groups=["dildo"]]
+transform = Transform3D(1, 7.10543e-15, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_16pi5")
+
+[node name="click" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_fjps0")
+volume_db = -4.572
+
+[connection signal="body_entered" from="plate/Area3D" to="." method="_on_area_3d_body_entered"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7rhewwvyw2ra"]
+
+[ext_resource type="Script" path="res://presure_plate.gd" id="1_m25lm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eknny"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aul7x"]
+
+[node name="presurePlate" type="Node3D"]
+script = ExtResource("1_m25lm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_eknny")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Area3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.0462683, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_aul7x")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

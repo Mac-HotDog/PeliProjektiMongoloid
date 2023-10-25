@@ -183,6 +183,7 @@ mesh = SubResource("ArrayMesh_cuvax")
 skeleton = NodePath("")
 
 [node name="rocks2" type="Node3D" parent="."]
+visible = false
 
 [node name="rocks2" type="MeshInstance3D" parent="rocks2"]
 mesh = SubResource("ArrayMesh_cuvax")

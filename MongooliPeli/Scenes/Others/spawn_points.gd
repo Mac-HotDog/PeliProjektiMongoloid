@@ -16,7 +16,7 @@ func _on_area_3d_body_entered(body):
 			add_child(zombiIns)
 			spawn_light.visible = true
 			$spawnaudio.play()
-			await get_tree().create_timer(3).timeout
+			await get_tree().create_timer(30).timeout
 			spawn_light.visible = false
 			#numberOfZombies -= 1
 			#queue_free()

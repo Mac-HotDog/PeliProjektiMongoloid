@@ -415,20 +415,20 @@ func hyppyLogiikkaa():
 	nodet.alotaCDW()
 	wLock = true
 	wTimer.start()
-	if Input.is_action_just_pressed("w") and not is_jumping:
-		if is_on_floor():
-			play_animation("Jump",true)
-			await get_tree().create_timer(0.17).timeout
-			nav_target_pos = null
-			is_jumping = true
-			#navigationAgent.is_target_reachable()
-			Speed = 10
-			var suunta = Vector3.FORWARD.normalized()
-			#velocity += suunta[1] + 10
-			#nav_target_pos = suunta
-			velocity.y +=  jump_speed
-			#velocity.dir = 1.1
-			move_and_slide()
+#	if Input.is_action_just_pressed("w") and not is_jumping:
+#		if is_on_floor():
+#			play_animation("Jump",true)
+#			await get_tree().create_timer(0.17).timeout
+#			nav_target_pos = null
+#			is_jumping = true
+#			#navigationAgent.is_target_reachable()
+#			Speed = 10
+#			var suunta = Vector3.FORWARD.normalized()
+#			#velocity += suunta[1] + 10
+#			#nav_target_pos = suunta
+#			velocity.y +=  jump_speed
+#			#velocity.dir = 1.1
+#			move_and_slide()
 
 func dashJuttuja(delta):
 	play_animation("RunSlide", true)
@@ -630,7 +630,9 @@ func _on_timer_timeoutw():
 func _on_timer_timeoute():
 	eLock = false
 	eTimer.stop()
+	
 
+#damamgen otto
 func _on_area_3d_area_entered(area):
 	if area:
 		print("tänne päästiin")
@@ -657,5 +659,5 @@ func _on_area_3d_body_entered(body):
 	for x in ryhmat2:
 		if x == "arrow":
 			print("osu")
-			health -= 10
+			health -= 25
 		

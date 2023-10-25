@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5x86560x1ucr"]
+
+[ext_resource type="Material" uid="uid://bk23xwqrfet1h" path="res://Scenes/level_nodes/hiekkaVaalea.tres" id="1_56gdf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybo8a"]
+albedo_color = Color(0.545098, 0.368627, 0.0745098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hnsii"]
+material = SubResource("StandardMaterial3D_ybo8a")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogcyw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncs0i"]
+material = ExtResource("1_56gdf")
+
+[sub_resource type="PrismMesh" id="PrismMesh_2a02m"]
+material = ExtResource("1_56gdf")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="hiekka" type="MeshInstance3D" parent="." groups=["sand"]]
+visible = false
+mesh = SubResource("BoxMesh_hnsii")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hiekka"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hiekka/StaticBody3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="Area3D" type="Area3D" parent="hiekka"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="hiekka/Area3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="hiekkavalkea" type="MeshInstance3D" parent="." groups=["sandvalkea"]]
+visible = false
+mesh = SubResource("BoxMesh_ncs0i")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hiekkavalkea"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hiekkavalkea/StaticBody3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="Area3D" type="Area3D" parent="hiekkavalkea"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="hiekkavalkea/Area3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="hiekkaKolmio" type="MeshInstance3D" parent="." groups=["sandBrown"]]
+mesh = SubResource("PrismMesh_2a02m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hiekkaKolmio"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hiekkaKolmio/StaticBody3D"]
+shape = SubResource("BoxShape3D_ogcyw")
+
+[node name="Area3D" type="Area3D" parent="hiekkaKolmio"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="hiekkaKolmio/Area3D"]
+shape = SubResource("BoxShape3D_ogcyw")

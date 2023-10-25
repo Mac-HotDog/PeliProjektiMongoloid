@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyt847vhr7ivc"]
+[gd_scene load_steps=6 format=3 uid="uid://cyt847vhr7ivc"]
 
 [ext_resource type="Script" path="res://Scripts/arrowShooter.gd" id="1_hvxpx"]
-[ext_resource type="AudioStream" uid="uid://jt1spx3gj5vh" path="res://209399__samulis__bow-release.mp3" id="3_sp8cr"]
+[ext_resource type="AudioStream" uid="uid://jt1spx3gj5vh" path="res://audio/209399__samulis__bow-release.mp3" id="2_pqgqb"]
+[ext_resource type="Texture2D" uid="uid://u2y14yqdxea0" path="res://huutomerkki.png" id="3_4u7b3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5nhhw"]
 
@@ -22,6 +23,12 @@ mesh = SubResource("BoxMesh_y78sx")
 transform = Transform3D(0.000890211, 0, -1, 0, 1, 0, 1, 0, 0.000890211, 1.57151, 0, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_sp8cr")
+stream = ExtResource("2_pqgqb")
 volume_db = -2.0
 max_distance = 18.0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.47404, 0, 0, 0, 0.445753, 0, 0, 0, 1, 0, 1.09152, 0)
+visible = false
+billboard = 1
+texture = ExtResource("3_4u7b3")

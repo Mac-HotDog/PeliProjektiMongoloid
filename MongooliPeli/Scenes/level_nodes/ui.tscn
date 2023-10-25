@@ -31,6 +31,7 @@ toggle_mode = true
 text = "Q"
 
 [node name="Button2" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 428.0
 offset_top = 561.0
@@ -77,6 +78,7 @@ texture_progress = ExtResource("6_5k48v")
 script = ExtResource("7_657ur")
 
 [node name="TextureProgressBar2" type="TextureProgressBar" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 429.0
 offset_top = 544.0
