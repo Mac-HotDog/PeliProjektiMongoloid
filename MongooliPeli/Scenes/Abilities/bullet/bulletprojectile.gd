@@ -2,7 +2,7 @@ extends RigidBody3D
 class_name bullet
 
 
-var speed = 14
+var speed = 15
 var gravity = 0
 var timer
 var parent = get_parent()
@@ -40,7 +40,7 @@ func _physics_process(delta):
 	var to = Vector3(mouse_pos[0], 1,mouse_pos[2])
 	var movement = to * speed * delta
 	transform.origin[0] += movement[0]
-	transform.origin[1] = 1
+	transform.origin[1] = 1.7
 	transform.origin[2] += movement[2]
 	#print(position)
 	var displacement = position - initial_position

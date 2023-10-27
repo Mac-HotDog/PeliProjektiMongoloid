@@ -1,17 +1,17 @@
 extends Enemy
 
 
-var player = null
+#var player = null
 var state_machine
 var dead = false
 var in_aoeslow = false
 var last_hitter #kuka teki dmg vikana
 
-var SPEED = 4.0
+#var SPEED = 4.0
 @export var ATTACK_RANGE = 2.0#enemmänkin targettaus range
 @export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
 var dmg_number
-@export var player_path := "/root/level1/Mannekiini"
+#@export var player_path := "/root/level1/Mannekiini"
 @export var gold_value = 15
 @export var exp_value = 10
 @onready var nav_agent = $NavigationAgent3D
@@ -26,7 +26,8 @@ var test
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player = get_node(player_path)
+	#player = get_node(player_path)
+	SPEED = 4
 	state_machine = anim_tree.get("parameters/playback")
 	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
@@ -55,6 +56,9 @@ func whendead():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if die() and dead == false:
+		whendead()
+
 	velocity = Vector3.ZERO
 	
 	if bar:
@@ -64,8 +68,8 @@ func _process(delta):
 #	if manaBar:
 #		manaBar.update_bar(mana)
 
-	if die() and dead == false:
-		whendead()
+#	if knock_back:
+#		knocked_back()
 		
 	match state_machine.get_current_node():
 		#"GetUp":
@@ -80,12 +84,14 @@ func _process(delta):
 			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
 	# Conditions
+	#anim_tree.set("parameters/conditions/attack", knocked_back())
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 	anim_tree.set("parameters/conditions/run", !_target_in_range())
 	anim_tree.set("parameters/conditions/die", die())
 	
 	move_and_slide()
 
+	
 
 func _target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
@@ -130,6 +136,8 @@ func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 	if area is bullet or area.get_parent() is bullet:
 		change_health(-player.bullet_dmg_returner())
 		#print(area.class)
+	if area.get_parent() is kick:
+		change_health(-player.kick_dmg_returner())
 	if area is aoeslow or area.get_parent() is aoeslow:  
 		take_dot()
 		SPEED = 1

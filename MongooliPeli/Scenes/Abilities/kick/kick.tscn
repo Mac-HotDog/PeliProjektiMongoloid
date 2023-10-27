@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cplh6yt27ebpe"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/kick/kick.gd" id="1_soakq"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_soakq")
