@@ -3,12 +3,7 @@ extends CharacterBody3D
 class_name Entity
 
 var level = 1
-<<<<<<< Updated upstream
 var health: int = 100 + 20 * level
-=======
-var exp = 0
-var health: int = 100 + 20 * level#ei päivity tästä
->>>>>>> Stashed changes
 var mana: int = 100
 var strength: int = 10
 var agility: int = 10

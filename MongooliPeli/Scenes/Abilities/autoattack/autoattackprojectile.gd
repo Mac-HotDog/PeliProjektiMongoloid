@@ -36,10 +36,10 @@ func _physics_process(delta):
 		#print(target_pos)
 		var direction = global_position.direction_to(target_pos)
 		var too = Vector3(direction[0], 1.5,direction[2])
-		#var to = Vector3(target_pos[0], 1.5,target_pos[2])
+		var to = Vector3(target_pos[0], 1.5,target_pos[2])
 		var movement = too * speed * delta
 		transform.origin[0] += movement[0]
-		transform.origin[1] = 1.8
+		transform.origin[1] = 1.5
 		transform.origin[2] += movement[2]
 	if target == null:
 		queue_free()

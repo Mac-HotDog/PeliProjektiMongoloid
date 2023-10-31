@@ -15,17 +15,6 @@ const CAMERA_ZOOM_SPEED = 0.4
 func _ready():
 	#bgm
 	var audioplayer = $AudioStreamPlayer
-<<<<<<< Updated upstream
-=======
-	var camera_extender = Vector3(0,7,5)
-	
-	$Camera3D.global_position[1] = $Mannekiini.global_position[1] + 7
-	$Camera3D.global_position[0] = $Mannekiini.global_position[0]
-	$Camera3D.global_position[2] = $Mannekiini.global_position[2] + 5
-	camera_o_pos = $Camera3D.global_position
-	
-	
->>>>>>> Stashed changes
 	#audioplayer.play()
 	
 
@@ -116,7 +105,7 @@ func _physics_process(delta):
 	var z = player_pos[2] + difference
 	var new_camera_pos = Vector3(player_pos[0],camera_pos[1],z)
 	if Input.is_action_just_pressed("space") or Input.is_action_pressed("space"):
-		$Camera3D.global_position = new_camera_pos
+		$Camera3D.transform.origin = new_camera_pos
 
 	if Input.is_action_just_released("ZoomOut"): 
 		#zoomaa (epätarkka, käyttää samaa nopeutta ja toimii vain y ja z)

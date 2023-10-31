@@ -1,20 +1,20 @@
 extends Enemy
 #vissiin vaan tällä toimii hp regen toistaseks
 
-#var player = null
+var player = null
 var player_pos #viiveellinen pelaajn sijainti
 #var allow_getting_pos = false #lippu pelaaja posille
 var state_machine
 var timer
 var dead = false
 var last_hitter #kuka teki dmg vikana
-#var SPEED = 4.0
+var SPEED = 4.0
 var ATTACK_RANGE = 9.0
 @export var gold_value = 10
 @export var exp_value = 10
 
 #@export var player_path : NodePath
-#@export var player_path := "/root/level1/Mannekiini"
+@export var player_path := "/root/level1/Mannekiini"
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -232,8 +232,6 @@ func _on_area_3d_area_entered(area):
 	if area is bullet or area.get_parent() is bullet:
 		change_health(-player.bullet_dmg_returner())
 		#print(area.class)
-	if area is kick:
-		change_health(-player.kick_dmg_returner())
 	if area is aoeslow:
 		take_dot()
 		SPEED = 1
