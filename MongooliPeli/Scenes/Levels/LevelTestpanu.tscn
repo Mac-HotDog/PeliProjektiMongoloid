@@ -17,7 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://dk55l5q3x28cm" path="res://audio/effects/horror-background-atmosphere-156462.mp3" id="12_x1gjw"]
 [ext_resource type="Texture2D" uid="uid://c1v426abbs471" path="res://assetit/images/blood.png" id="13_ovta8"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="15_j2j3n"]
-[ext_resource type="PackedScene" uid="uid://1itqjb3oylio" path="res://plesure_plate_ansa.tscn" id="19_qp7ad"]
+[ext_resource type="PackedScene" uid="uid://1itqjb3oylio" path="res://plesure_plate_ansa2.tscn" id="19_qp7ad"]
 [ext_resource type="PackedScene" uid="uid://cyt847vhr7ivc" path="res://Scenes/level_nodes/arrowShooter.tscn" id="20_bweaf"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="20_guk0f"]
 [ext_resource type="PackedScene" uid="uid://c7uihborwxy2l" path="res://Scenes/characters/guard.tscn" id="21_tsnvb"]

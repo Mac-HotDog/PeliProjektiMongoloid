@@ -2,9 +2,13 @@ extends Node3D
 
 
 var arrow = preload("res://Scenes/level_nodes/arrow.tscn")
-@export var startDelay = 0
+
+@export var startDelay = 0.0
+@export var shootTimer = 2.0
+
 var random_int = 1 + randi() % (5 + 1 - 1)
 var random_float = 2 + randf() * (4 - 2)
+
 var alert_timer = random_float -0.5
 var timer2
 
@@ -13,7 +17,7 @@ func _ready():
 	var timer = Timer.new()
 
 	# Set the timer properties
-	timer.wait_time = random_float  # The timer will wait for 5 seconds
+	timer.wait_time = shootTimer  # The timer will wait for 5 seconds
 	timer.one_shot = false  # This timer will only timeout once
 
 	# Connect the timeout signal to a callback function
@@ -21,7 +25,8 @@ func _ready():
 
 	# Add the timer as a child of the current node
 	add_child(timer)
-
+	
+	await get_tree().create_timer(startDelay).timeout
 	# Start the timer
 	timer.start()
 	

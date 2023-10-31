@@ -1,10 +1,11 @@
 extends Node3D
 
-
+var idm
+signal painettu( idm)
 
 func _ready():
-	#var node = get_node(node_path)
-	pass
+	idm = self.get_instance_id()
+	print(idm)
 
 func _on_area_3d_body_entered(body):
-	pass # Replace with function body.
+	emit_signal("painettu", idm)

@@ -1,7 +1,9 @@
 extends Node3D
 
-@export var wait = 2
-@export var waitHide = 1
+@export var wait = 2.0
+@export var waitHide = 1.0
+@export var offset = 0.0
+
 @onready var dildo = $dildo
 @onready var area = $dildo/Area3D
 @onready var coll = $dildo/Area3D/CollisionShape3D
@@ -16,7 +18,7 @@ func _ready():
 
 	# Connect the timeout signal to a callback function
 	timer.timeout.connect(_on_timer_timeout)
-
+	await get_tree().create_timer(offset).timeout
 	# Add the timer as a child of the current node
 	add_child(timer)
 
@@ -27,6 +29,7 @@ func _ready():
 	
 	
 func _on_timer_timeout():
+	$click.play()
 	dildo.show()
 	area.set_monitorable(true)
 	area.set_monitoring(false)
@@ -34,4 +37,4 @@ func _on_timer_timeout():
 	await get_tree().create_timer(waitHide).timeout
 	dildo.hide()
 	area.set_monitorable(false)
-	$click.play()
+	
