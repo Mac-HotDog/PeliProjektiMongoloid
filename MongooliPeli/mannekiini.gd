@@ -4,7 +4,14 @@ var exp = 0
 @export var Speed = 4.5
 @export var gravity = 6
 @export var jump_speed = 3.5
+
 @onready var gold_label = $Label3DGold
+
+var exp_limit = 100 #initial
+#@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
+#@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
+@onready var fowlight = $Node3Dfogofwar/Area3D/CollisionShape3D
+
 @onready var bar = $Resourcebar
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
@@ -13,9 +20,25 @@ var exp = 0
 @onready var inventory = inventoryscene.instantiate()
 @export var shopscene = preload("res://Scenes/HUD/shop.tscn")
 @onready var shop = shopscene.instantiate()
+
 @export var salesman_path := "/root/level1/salesman"
 var salesman
 var mouse_in_shop = false
+
+#audio
+@onready var bullet_cast_sound = $audiot/audiobulletcast
+@onready var fireball_cast_sound =$audiot/audiofireballcast #nykyään lumimyrsky
+@onready var death_sound = $audiot/audiodeath
+@onready var dash_cast_sound = $audiot/audiodashcast
+@onready var kick_sound = $audiot/audiokick
+#dmg numbers
+var base_attack_dmg = 7
+var attack_dmg = base_attack_dmg
+@export var bullet_dmg = 30#returner funtiossa uusi kaava tälle
+@export var autoattack_dmg = 15
+@export var aoeslow_dmg = 8
+@export var kick_dmg = 40
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 
 #audio
 @onready var bullet_cast_sound = $audiobulletcast
@@ -76,6 +99,7 @@ var spear = "Area3Dspearprojectile"
 var zombie_area = "Area3DZombie"
 
 # ==ABILITIES LOAD==
+var kick = load_ability("kick")
 var jump = load_ability("jump")
 var stealth = load_ability("stealth")
 var fireball = load_ability("fireball")
@@ -85,12 +109,13 @@ var autoattack = load_ability("autoattack")#spawner scene for projectile
 var aoeslow = load_ability("aoeslow")
 
 #animaatiot jotka estää juoksun ja idlen, cancellaus
-var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight"]
+var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight","Kick"]
 var animplaying
 var activeanimationplaying
 
 
 func _ready():
+	health += 10000
 	#navigationAgent.set_target_position(global_position)
 	add_child(inventory)
 	add_child(shop)
@@ -141,6 +166,7 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
+
 	if Input.is_action_just_pressed("w"):
 		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 			nav_target_pos = mouse_pos
@@ -159,6 +185,28 @@ func _read_input():
 #		o_player_position = global_position #vanhaa dashia varten
 #		o_player_rotation = global_rotation
 		pass
+
+	if Input.is_action_just_pressed("r"):
+		play_animation("Kick",true)
+		if kick_sound.is_playing() == false:
+			kick_sound.play()
+		look_at(suunta, Vector3.UP,true)
+		#kick.execute(self)
+#		nodet3.alotaCDR()
+#		rLock = true
+#		rTimer.start()
+#		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
+#			nav_target_pos = mouse_pos
+#			navigationAgent.set_path_desired_distance(aoeslow_range)
+#			pathing_for_aoeslow = true # tarkistetaan physprosessissa
+#		if global_position.distance_to(mouse_pos) <= aoeslow_range:
+#			navigationAgent.set_target_position(self.position)
+#			aoeslow.mouse_position(mouse_pos)
+#			look_at(suunta, Vector3.UP,true)
+#			play_animation("CastUpRight", true)
+#			fireball_cast_sound.play()
+
+
 
 		#stop pathing
 	if (Input.is_action_just_pressed("s") or Input.is_action_pressed("s") 
@@ -190,12 +238,22 @@ func play_animation(animation,condition):
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
+
 			anim_player.set_speed_scale(6.5)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
 			allow_idle = false
 			anim_player.set_speed_scale(1.3)
 			anim_player.play(animation)
+
+			anim_player.set_speed_scale(7)
+			anim_player.play(animation)
+		if animation == "ThrowRight":#auto attack
+			if not activeanimationplaying:
+				allow_idle = false
+				anim_player.set_speed_scale(1.5)
+				anim_player.play(animation)
+
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
@@ -218,9 +276,19 @@ func play_animation(animation,condition):
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
+
 #	if not condition and anim_player.get_current_animation() == animation:
 #		anim_player.stop()
 #		allow_idle = true
+
+		if animation == "Kick":
+			allow_idle = false
+			anim_player.set_speed_scale(1.4)
+			anim_player.play(animation)
+	if not condition and anim_player.get_current_animation() == animation:
+		anim_player.stop()
+		allow_idle = true
+
 		
 	#print(anim_player.current_animation)
 
@@ -244,10 +312,19 @@ func change_gold(value):
 func change_exp(value):
 	exp += value
 	#level1
-	if exp > 100:
-		level = 2
-		bar.update_level(level)
-		health += 20 #paska tää koko systeemi
+	if exp >= exp_limit:
+		change_level()
+		exp_limit += 100 #??
+		
+
+func change_level():#lvl up
+	health += 20 * level #???
+	attack_dmg += 2
+	level = 2
+	bar.update_level(level)
+	$OmniLight3Dlevelup.visible = true
+	await get_tree().create_timer(0.5).timeout #cool levutus efekti 
+	$OmniLight3Dlevelup.visible = false
 
 func _physics_process(delta):
 	animplaying = anim_player.get_current_animation()
@@ -266,6 +343,7 @@ func _physics_process(delta):
 			fireball_cast_sound.play()
 			pathing_for_aoeslow = false
 			navigationAgent.set_path_desired_distance(1)
+
 
 	#liikkeessä olemisen tunnistus, spagettia
 	if navigationAgent.is_navigation_finished():
@@ -298,6 +376,13 @@ func _physics_process(delta):
 				targetmesh.global_transform.origin.y = 4
 				targetmesh.global_transform.origin.z += -1
 				targetmesh.visible = true
+
+	#liikkeessä olemisen tunnistus, spagettia ja turha?
+	#detectSelfMovement()
+	#run animation rules 3===D
+	runningLogic()
+
+	autoAttack()
 
 
 	#uusi dash? vähän paska mut toimii
@@ -352,6 +437,7 @@ func _physics_process(delta):
 
 
 		
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
 #ranimation rules 3===D
 	allow_run = not navigationAgent.is_navigation_finished()
 	activeanimationplaying = activeanimations.has(animplaying)
@@ -362,6 +448,11 @@ func _physics_process(delta):
 	play_animation("NeutralIdle",allow_idle)
 	play_animation("Running",allow_run)
 
+=======
+
+	
+	
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 	#estää liikkumisen animaation aikana mutta liikkuu sen jälkeen
 	if nav_target_pos == null:
 		navigationAgent.set_target_position(global_position)
@@ -387,6 +478,69 @@ func _physics_process(delta):
 
 	moveToPoint(delta, Speed)
 
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
+=======
+	play_animation("NeutralIdle",allow_idle)
+	play_animation("Running",allow_run)
+	#print("animation: ", anim_player.get_current_animation())
+	#print("allowrun: ", allow_run)
+
+func hyppyLogiikkaa():
+	nodet.alotaCDW()
+	wLock = true
+	wTimer.start()
+	if Input.is_action_just_pressed("w") and not is_jumping:
+		if is_on_floor():
+			play_animation("Jump",true)
+			await get_tree().create_timer(0.17).timeout
+			nav_target_pos = null
+			is_jumping = true
+			#navigationAgent.is_target_reachable()
+			Speed = 10
+			var suunta = Vector3.FORWARD.normalized()
+			#velocity += suunta[1] + 10
+			#nav_target_pos = suunta
+			velocity.y +=  jump_speed
+			#velocity.dir = 1.1
+			move_and_slide()
+
+func dashJuttuja(delta):
+	play_animation("RunSlide", true)
+	dash_cast_sound.play()
+	var dash_vector = dash_direction * DASH_DISTANCE
+	var dash_speed = DASH_SPEED
+	nav_target_pos = null
+
+	if dash_progress < 1.0:
+		#print("h")
+		#navigationAgent.set_target_position(global_position)
+		dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
+		dash_progress += DASH_ACCELERATION * delta
+
+	move_and_collide(dash_vector * dash_speed * delta)
+
+func pathToGetToRange():
+	if navigationAgent.is_navigation_finished() and global_position.distance_to(mouse_pos) <= aoeslow_range:
+		pathing_for_aoeslow = false
+		navigationAgent.set_target_position(self.position)
+		aoeslow.mouse_position(mouse_pos)
+		look_at(mouse_pos, Vector3.UP,true)
+		play_animation("CastUpRight", true)
+		fireball_cast_sound.play()
+		navigationAgent.set_path_desired_distance(0.1)
+
+func kuolema():
+	get_tree().change_scene_to_file("res://Scenes/Levels/HavisitPelinScene.tscn")
+	if die() and dead == false:
+		whendead()
+
+func newDash():
+	nodet2.alotaCDE()
+	eLock = true
+	eTimer.start()
+	is_dashing = true
+	dash_direction = transform.basis.z.normalized() 
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 
 func moveToPoint(delta, speed):
 	if is_on_floor(): #and not activeanimations.has(animplaying):
@@ -402,8 +556,13 @@ func moveToPoint(delta, speed):
 
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
 	look_at(kohta, Vector3.UP, true)
 	#rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
+=======
+	#look_at(kohta, Vector3.UP, true)
+	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),0.2)
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
@@ -533,11 +692,24 @@ func auto_attack(targetpos):
 
 
 func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
 	if target != null:
 		navigationAgent.set_target_position(self.position)
 		autoattack.attack_target_position(target.global_position)
 		autoattack.execute(self)
 	
+=======
+	navigationAgent.set_target_position(self.position)
+	autoattack.attack_target_position(target.global_position)
+	autoattack.execute(self)
+
+func kick_moment():
+	kick.execute(self)
+
+func kick_over():
+	kick.remove_area()
+
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
 
@@ -551,14 +723,21 @@ func aa_dmg_returner():#nämä returnerit vois varmaan siirtää entity scriptii
 	return attack_dmg
 
 func bullet_dmg_returner():
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
 	var bullet_dmg = 20 * level + attack_dmg * 0.7
+=======
+	var bullet_dmg = 10 * level + attack_dmg * 0.7 #onko hyvä ratio?
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
 	return bullet_dmg
 
 func aoeslow_dmg_returner():
 	return aoeslow_dmg
+
+func kick_dmg_returner():
+	return kick_dmg + attack_dmg * 0.7  #?
 	
 #func dmg_returner(dmgsource):
-#	#koitin tehdä koodista järkevämpää, ei toimi vielä
+#	#koitin tehdä koodista järkevämpää, ei toimi vielä, returnerit svoi myös siirtää entityyn?
 #	return dmgsource + "_dmg"
 #	if dmgsource == bullet:
 #		return bullet_dmg
@@ -568,3 +747,27 @@ func aoeslow_dmg_returner():
 #		return autoattack_dmg
 
 
+<<<<<<< Updated upstream:MongooliPeli/mannekiini.gd
+=======
+
+
+func _on_timer_timeoutq():
+	qLock = false
+	qTimer.stop()
+func _on_timer_timeoutw():
+	wLock = false
+	wTimer.stop()
+func _on_timer_timeoute():
+	eLock = false
+	eTimer.stop()
+
+
+func _on_area_3d_body_entered(body):
+	if body is Enemy:
+		body.visible = true
+
+
+func _on_area_3d_body_exited(body):
+	if body is Enemy:
+		body.visible = false
+>>>>>>> Stashed changes:MongooliPeli/Scripts/mannekiini.gd
