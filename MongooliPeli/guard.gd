@@ -37,6 +37,7 @@ var spear_cd = 4.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node(player_path)
+	SPEED = 4
 	state_machine = anim_tree.get("parameters/playback")
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child

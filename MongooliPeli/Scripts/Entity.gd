@@ -3,6 +3,7 @@ extends CharacterBody3D
 class_name Entity
 
 var level = 1
+var exp
 var health: int = 100 + 20 * level
 var mana: int = 100
 var strength: int = 10

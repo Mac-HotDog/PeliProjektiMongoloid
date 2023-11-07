@@ -72,3 +72,5 @@ light_indirect_energy = 2.6
 light_size = 1.0
 spot_range = 10.0
 spot_angle = 28.39
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

@@ -34,10 +34,11 @@ var dmg_number
 @onready var punchcomboaudio = $audio/punchcombo
 
 var allow_idle
-var casting_animation = ["powerup","ultimate","jumpmove","jumpdown","punchcombo","death","knocked"]
+var casting_animation = ["powerup","ultimate","jump","jumpdown","punchcombo","death","knocked"]
 var activeanimationplaying
 var animplaying
-var moveplaying = false
+#var moveplaying = false
+
 
 #skills
 @onready var timer = $Timer# ei tee vielä mitään
@@ -54,7 +55,7 @@ var is_dashing = false
 var took_dash_dmg = false # lippu pelaajaa varten
 
 
-#counters
+#counters, ei tee vielä mtn
 var dashcounter = 0
 var punchcombocounter = 0
 
@@ -84,8 +85,9 @@ func play_animation(animation,condition):
 			anim_player.set_speed_scale(2)
 			anim_player.play(animation)
 		if animation == "powerup":
+			anim_player.set_speed_scale(2)
 			anim_player.play(animation)
-			look_at(player.global_position)
+			look_at(player.global_position,Vector3.UP,true)
 		if animation == "ultimate":
 			anim_player.play(animation)
 			await get_tree().create_timer(1.1).timeout
@@ -139,7 +141,7 @@ func _process(delta):
 
 	animplaying = anim_player.get_current_animation()
 	activeanimationplaying = casting_animation.has(animplaying)
-	if activeanimationplaying or moveplaying:
+	if activeanimationplaying: #or moveplaying:
 		nav_agent.set_target_position(self.global_position)
 
 
@@ -150,14 +152,17 @@ func _process(delta):
 		bar.update_bar(health)
 
 #	if not is_on_floor():
+#		print("notonfloor")
 #		velocity.y = 9 * delta
-	velocity = Vector3.ZERO#?
+#	if is_on_floor():
+#		print("onfloor")
+#	velocity = Vector3.ZERO#?
 	
 	
 
 	
 	
-	if _target_not_in_range(): #and not moveplaying and not activeanimationplaying:
+	if _target_not_in_range() and not activeanimationplaying: #and not moveplaying and not activeanimationplaying:
 		move_and_run()
 
 	
@@ -167,7 +172,7 @@ func _process(delta):
 		
 	if is_dashing: #vois varmaan laittaa funktioon vaa
 		#nav_agent.set_target_position(self.global_position)
-		dash_direction = -transform.basis.z.normalized()
+		dash_direction = transform.basis.z.normalized()
 		var dash_vector = dash_direction * DASH_DISTANCE
 		current_pos = self.global_position
 		if original_pos.distance_to(current_pos) >= DASH_DISTANCE:
@@ -181,12 +186,13 @@ func _process(delta):
 			if collision.get_collider() == player:
 				took_dash_dmg = true
 				player.change_health(-dash_move_dmg)
+				collision = move_and_collide(Vector3.ZERO)
 				is_dashing = false
 			
 		
 	#print(moveplaying)
 	
-	move_and_slide()
+	#move_and_slide()
 	
 #	allow_run = not navigationAgent.is_navigation_finished()
 #	activeanimationplaying = activeanimations.has(animplaying)
@@ -200,8 +206,9 @@ func move_and_run():
 		velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 		#rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 		var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
-		look_at(next_nav_point,Vector3.UP)#,true)
+		look_at(next_nav_point,Vector3.UP,true)
 		play_animation("run",true)
+		move_and_slide()
 
 func knocked_back_func():
 	play_animation("knocked",true)
@@ -221,12 +228,13 @@ func move_decider():
 
 
 func punch_combo():
-	punchcombocounter += 1
-	punchcomboaudio.play()
-	look_at(player.global_position,Vector3.UP)
-	play_animation("punchcombo", true)
-	await get_tree().create_timer(0.4).timeout#scuffed
-	#punch_combo_area.disabled = false
+	if not stunned and not dead:
+		punchcombocounter += 1
+		punchcomboaudio.play()
+		look_at(player.global_position,Vector3.UP,true)
+		play_animation("punchcombo", true)
+		#await get_tree().create_timer(0.4).timeout#scuffed
+		#punch_combo_area.disabled = false
 	
 func punch_combo_animation_moment():#lyöntien hetket
 	punch_combo_area.disabled = false
@@ -234,16 +242,17 @@ func punch_combo_animation_moment():#lyöntien hetket
 	punch_combo_area.disabled = true
 	
 func punch_combo_end(): #ei koko animaation loppu, vain lyömisen
-	pass
+	punchcomboaudio.stop()
 	
 func dash_move():
-	original_pos = self.global_position# saadaan opos jolla rajoteitaan dash rangee
-	took_dash_dmg = false #pelaajan vahinkoa varten
-	roaraudio.play()
-	dash_move_indicator()	
-	await get_tree().create_timer(1).timeout
-	play_animation("jumpmove", true)
-	is_dashing = true #menee physprosessiin
+	if not stunned and not dead:
+		original_pos = self.global_position# saadaan opos jolla rajoteitaan dash rangee
+		took_dash_dmg = false #pelaajan vahinkoa varten
+		roaraudio.play()
+		dash_move_indicator()	
+		await get_tree().create_timer(1).timeout
+		play_animation("jump", true)
+		is_dashing = true #menee physprosessiin
 
 	
 func dash_move_indicator():
@@ -263,11 +272,13 @@ func flame_move():
 	play_animation("ultimate",true)
 
 func ultimate_animation_moment():#liekki spelli
-	flameaudio.play()
-	flame.marker_position(flame_marker)#antaa marker noden ja siitä saa spawn pos
+	flame.marker_getter(flame_marker)#antaa marker noden ja siitä saa spawn pos
 	flame.execute(self)
+	flameaudio.play()
+	await get_tree().create_timer(1).timeout
+	flameaudio.stop()
 
-func ultimate_animation_end():
+func ultimate_animation_end():#animaatiohetki
 	flame.end_flame()#despawnaa liekin
 	#await get_tree().create_timer(0.5).timeout
 	#moveplaying = false
@@ -336,12 +347,13 @@ func _on_area_3d_area_entered(area):
 
 func _on_area_3d_area_exited(area):
 	if area is aoeslow:
-		SPEED = 4
+		SPEED = 4.5
 
 
 func _on_area_3d_punch_combo_area_entered(area):
 	if area.get_parent() is Entity or area is Entity:
-		punch_combo_dmg_sender(true)
+		punch_combo_dmg_sender()
+		print("osui")
 
 #func _on_area_3d_punch_combo_area_exited(area):
 #	if area.get_parent() is Entity or area is Entity:
@@ -349,6 +361,5 @@ func _on_area_3d_punch_combo_area_entered(area):
 #		print("ei lyönti")
 #		punch_combo_dmg_sender(false)#turha
 
-func punch_combo_dmg_sender(send):
-	if send:
-		player.change_health(-punch_combo_dmg)
+func punch_combo_dmg_sender():
+	player.change_health(-punch_combo_dmg)
