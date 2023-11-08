@@ -19,7 +19,6 @@ material = ExtResource("1_56gdf")
 [node name="Node3D" type="Node3D"]
 
 [node name="hiekka" type="MeshInstance3D" parent="." groups=["sand"]]
-visible = false
 mesh = SubResource("BoxMesh_hnsii")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="hiekka"]
@@ -47,6 +46,7 @@ shape = SubResource("BoxShape3D_ogcyw")
 shape = SubResource("BoxShape3D_ogcyw")
 
 [node name="hiekkaKolmio" type="MeshInstance3D" parent="." groups=["sandBrown"]]
+visible = false
 mesh = SubResource("PrismMesh_2a02m")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="hiekkaKolmio"]
