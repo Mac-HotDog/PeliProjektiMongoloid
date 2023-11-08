@@ -72,21 +72,6 @@ func gold_value_returner():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	#turhaa paskaa mitä en saanu toimii
-#	var vittu = $Armature/Skeleton3D.global_transform * $Armature/Skeleton3D.get_bone_global_pose(22)
-#	var perse = $Armature/Skeleton3D.get_bone_global_pose(22)
-#	var saatana = $Armature/Skeleton3D.get_bone_pose(22)
-#	#spearmesh.set_transform(perse)
-#	#spearmesh.top_level = true
-#	#spearmesh.global_transform.origin = right_hand.global_transform.origin
-#	#spearmesh.set_global_transform(saatana)
-#	var skeleton_global_transform = skeleton.get_global_transform()
-#	var right_hand_local_transform = skeleton.get_bone_pose(22)
-#	var right_hand_global_transform = (skeleton_global_transform * right_hand_local_transform)
-
-	#spearmesh.transform = right_hand_local_transform
-	#print(right_hand_local_transform.origin)
-	#print(nav_agent.is_target_reached())
 #
 	if bar:
 		bar.global_position = self.global_position
@@ -99,11 +84,11 @@ func _process(delta):
 	velocity = Vector3.ZERO#?
 	
 		# Conditions
-	anim_tree.set("parameters/conditions/death",die())
+
 	if die() == true and dead == false:
 		whendead()
 
-	
+	#anim_tree.set("parameters/conditions/knocked", knock_back_func())
 	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
 	anim_tree.set("parameters/conditions/death", die())
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())

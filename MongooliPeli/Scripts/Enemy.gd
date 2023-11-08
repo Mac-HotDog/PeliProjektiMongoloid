@@ -61,7 +61,7 @@ func kicked(cc_duration): #cc_dur on vain stun dur eikä move_and_colliden
 	knockback_reset = true#physprosessia varten
 	stunned = true
 	knockback_vector = (self.global_position - player.global_position)
-	knockback_vector[1] = 0
+	knockback_vector[1] = 0.1
 	knockback_vector = knockback_vector.normalized() * 3
 	await get_tree().create_timer(cc_duration).timeout 
 	stunned = false

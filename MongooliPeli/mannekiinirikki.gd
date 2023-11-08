@@ -447,9 +447,9 @@ func _physics_process(delta):
 	or Input.is_action_just_pressed("s")):
 		_read_input()
 
-	if shop.visible == true:
+	if shop.visible == true and shop != null:
 		salesman.shop_open(true)
-	if shop.visible == false:
+	if shop.visible == false and shop != null:
 		salesman.shop_open(false)
 	#print(navigationAgent.is_target_reachable())
 	if(navigationAgent.is_navigation_finished()):

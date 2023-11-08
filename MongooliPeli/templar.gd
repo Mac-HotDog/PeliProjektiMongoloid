@@ -48,6 +48,7 @@ var flame = load_ability("flame")
 var in_punch_combo_area = false
 #dashia
 @export var  DASH_DISTANCE = 5
+var dash_collision #move_and_collide()
 var original_pos
 var current_pos
 var dash_direction = Vector3.FORWARD
@@ -69,7 +70,7 @@ func _ready():
 	SPEED = 4.5
 	anim_player.set_speed_scale(2)
 	player = get_node(player_path)
-	anim_player.play("jumpdown")
+	play_animation("jumpdown",true)
 	yellaudio.play()
 
 
@@ -101,7 +102,11 @@ func play_animation(animation,condition):
 			anim_player.stop()
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
+		if animation == "jumpdown":
+			anim_player.play(animation)
+			velocity.y = -8
 		else:
+			anim_player.set_speed_scale(2)
 			anim_player.play(animation)
 			
 func whendead():
@@ -141,14 +146,14 @@ func _process(delta):
 
 	animplaying = anim_player.get_current_animation()
 	activeanimationplaying = casting_animation.has(animplaying)
-	if activeanimationplaying: #or moveplaying:
+	if activeanimationplaying or is_dashing: #or moveplaying:
 		nav_agent.set_target_position(self.global_position)
 
 
 		
 	if bar:
 		bar.global_position = self.global_position
-		bar.global_position[1] = 3.5
+		bar.global_position[1] = self.global_position[1] + 2
 		bar.update_bar(health)
 
 #	if not is_on_floor():
@@ -156,47 +161,42 @@ func _process(delta):
 #		velocity.y = 9 * delta
 #	if is_on_floor():
 #		print("onfloor")
-#	velocity = Vector3.ZERO#?
-	
+	if animplaying != "jumpdown":
+		velocity = Vector3.ZERO#?
+
 	
 
 	
-	
-	if _target_not_in_range() and not activeanimationplaying: #and not moveplaying and not activeanimationplaying:
-		move_and_run()
-
-	
-	if _target_in_range() and not activeanimationplaying:
+	if _target_in_range() and not activeanimationplaying and not stunned:
 		#if !moveplaying:
 		move_decider()
 		
 	if is_dashing: #vois varmaan laittaa funktioon vaa
-		#nav_agent.set_target_position(self.global_position)
 		dash_direction = transform.basis.z.normalized()
 		var dash_vector = dash_direction * DASH_DISTANCE
 		current_pos = self.global_position
 		if original_pos.distance_to(current_pos) >= DASH_DISTANCE:
 			is_dashing = false
-		#var motion = dash_vector * delta
-		#self.add_collision_exception_with(maa:<GridMap#53234107622>)
-		var collision = move_and_collide(dash_vector * delta * 1.2)#,false,0.001,false,40)
+			dash_collision = null
+		dash_collision = move_and_collide(dash_vector * delta * 1.2)#,false,0.001,false,40)
+#		if stunned:
+#			return
 		
-		if collision and took_dash_dmg == false:
+		if dash_collision and took_dash_dmg == false:
 			#print(collision.get_collider())
-			if collision.get_collider() == player:
+			if dash_collision.get_collider() == player:
 				took_dash_dmg = true
 				player.change_health(-dash_move_dmg)
-				collision = move_and_collide(Vector3.ZERO)
+				dash_collision = null#move_and_collide(Vector3.ZERO)
 				is_dashing = false
 			
-		
-	#print(moveplaying)
 	
-	#move_and_slide()
-	
-#	allow_run = not navigationAgent.is_navigation_finished()
-#	activeanimationplaying = activeanimations.has(animplaying)
 
+	if _target_not_in_range() and not activeanimationplaying: #and not moveplaying and not activeanimationplaying:
+		move_and_run()
+
+	if not is_dashing:
+		move_and_slide()
 
 func move_and_run():
 	if not activeanimationplaying and not die() and not stunned:
@@ -208,10 +208,18 @@ func move_and_run():
 		var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 		look_at(next_nav_point,Vector3.UP,true)
 		play_animation("run",true)
-		move_and_slide()
+		#move_and_slide()
 
 func knocked_back_func():
-	play_animation("knocked",true)
+	if knockback:
+		play_animation("knocked",true)
+		look_at(player.global_position,Vector3.UP,true)
+		is_dashing = false
+		$OmniLight3D.visible = false
+		punchcomboaudio.stop()
+		dash_collision = null
+		flameaudio.stop()
+		flame.end_flame()
 
 func move_decider():
 	#if timer.time_left <= 0.1:# ei toimi vielä
@@ -233,8 +241,7 @@ func punch_combo():
 		punchcomboaudio.play()
 		look_at(player.global_position,Vector3.UP,true)
 		play_animation("punchcombo", true)
-		#await get_tree().create_timer(0.4).timeout#scuffed
-		#punch_combo_area.disabled = false
+
 	
 func punch_combo_animation_moment():#lyöntien hetket
 	punch_combo_area.disabled = false
@@ -263,9 +270,8 @@ func dash_move_indicator():
 func dash_animation_end():
 	$OmniLight3D.visible = false
 	is_dashing = false
+	dash_collision = null
 	
-func jumpdown_animation_end():
-	pass
 	
 func flame_move():
 	#moveplaying = true

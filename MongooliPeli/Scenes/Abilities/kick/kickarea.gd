@@ -4,7 +4,7 @@ class_name kick
 @onready var impactaudio = $impactaudio
 var monitoring = true
 var hit = false
-var cc_duration = 1
+var cc_duration = 0.8
 
 func disable_area():
 	monitoring = false

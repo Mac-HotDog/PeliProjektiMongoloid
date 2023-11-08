@@ -46,10 +46,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00293252, -0.645064, -0.00
 lifetime = 0.8
 explosiveness = 1.0
 randomness = 1.0
-trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2d4ku")
 draw_pass_1 = SubResource("PlaneMesh_ubhsv")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(0.705882, 0.196078, 0.145098, 1)
+light_color = Color(0.705882, 0.223529, 0.145098, 1)
 light_energy = 7.635

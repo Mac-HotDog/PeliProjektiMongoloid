@@ -386,12 +386,13 @@ func stopMovementDuringAnimationAndMoveAfter():
 func detectSelfMovement():
 	if navigationAgent.is_navigation_finished():
 		prev_pos = global_position
-	if (prev_pos-global_position).length() > 0:
+	if (prev_pos-global_position).length() > 0.1:
 		liikkeessä = true
 	if (prev_pos-global_position).length() <= 0:
 		liikkeessä = false
-	if liikkeessä == false and anim_player.get_current_animation() == "":
+	if liikkeessä == false and anim_player.get_current_animation() == "Running":
 		allow_idle = true
+		allow_run = false
 
 func autoAttack():
 	if not aa_free and not target == null:#lähettää vihun pos permana, aa ohjautuu
@@ -500,7 +501,7 @@ func moveToPoint(delta, speed):
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
 	#look_at(kohta, Vector3.UP, true)
-	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
+	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),0.2)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 

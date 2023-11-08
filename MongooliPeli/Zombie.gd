@@ -63,13 +63,13 @@ func _process(delta):
 	
 	if bar:
 		bar.global_position = self.global_position
-		bar.global_position[1] = 3.5
+		bar.global_position[1] = self.global_position[1] + 2
 		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
 
-#	if knock_back:
-#		knocked_back()
+
+	knocked_back_func()
 		
 	match state_machine.get_current_node():
 		#"GetUp":
@@ -84,14 +84,18 @@ func _process(delta):
 			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
 	# Conditions
-	#anim_tree.set("parameters/conditions/knocked", knocked_back())
+	anim_tree.set("parameters/conditions/knocked", knocked_back_func())
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 	anim_tree.set("parameters/conditions/run", !_target_in_range())
 	anim_tree.set("parameters/conditions/die", die())
 	
 	move_and_slide()
 
-	
+func knocked_back_func():
+	if knockback:
+		return true
+	else:
+		return false
 
 func _target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
