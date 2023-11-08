@@ -484,7 +484,7 @@ func moveToPoint(delta, speed):
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
 	#look_at(kohta, Vector3.UP, true)
-	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),1.0)
+	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),0.3)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
