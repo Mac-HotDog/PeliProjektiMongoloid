@@ -54,7 +54,7 @@ func aa_freed():
 	player.aa_freed()
 
 func _physics_process(delta):
-	if ready_to_execute and aa_free == false and target != null:
+	if ready_to_execute and aa_free == false and target != null and target_pos != null:
 		autoattackprojectile.attack_target_position(target_pos)
 		#print(target_pos)
 

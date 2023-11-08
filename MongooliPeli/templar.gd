@@ -95,12 +95,9 @@ func play_animation(animation,condition):
 			anim_player.set_speed_scale(0.7)
 			await get_tree().create_timer(1.5).timeout
 			anim_player.set_speed_scale(2)
-		if animation == "death":
-			anim_player.set_speed_scale(1.8)
-			anim_player.play(animation)
 		if animation == "knocked":
 			anim_player.stop()
-			anim_player.set_speed_scale(1)
+			anim_player.set_speed_scale(0.6)
 			anim_player.play(animation)
 		if animation == "jumpdown":
 			anim_player.play(animation)
@@ -122,6 +119,7 @@ func whendead():
 	flame.end_flame()
 	#last_hitter.target_killed()
 	deathaudio.play()
+	$CollisionShape3D.disable = true
 	$Area3D/CollisionShape3D.disabled = true
 	bar.visible = false
 	await get_tree().create_timer(5).timeout
@@ -164,12 +162,13 @@ func _process(delta):
 	if animplaying != "jumpdown":
 		velocity = Vector3.ZERO#?
 
-	
+	if dead:
+		return
 
 	
 	if _target_in_range() and not activeanimationplaying and not stunned:
-		#if !moveplaying:
-		move_decider()
+		if !die():
+			move_decider()
 		
 	if is_dashing: #vois varmaan laittaa funktioon vaa
 		dash_direction = transform.basis.z.normalized()
@@ -179,10 +178,11 @@ func _process(delta):
 			is_dashing = false
 			dash_collision = null
 		dash_collision = move_and_collide(dash_vector * delta * 1.2)#,false,0.001,false,40)
-#		if stunned:
-#			return
+		if knockback:
+			is_dashing = false
+			return
 		
-		if dash_collision and took_dash_dmg == false:
+		if dash_collision and took_dash_dmg == false and is_dashing:
 			#print(collision.get_collider())
 			if dash_collision.get_collider() == player:
 				took_dash_dmg = true
@@ -369,3 +369,6 @@ func _on_area_3d_punch_combo_area_entered(area):
 
 func punch_combo_dmg_sender():
 	player.change_health(-punch_combo_dmg)
+	
+func flame_dmg_sender():
+	player.change_health(-flame_dmg)

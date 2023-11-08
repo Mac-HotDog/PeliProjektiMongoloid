@@ -40,7 +40,8 @@ func execute(node):
 	add_child(flame)
 	flame.global_position = marker.global_position
 	#flame.global_transform.origin = marker.global_transform.origin
-	flame.global_transform.basis = marker.global_transform.basis
+	flame.global_transform.basis = marker.global_transform.basis#?
+	flame.get_parent_func(parent)
  
 
 

@@ -289,6 +289,7 @@ func play_animation(animation,condition):
 func _on_animation_player_animation_finished(anim_name):
 	allow_idle = true
 
+
 func whendead():
 		dead = true
 		death_sound.play()
@@ -384,15 +385,14 @@ func stopMovementDuringAnimationAndMoveAfter():
 		navigationAgent.set_target_position(nav_target_pos)
 
 func detectSelfMovement():
-	if navigationAgent.is_navigation_finished():
-		prev_pos = global_position
-	if (prev_pos-global_position).length() > 0.1:
-		liikkeessä = true
-	if (prev_pos-global_position).length() <= 0:
-		liikkeessä = false
-	if liikkeessä == false and anim_player.get_current_animation() == "Running":
-		allow_idle = true
-		allow_run = false
+	pass
+#	if not navigationAgent.is_target_reachable():
+#		if anim_player.get_current_animation() == "Running":
+#			if velocity == Vector3.ZERO:
+#				print("perhana")
+#				allow_run = false
+#				allow_idle = true
+		
 
 func autoAttack():
 	if not aa_free and not target == null:#lähettää vihun pos permana, aa ohjautuu
@@ -421,11 +421,23 @@ func runningLogic():
 
 	if activeanimationplaying:
 		allow_run = false
+		
+	#if not navigationAgent.is_target_reachable():
+	if anim_player.get_current_animation() == "Running":
+		if velocity == Vector3.ZERO:
+			navigationAgent.set_target_position(self.global_position)
+			nav_target_pos = self.global_position
+			allow_run = false
+			allow_idle = true
+#				print("navigation: ",navigationAgent.is_navigation_finished())
+#				print("animation: ", anim_player.get_current_animation())
+#				print("allowrun: ", allow_run)
+#				print("allowidle: ", allow_idle)
 
 	play_animation("NeutralIdle",allow_idle)
 	play_animation("Running",allow_run)
-	#print("animation: ", anim_player.get_current_animation())
-	#print("allowrun: ", allow_run)
+#	print("animation: ", anim_player.get_current_animation())
+#	print("allowrun: ", allow_run)
 
 func hyppyLogiikkaa():
 #	nodet.alotaCDW()
