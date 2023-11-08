@@ -9,7 +9,7 @@ extends Entity
 @onready var navigationAgent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
-@export var inventoryscene = preload("res://Scenes/HUD/inventorynew.tscn")
+@onready var inventoryscene = preload("res://Scenes/HUD/inventorynew.tscn")
 @onready var inventory = inventoryscene.instantiate()
 @onready var gold_label =$Label3DGold
 @export var salesman_path := "/root/level1/salesman"
@@ -26,6 +26,7 @@ var attack_dmg = base_attack_dmg
 @export var bullet_dmg = 30#returner funtiossa uusi kaava tälle
 @export var autoattack_dmg = 15
 @export var aoeslow_dmg = 7
+@export var kick_dmg = 40
 
 #ranges
 @export var aa_range = 8
@@ -113,15 +114,17 @@ var bullet = load_ability("bullet")#spawner scene for projectile
 var acidBall = load_ability("acidBall")
 var autoattack = load_ability("autoattack")#spawner scene for projectile
 var aoeslow = load_ability("aoeslow")
+var kick = load_ability("kick")
 
 #animaatiot jotka estää juoksun ja idlen, cancellaus
-var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight"]
+var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight","Kick"]
 var animplaying
 var activeanimationplaying
 
 
 func _ready():
 	#navigationAgent.set_target_position(global_position)
+	exp = 0
 	add_child(inventory)
 	add_child(shop)
 	salesman = get_node(salesman_path)
@@ -189,20 +192,24 @@ func _read_input():
 		bullet_cast_sound.play()
 		bullet.execute(self)
 	if Input.is_action_just_pressed("r"):
-		nodet3.alotaCDR()
-		rLock = true
-		rTimer.start()
-		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
-			nav_target_pos = mouse_pos
-			navigationAgent.set_path_desired_distance(aoeslow_range)
-			pathing_for_aoeslow = true # tarkistetaan physprosessissa
-		if global_position.distance_to(mouse_pos) <= aoeslow_range:
-			navigationAgent.set_target_position(self.position)
-			aoeslow.mouse_position(mouse_pos)
-			look_at(suunta, Vector3.UP,true)
-			play_animation("CastUpRight", true)
-			fireball_cast_sound.play()
-		#aoesplash.mouse_position(mouse_pos)
+#		nodet3.alotaCDR()
+#		rLock = true
+#		rTimer.start()
+
+		look_at(suunta, Vector3.UP,true)
+		play_animation("Kick",true)
+		
+#		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
+#			nav_target_pos = mouse_pos
+#			navigationAgent.set_path_desired_distance(aoeslow_range)
+#			pathing_for_aoeslow = true # tarkistetaan physprosessissa
+#		if global_position.distance_to(mouse_pos) <= aoeslow_range:
+#			navigationAgent.set_target_position(self.position)
+#			aoeslow.mouse_position(mouse_pos)
+#			look_at(suunta, Vector3.UP,true)
+#			play_animation("CastUpRight", true)
+#			fireball_cast_sound.play()
+
 #	if Input.is_action_just_pressed("e"):
 ##		o_player_position = global_position #vanhaa dashia varten
 ##		o_player_rotation = global_rotation
@@ -239,12 +246,13 @@ func play_animation(animation,condition):
 			#anim_player.set_blend_time("Running","CastForwardRight",2)
 			allow_idle = false
 			anim_player.stop()
-			anim_player.set_speed_scale(8)
+			anim_player.set_speed_scale(7)
 			anim_player.play(animation)
 		if animation == "ThrowRight":#auto attack
-			allow_idle = false
-			anim_player.set_speed_scale(1.5)
-			anim_player.play(animation)
+			if not activeanimationplaying:
+				allow_idle = false
+				anim_player.set_speed_scale(1.5)
+				anim_player.play(animation)
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
 			anim_player.play(animation)
@@ -267,6 +275,11 @@ func play_animation(animation,condition):
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
+		if animation == "Kick":
+			anim_player.set_speed_scale(1.5)
+			allow_run = false
+			allow_idle = false
+			anim_player.play(animation)
 	if not condition and anim_player.get_current_animation() == animation:
 		anim_player.stop()
 		allow_idle = true
@@ -275,6 +288,7 @@ func play_animation(animation,condition):
 
 func _on_animation_player_animation_finished(anim_name):
 	allow_idle = true
+
 
 func whendead():
 		dead = true
@@ -312,11 +326,19 @@ func _physics_process(delta):
 	if pathing_for_aoeslow: #pathaus rangelle pääsyyn
 		pathToGetToRange()
 
-	#liikkeessä olemisen tunnistus, spagettia
+	#run animation rules and activeanimations
+	runningLogic()
+
+	#liikkeessä olemisen tunnistus, laittaa idlen päälle, spagettia
 	detectSelfMovement()
 	
+	#estää liikkumisen animaation aikana mutta liikkuu sen jälkeen
+	stopMovementDuringAnimationAndMoveAfter()
+
 	#########===========autoattack==============##########
 	autoAttack()
+	
+
 
 	#uusi dash? vähän paska mut toimii
 	if eLock == false and Input.is_action_just_pressed("e") and is_dashing == false and (is_on_floor() or is_jumping):
@@ -342,12 +364,6 @@ func _physics_process(delta):
 		bar.global_position[1] = 3.2
 		bar.update_bar(health)
 		
-	#run animation rules 3===D
-	runningLogic()
-	
-	
-	#estää liikkumisen animaation aikana mutta liikkuu sen jälkeen
-	stopMovementDuringAnimationAndMoveAfter()
 		
 	if (Input.is_action_just_pressed("q") or Input.is_action_just_pressed("w") or 
 	Input.is_action_just_pressed("e") or Input.is_action_just_pressed("r")
@@ -369,14 +385,14 @@ func stopMovementDuringAnimationAndMoveAfter():
 		navigationAgent.set_target_position(nav_target_pos)
 
 func detectSelfMovement():
-	if navigationAgent.is_navigation_finished():
-		prev_pos = global_position
-	if (prev_pos-global_position).length() > 0:
-		liikkeessä = true
-	if (prev_pos-global_position).length() <= 0:
-		liikkeessä = false
-	if liikkeessä == false and anim_player.get_current_animation() == "":
-		allow_idle = true
+	pass
+#	if not navigationAgent.is_target_reachable():
+#		if anim_player.get_current_animation() == "Running":
+#			if velocity == Vector3.ZERO:
+#				print("perhana")
+#				allow_run = false
+#				allow_idle = true
+		
 
 func autoAttack():
 	if not aa_free and not target == null:#lähettää vihun pos permana, aa ohjautuu
@@ -405,16 +421,28 @@ func runningLogic():
 
 	if activeanimationplaying:
 		allow_run = false
+		
+	#if not navigationAgent.is_target_reachable():
+	if anim_player.get_current_animation() == "Running":
+		if velocity == Vector3.ZERO:
+			navigationAgent.set_target_position(self.global_position)
+			nav_target_pos = self.global_position
+			allow_run = false
+			allow_idle = true
+#				print("navigation: ",navigationAgent.is_navigation_finished())
+#				print("animation: ", anim_player.get_current_animation())
+#				print("allowrun: ", allow_run)
+#				print("allowidle: ", allow_idle)
 
 	play_animation("NeutralIdle",allow_idle)
 	play_animation("Running",allow_run)
-	#print("animation: ", anim_player.get_current_animation())
-	#print("allowrun: ", allow_run)
+#	print("animation: ", anim_player.get_current_animation())
+#	print("allowrun: ", allow_run)
 
 func hyppyLogiikkaa():
-	nodet.alotaCDW()
-	wLock = true
-	wTimer.start()
+#	nodet.alotaCDW()
+#	wLock = true
+#	wTimer.start()
 #	if Input.is_action_just_pressed("w") and not is_jumping:
 #		if is_on_floor():
 #			play_animation("Jump",true)
@@ -429,6 +457,7 @@ func hyppyLogiikkaa():
 #			velocity.y +=  jump_speed
 #			#velocity.dir = 1.1
 #			move_and_slide()
+	pass
 
 func dashJuttuja(delta):
 	play_animation("RunSlide", true)
@@ -484,7 +513,7 @@ func moveToPoint(delta, speed):
 func faceDirection(direction):
 	var kohta = Vector3(direction.x, global_position.y, direction.z)
 	#look_at(kohta, Vector3.UP, true)
-	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),0.3)
+	rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z),0.2)
 	#self.rotate(direction.x.normalized(),direction.z.normalized())
 	#look_at(Vector3.FORWARD.rotated(Vector3.UP, rotation.y).lerp(direction, 0.1) + position)
 
@@ -594,6 +623,12 @@ func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
 func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
 
+func kick_moment():
+	kick.execute(self)
+
+func kick_over():
+	kick.remove_area()
+
 func in_aa_range(targetpos):
 	return global_position.distance_to(targetpos) <= aa_range
 	
@@ -606,6 +641,10 @@ func aa_dmg_returner():
 func bullet_dmg_returner():
 	var bullet_dmg = 20 * level + attack_dmg * 0.7 #onko hyvä ratio?
 	return bullet_dmg
+	
+
+func kick_dmg_returner():
+	return kick_dmg + attack_dmg * 0.7  #?
 
 func aoeslow_dmg_returner():
 	return aoeslow_dmg

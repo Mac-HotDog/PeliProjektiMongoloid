@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcv7h05ahes0f"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/groundstomp/groundstomp.gd" id="1_qwqlg"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_qwqlg")

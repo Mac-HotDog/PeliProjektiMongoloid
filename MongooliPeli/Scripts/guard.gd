@@ -1,20 +1,20 @@
 extends Enemy
 #vissiin vaan tällä toimii hp regen toistaseks
 
-var player = null
+#var player = null
 var player_pos #viiveellinen pelaajn sijainti
 #var allow_getting_pos = false #lippu pelaaja posille
 var state_machine
 var timer
 var dead = false
 var last_hitter #kuka teki dmg vikana
-var SPEED = 4.0
+#var SPEED = 4.0
 var ATTACK_RANGE = 9.0
 @export var gold_value = 10
 @export var exp_value = 10
 
 #@export var player_path : NodePath
-@export var player_path := "/root/level1/Mannekiini"
+#@export var player_path := "/root/level1/Mannekiini"
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -37,6 +37,7 @@ var spear_cd = 4.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node(player_path)
+	SPEED = 4
 	state_machine = anim_tree.get("parameters/playback")
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
@@ -45,8 +46,8 @@ func _ready():
 	
 func whendead():
 	dead = true
-	#last_hitter.change_gold(gold_value)
-	#last_hitter.change_exp(exp_value)
+	last_hitter.change_gold(gold_value)
+	last_hitter.change_exp(exp_value)
 	#last_hitter.target_killed()
 	deathaudio.play()
 	#deathaudio.play()
@@ -71,21 +72,6 @@ func gold_value_returner():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	#turhaa paskaa mitä en saanu toimii
-#	var vittu = $Armature/Skeleton3D.global_transform * $Armature/Skeleton3D.get_bone_global_pose(22)
-#	var perse = $Armature/Skeleton3D.get_bone_global_pose(22)
-#	var saatana = $Armature/Skeleton3D.get_bone_pose(22)
-#	#spearmesh.set_transform(perse)
-#	#spearmesh.top_level = true
-#	#spearmesh.global_transform.origin = right_hand.global_transform.origin
-#	#spearmesh.set_global_transform(saatana)
-#	var skeleton_global_transform = skeleton.get_global_transform()
-#	var right_hand_local_transform = skeleton.get_bone_pose(22)
-#	var right_hand_global_transform = (skeleton_global_transform * right_hand_local_transform)
-
-	#spearmesh.transform = right_hand_local_transform
-	#print(right_hand_local_transform.origin)
-	#print(nav_agent.is_target_reached())
 #
 	if bar:
 		bar.global_position = self.global_position
@@ -98,13 +84,15 @@ func _process(delta):
 	velocity = Vector3.ZERO#?
 	
 		# Conditions
-	anim_tree.set("parameters/conditions/death",die())
+
 	if die() == true and dead == false:
 		whendead()
 
-	anim_tree.set("parameters/conditions/death", die())
+	#anim_tree.set("parameters/conditions/knocked", knock_back_func())
 	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
+	anim_tree.set("parameters/conditions/death", die())
 	anim_tree.set("parameters/conditions/run", _target_not_in_range())
+	
 	anim_tree.set("parameters/conditions/idle", allow_idle())
 
 	
@@ -133,7 +121,9 @@ func _process(delta):
 				return
 #			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 #			look_at(kohta,Vector3.UP,true)
-			#cast_spear()#turhia
+
+
+			#cast_spear()
 			
 		"Idle":
 			spear.target_position(player.position)#pelaajan on helppo väistää keihäs jos tämä on idlessä
@@ -169,7 +159,7 @@ func _target_not_in_range():
 	
 func allow_cast_spear():
 	var in_range = global_position.distance_to(player.global_position) < ATTACK_RANGE
-	if in_range and spear_timer.time_left < 0.1 and die() == false:
+	if in_range and spear_timer.time_left < 0.1 and not die():
 		return true
 	else:
 		return false
@@ -228,6 +218,8 @@ func _on_area_3d_area_entered(area):
 	if area is bullet or area.get_parent() is bullet:
 		change_health(-player.bullet_dmg_returner())
 		#print(area.class)
+	if area is kick:
+		change_health(-player.kick_dmg_returner())
 	if area is aoeslow:
 		take_dot()
 		SPEED = 1

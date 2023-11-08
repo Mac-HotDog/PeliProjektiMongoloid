@@ -91,6 +91,7 @@ offset_left = 792.0
 offset_top = 144.0
 offset_right = 809.0
 offset_bottom = 175.0
+mouse_filter = 1
 text = "x"
 
 [node name="tooltip" type="RichTextLabel" parent="."]
@@ -100,6 +101,7 @@ offset_left = 219.892
 offset_top = 179.886
 offset_right = 419.892
 offset_bottom = 249.886
+mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "testi"
 

@@ -8,7 +8,7 @@ extends Sprite3D
 @onready var lvl_label = $Level/SubViewport2/Control/LevelLabel
 @onready var parent = get_parent()
 var value = 100
-
+var max_value_gotten = false
 
 
 func _ready():
@@ -35,6 +35,9 @@ func _physics_process(delta):
 	level_srite.global_position[2] = self.global_position[2]
 	
 func update_bar(x):#x on tämän hetken hp määrä
+	if !max_value_gotten:
+		bar.max_value = x
+		max_value_gotten = true
 	bar.value = x
 	label.text =str(x)#scuffed ik # "                  "+
 

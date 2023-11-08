@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwlrg7i1p0yga"]
+
+[ext_resource type="AudioStream" uid="uid://pthalwcu8wsk" path="res://audio/effects/lava-loop-2-67306.mp3" id="1_4ghst"]
+[ext_resource type="Texture2D" uid="uid://cu64snqn7l2qo" path="res://assetit/kenney particle transparent/fire_02.png" id="2_4a8hq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbtbp"]
+albedo_color = Color(0.588235, 0.117647, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f0i7g"]
+material = SubResource("StandardMaterial3D_kbtbp")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r4wqc"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2d4ku"]
+direction = Vector3(0, 100, 100)
+spread = 163.39
+gravity = Vector3(0, 1.2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ppfjl"]
+transparency = 1
+albedo_color = Color(0.721569, 0, 0.113725, 1)
+albedo_texture = ExtResource("2_4a8hq")
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ubhsv"]
+material = SubResource("StandardMaterial3D_ppfjl")
+orientation = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_f0i7g")
+
+[node name="Area3D" type="Area3D" parent="." groups=["tappo"]]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_r4wqc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_4ghst")
+volume_db = -65.0
+autoplay = true
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00293252, -0.645064, -0.00887972)
+lifetime = 0.8
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_2d4ku")
+draw_pass_1 = SubResource("PlaneMesh_ubhsv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.705882, 0.223529, 0.145098, 1)
+light_energy = 7.635

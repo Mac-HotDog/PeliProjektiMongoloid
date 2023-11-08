@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/grunt1-84540.mp3-d802d71c170625b8654b99546388
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

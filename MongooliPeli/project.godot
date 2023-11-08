@@ -32,6 +32,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/simplegrasstextured/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 q={
