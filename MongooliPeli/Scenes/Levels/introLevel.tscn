@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="7_xg406"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="8_ibavm"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="9_2mc1t"]
-[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiinirikki.tscn" id="10_33ol5"]
 [ext_resource type="MeshLibrary" uid="uid://dxh12cai15i4b" path="res://blockit12.tres" id="11_ly756"]
 [ext_resource type="PackedScene" uid="uid://bp54h2povvrfl" path="res://timeTriggerAnsa3.tscn" id="13_5g58c"]
 [ext_resource type="PackedScene" uid="uid://dwyp8br1hgqho" path="res://timeTriggerAnsa4.tscn" id="13_eule1"]
@@ -17,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cyt847vhr7ivc" path="res://Scenes/level_nodes/arrowShooter.tscn" id="14_qkojq"]
 [ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="15_qtpw8"]
 [ext_resource type="PackedScene" uid="uid://pbtsb2x35cks" path="res://Scenes/level_nodes/arrowShooterPlate.tscn" id="17_8tfyk"]
+[ext_resource type="PackedScene" uid="uid://cq755s0vhaypf" path="res://Scenes/characters/Mannekiini.tscn" id="18_koi2j"]
 [ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Others/spawn_points.tscn" id="19_fvecq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds5h3"]
@@ -99,9 +99,6 @@ process_mode = 2
 visible = false
 
 [node name="UI" parent="." instance=ExtResource("9_2mc1t")]
-
-[node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("10_33ol5")]
-transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 37.2879, 0.797068, -10.8718)
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("11_ly756")
@@ -331,6 +328,9 @@ transform = Transform3D(0.55, 0, 0, 0, 1, 0, 0, 0, 0.7, 22.2, 0, -15)
 
 [node name="winpoint?" parent="." instance=ExtResource("15_qtpw8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 26)
+
+[node name="Mannekiini" parent="." instance=ExtResource("18_koi2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.4, 0.8, -11.6)
 
 [connection signal="body_entered" from="platNGroup/group1/plateNN2/presurePlate/Area3D" to="platNGroup/group1/plateNN2/arrowShooterPlate" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="platNGroup/group1/plateNN/presurePlate/Area3D" to="platNGroup/group1/plateNN/arrowShooterPlate" method="_on_area_3d_body_entered"]
