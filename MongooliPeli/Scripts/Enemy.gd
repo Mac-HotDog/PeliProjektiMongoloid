@@ -3,7 +3,7 @@ extends CharacterBody3D
 class_name Enemy
 
  #= null
-var player_path := "/root/level1/Mannekiini"#level1
+var player_path = "/root/level1/Mannekiini"#level1
 @onready var player = get_node(player_path)
 var health: int = 100
 var mana: int = 100
@@ -67,7 +67,9 @@ func kicked(cc_duration): #cc_dur on vain stun dur eikä move_and_colliden
 	stunned = false
 	knockback = false
 	#SPEED = 4
-	
+
+func knocked_up():
+	pass
 
 # Called every physics frame
 func _physics_process(delta: float) -> void:

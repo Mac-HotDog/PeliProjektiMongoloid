@@ -21,7 +21,7 @@ var exp_limit = 100 #initial
 @export var shopscene = preload("res://Scenes/HUD/shop.tscn")
 @onready var shop = shopscene.instantiate()
 
-#@export var salesman_path := "/root/level1/salesman"
+@export var salesman_path := "/root/level1/salesman"
 var salesman
 var mouse_in_shop = false
 
@@ -112,7 +112,7 @@ func _ready():
 	#navigationAgent.set_target_position(global_position)
 	add_child(inventory)
 	add_child(shop)
-	#salesman = get_node(salesman_path)
+	salesman = get_node(salesman_path)
 	add_child(targetmesh)
 	targetmesh.visible = false
 	gold_label.visible = false
@@ -447,10 +447,10 @@ func _physics_process(delta):
 	or Input.is_action_just_pressed("s")):
 		_read_input()
 
-#	if shop.visible == true and shop != null:
-#		salesman.shop_open(true)
-#	if shop.visible == false and shop != null:
-#		salesman.shop_open(false)
+	if shop.visible == true and shop != null and salesman != null:
+		salesman.shop_open(true)
+	if shop.visible == false and shop != null and salesman != null:
+		salesman.shop_open(false)
 	#print(navigationAgent.is_target_reachable())
 	if(navigationAgent.is_navigation_finished()):
 		return
