@@ -27,7 +27,6 @@ var attack_dmg = base_attack_dmg
 @export var autoattack_dmg = 15
 @export var aoeslow_dmg = 7
 @export var kick_dmg = 40
-@export var stomp_dmg = 55
 
 #ranges
 @export var aa_range = 8
@@ -71,7 +70,6 @@ var keep_aa #keep autoattackking
 var target_found = false#flag for following enemy
 var target
 var target_pos 
-var mousepos
 
 #sekalaisia
 #var parent = get_parent()
@@ -117,10 +115,9 @@ var acidBall = load_ability("acidBall")
 var autoattack = load_ability("autoattack")#spawner scene for projectile
 var aoeslow = load_ability("aoeslow")
 var kick = load_ability("kick")
-var stomp = load_ability("groundstomp")
 
 #animaatiot jotka estää juoksun ja idlen, cancellaus
-var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight","Kick","Stomp"]
+var activeanimations = ["CastForwardRight","Jump","DramaticDeath","RunSlide","CastUpRight","Kick"]
 var animplaying
 var activeanimationplaying
 
@@ -163,10 +160,10 @@ func _ready():
 func _read_input():
 	#kääntyminen spellin suuntaan
 	var camera = get_tree().get_nodes_in_group("Camera")[0]
-	mousepos = get_viewport().get_mouse_position()
+	var mousePos = get_viewport().get_mouse_position()
 	var rayLength = 100
-	var from = camera.project_ray_origin(mousepos)
-	var to = from + camera.project_ray_normal(mousepos) * rayLength
+	var from = camera.project_ray_origin(mousePos)
+	var to = from + camera.project_ray_normal(mousePos) * rayLength
 	var space = get_world_3d().direct_space_state #get_environment
 	var rayQuery = PhysicsRayQueryParameters3D.new()
 	rayQuery.from = from
@@ -194,13 +191,13 @@ func _read_input():
 		bullet.mouse_position(cast_to)
 		bullet_cast_sound.play()
 		bullet.execute(self)
-	if Input.is_action_just_pressed("w"):
-		cast_ability("stomp")
 	if Input.is_action_just_pressed("r"):
 #		nodet3.alotaCDR()
 #		rLock = true
 #		rTimer.start()
-		cast_ability("kick")
+
+		look_at(suunta, Vector3.UP,true)
+		play_animation("Kick",true)
 		
 #		if global_position.distance_to(mouse_pos) > aoeslow_range:#? 
 #			nav_target_pos = mouse_pos
@@ -283,25 +280,11 @@ func play_animation(animation,condition):
 			allow_run = false
 			allow_idle = false
 			anim_player.play(animation)
-		if animation == "Stomp":
-			anim_player.set_speed_scale(1.5)
-			anim_player.play(animation)
-		else:
-			anim_player.play(animation)
 	if not condition and anim_player.get_current_animation() == animation:
 		anim_player.stop()
 		allow_idle = true
 		
 	#print(anim_player.current_animation)
-	
-func cast_ability(ability): #tänne vois laittaa kaikki skillit?
-	var suunta = Vector3(mouse_pos[0],global_position.y,mouse_pos[2])
-	if ability == "kick":
-		look_at(suunta, Vector3.UP,true)
-		play_animation("Kick",true)
-	if ability == "stomp":
-		#stomp.get_pos(Vector3.MODEL_FRONT)
-		play_animation("Stomp",true)
 
 func _on_animation_player_animation_finished(anim_name):
 	allow_idle = true
@@ -438,7 +421,6 @@ func runningLogic():
 
 	if activeanimationplaying:
 		allow_run = false
-		allow_idle = false
 		
 	#if not navigationAgent.is_target_reachable():
 	if anim_player.get_current_animation() == "Running":
@@ -641,9 +623,6 @@ func aa_animation_moment(pos):#aa animaation h hetki, spawnaa aa
 func cast_up_moment():#cast_up animaatop h hetki
 	aoeslow.execute(self)
 
-func stomp_moment():
-	stomp.execute(self)
-
 func kick_moment():
 	kick.execute(self)
 
@@ -662,9 +641,7 @@ func aa_dmg_returner():
 func bullet_dmg_returner():
 	var bullet_dmg = 20 * level + attack_dmg * 0.7 #onko hyvä ratio?
 	return bullet_dmg
-
-func stomp_dmg_returner():
-	return stomp_dmg#attack_dmg * 0.7 + stomp_dmg
+	
 
 func kick_dmg_returner():
 	return kick_dmg + attack_dmg * 0.7  #?

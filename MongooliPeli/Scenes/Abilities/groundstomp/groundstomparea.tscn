@@ -1,30 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://tdt6gqrsb513"]
-
-[ext_resource type="Script" path="res://Scenes/Abilities/groundstomp/groundstomparea.gd" id="1_hywmd"]
-[ext_resource type="Texture2D" uid="uid://80qdwxi30n4" path="res://assetit/kenney particle transparent/circle_01.png" id="3_iw744"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfksp"]
-transparency = 1
-albedo_texture = ExtResource("3_iw744")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_t42vr"]
-material = SubResource("StandardMaterial3D_kfksp")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_bfe74"]
-radius = 0.7
+[gd_scene format=3 uid="uid://tdt6gqrsb513"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_hywmd")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_t42vr")
-
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.473892, 0)
-shape = SubResource("CylinderShape3D_bfe74")
-
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]

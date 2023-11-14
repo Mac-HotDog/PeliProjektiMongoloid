@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwlrg7i1p0yga"]
+[gd_scene load_steps=9 format=3 uid="uid://dwlrg7i1p0yga"]
 
 [ext_resource type="AudioStream" uid="uid://pthalwcu8wsk" path="res://audio/effects/lava-loop-2-67306.mp3" id="1_4ghst"]
-[ext_resource type="Script" path="res://laava.gd" id="1_fcld4"]
 [ext_resource type="Texture2D" uid="uid://cu64snqn7l2qo" path="res://assetit/kenney particle transparent/fire_02.png" id="2_4a8hq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbtbp"]
@@ -21,7 +20,7 @@ initial_velocity_max = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ppfjl"]
 transparency = 1
-albedo_color = Color(0.682353, 0.160784, 0.0313726, 1)
+albedo_color = Color(0.721569, 0, 0.113725, 1)
 albedo_texture = ExtResource("2_4a8hq")
 billboard_mode = 1
 
@@ -31,7 +30,6 @@ orientation = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_f0i7g")
-script = ExtResource("1_fcld4")
 
 [node name="Area3D" type="Area3D" parent="." groups=["tappo"]]
 

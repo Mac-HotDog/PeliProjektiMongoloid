@@ -1,9 +1,9 @@
 extends Node3D
 
 # Threshold distance from the edge
-const EDGE_THRESHOLD = 50
+const EDGE_THRESHOLD = 100
 
-const CAMERA_MOVE_SPEED = 0.2
+const CAMERA_MOVE_SPEED = 0.3
 
 const CAMERA_ZOOM_SPEED = 0.4
 
@@ -15,6 +15,7 @@ const CAMERA_ZOOM_SPEED = 0.4
 func _ready():
 	#bgm
 	var audioplayer = $AudioStreamPlayer
+	
 	#audioplayer.play()
 	
 
@@ -29,6 +30,7 @@ func _input(event):
 		var rayQuery = PhysicsRayQueryParameters3D.new()
 		rayQuery.from = from
 		rayQuery.to = to
+		rayQuery.exclude = [$Mannekiini]
 		#rayQuery.collide_with_areas = true
 		rayQuery.set_collide_with_areas(false)
 		rayQuery.set_collide_with_bodies(true)
@@ -50,8 +52,9 @@ func _input(event):
 			$Marker.transform.origin = edited_result
 			await get_tree().create_timer(1).timeout
 			$Marker.visible = false 
-		if result.collider is Enemy:
-			$Marker.visible = false 
+		if result.collider != null:
+			if result.collider is Enemy:
+				$Marker.visible = false 
 
 
 
@@ -117,25 +120,27 @@ func _physics_process(delta):
 	
 	if NOTIFICATION_VP_MOUSE_ENTER:
 		# Get the mouse position
-		var viewport_size = get_viewport().size
 		var mouse_pos = get_viewport().get_mouse_position()
-		
-		print(viewport_size)
-		print(mouse_pos)
-
+		var viewport_size = get_viewport().size
+#		print(viewport_size.x)
+#		print(viewport_size.y)
+#		if NOTIFICATION_WM_RESIZED:
+#			mouse_pos = get_viewport().get_mouse_position()
+#			viewport_size = get_viewport().size
 		# Calculate the distance from the mouse position to the edges
 		var distance_left = mouse_pos.x
-		var distance_right = viewport_size.x - mouse_pos.x
+		var distance_right = 1152 - mouse_pos.x
+		#print(distance_right)
 		var distance_top = mouse_pos.y
-		var distance_bottom = viewport_size.y - mouse_pos.y
-
+		var distance_bottom = 648 - mouse_pos.y
+		#print(viewport_size.y)
 		# Check if the mouse is near any edge and emit the signal
 
-		if distance_left <= EDGE_THRESHOLD:
+		if distance_right < EDGE_THRESHOLD:
 			_on_mouse_near_edge("left")
-		if distance_right <= EDGE_THRESHOLD:
+		if distance_left < EDGE_THRESHOLD:
 			_on_mouse_near_edge("right")
-		if distance_top <= EDGE_THRESHOLD:
+		if distance_bottom < EDGE_THRESHOLD:
 			_on_mouse_near_edge("top")
-		if distance_bottom <= EDGE_THRESHOLD:
+		if distance_top < EDGE_THRESHOLD:
 			_on_mouse_near_edge("bottom")
