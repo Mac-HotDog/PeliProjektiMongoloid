@@ -119,7 +119,7 @@ func whendead():
 	flame.end_flame()
 	#last_hitter.target_killed()
 	deathaudio.play()
-	$CollisionShape3D.disable = true
+	$CollisionShape3D.disabled = true
 	$Area3D/CollisionShape3D.disabled = true
 	bar.visible = false
 	await get_tree().create_timer(5).timeout
@@ -359,7 +359,7 @@ func _on_area_3d_area_exited(area):
 func _on_area_3d_punch_combo_area_entered(area):
 	if area.get_parent() is Entity or area is Entity:
 		punch_combo_dmg_sender()
-		print("osui")
+		#print("osui")
 
 #func _on_area_3d_punch_combo_area_exited(area):
 #	if area.get_parent() is Entity or area is Entity:

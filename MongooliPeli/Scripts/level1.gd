@@ -117,8 +117,11 @@ func _physics_process(delta):
 	
 	if NOTIFICATION_VP_MOUSE_ENTER:
 		# Get the mouse position
-		var mouse_pos = get_viewport().get_mouse_position()
 		var viewport_size = get_viewport().size
+		var mouse_pos = get_viewport().get_mouse_position()
+		
+		print(viewport_size)
+		print(mouse_pos)
 
 		# Calculate the distance from the mouse position to the edges
 		var distance_left = mouse_pos.x
@@ -128,11 +131,11 @@ func _physics_process(delta):
 
 		# Check if the mouse is near any edge and emit the signal
 
-		if distance_left < EDGE_THRESHOLD:
+		if distance_left <= EDGE_THRESHOLD:
 			_on_mouse_near_edge("left")
-		if distance_right < EDGE_THRESHOLD:
+		if distance_right <= EDGE_THRESHOLD:
 			_on_mouse_near_edge("right")
-		if distance_top < EDGE_THRESHOLD:
+		if distance_top <= EDGE_THRESHOLD:
 			_on_mouse_near_edge("top")
-		if distance_bottom < EDGE_THRESHOLD:
+		if distance_bottom <= EDGE_THRESHOLD:
 			_on_mouse_near_edge("bottom")
