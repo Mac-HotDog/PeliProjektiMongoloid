@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="7_ek538"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="8_72cey"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="9_4h57k"]
-[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Scenes/characters/Mannekiini.tscn" id="10_6qnet"]
+[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiinirikki.tscn" id="10_6qnet"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds5h3"]
 albedo_color = Color(0.0588235, 0.0745098, 0.0588235, 1)

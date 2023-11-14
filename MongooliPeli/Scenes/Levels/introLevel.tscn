@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="7_xg406"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="8_ibavm"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="9_2mc1t"]
-[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Scenes/characters/Mannekiini.tscn" id="10_33ol5"]
+[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiinirikki.tscn" id="10_33ol5"]
 [ext_resource type="MeshLibrary" uid="uid://dxh12cai15i4b" path="res://blockit12.tres" id="11_ly756"]
 [ext_resource type="PackedScene" uid="uid://bp54h2povvrfl" path="res://timeTriggerAnsa3.tscn" id="13_5g58c"]
 [ext_resource type="PackedScene" uid="uid://dwyp8br1hgqho" path="res://timeTriggerAnsa4.tscn" id="13_eule1"]
