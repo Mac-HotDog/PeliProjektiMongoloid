@@ -330,7 +330,7 @@ transform = Transform3D(0.55, 0, 0, 0, 1, 0, 0, 0, 0.7, 22.2, 0, -15)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 26)
 
 [node name="Mannekiini" parent="." instance=ExtResource("18_koi2j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.4, 0.8, -11.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6, 0.8, -10.4)
 
 [connection signal="body_entered" from="platNGroup/group1/plateNN2/presurePlate/Area3D" to="platNGroup/group1/plateNN2/arrowShooterPlate" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="platNGroup/group1/plateNN/presurePlate/Area3D" to="platNGroup/group1/plateNN/arrowShooterPlate" method="_on_area_3d_body_entered"]

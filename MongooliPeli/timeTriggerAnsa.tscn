@@ -27,6 +27,7 @@ script = ExtResource("1_g3v5y")
 
 [node name="plate" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.132, 0, 0, 0, 0.637, 0, 0, 0)
+visible = false
 mesh = SubResource("BoxMesh_caqd5")
 
 [node name="Area3D" type="Area3D" parent="plate"]
@@ -60,5 +61,3 @@ shape = SubResource("CapsuleShape3D_16pi5")
 [node name="click" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_frm0m")
 volume_db = -4.572
-
-[connection signal="body_entered" from="plate/Area3D" to="." method="_on_area_3d_body_entered"]
