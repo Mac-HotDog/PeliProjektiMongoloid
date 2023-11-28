@@ -62,7 +62,7 @@ libraries = {
 
 [node name="Label3D" type="Label3D" parent="Node3D"]
 billboard = 1
-modulate = Color(1, 0, 0, 1)
+modulate = Color(0.843137, 0.545098, 0, 1)
 text = "123"
 font_size = 90
 outline_size = 0

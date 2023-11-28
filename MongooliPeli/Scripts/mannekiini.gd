@@ -232,7 +232,7 @@ func _read_input():
 
 #animation_list = []
 func play_animation(animation,condition):
-	#set_physics_process_internal(true)
+	anim_player.set_default_blend_time(0.1)
 	if condition:
 		if animation == "Running":
 			allow_idle = false
@@ -260,6 +260,8 @@ func play_animation(animation,condition):
 				anim_player.play(animation)
 		if animation == "NeutralIdle":
 			anim_player.set_speed_scale(1)
+			if animplaying == "Running":
+				anim_player.set_default_blend_time(3000)
 			anim_player.play(animation)
 		if animation == "PunchedFace":
 			anim_player.set_speed_scale(2)
@@ -365,10 +367,7 @@ func _physics_process(delta):
 		newDash()
 	if is_dashing:
 		dashJuttuja(delta)
-	if dash_progress >= 1.0:
-		is_dashing = false
-		dash_direction = Vector3.ZERO
-		dash_progress = 0.0
+
 
 	#hyppy
 	if is_on_floor():
@@ -491,6 +490,12 @@ func dashJuttuja(delta):
 		#print("h")
 		dash_speed = lerp(0.0, DASH_SPEED, dash_progress)
 		dash_progress += DASH_ACCELERATION * delta
+	
+	if dash_progress >= 1.0:
+		print("nomo")
+		is_dashing = false
+		dash_direction = Vector3.ZERO
+		dash_progress = 0.0
 
 	move_and_collide(dash_vector * dash_speed * delta)
 
@@ -657,6 +662,9 @@ func kick_over():
 func in_aa_range(targetpos):
 	return global_position.distance_to(targetpos) <= aa_range
 	
+func aa_target_returner():
+	return target
+
 func aa_freed():
 	aa_free = false
 

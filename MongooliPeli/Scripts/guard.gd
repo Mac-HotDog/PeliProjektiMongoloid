@@ -212,7 +212,7 @@ func _on_area_3d_area_entered(area):
 	var spawner_source = area_source.get_parent()
 	if spawner_source.get_parent() is Entity:
 		last_hitter = spawner_source.get_parent()
-	if area is autoattack or area.get_parent() is autoattack:
+	if area.get_parent() is autoattack and player.aa_target_returner() == self:
 		impactaudio.play()
 		change_health(-player.aa_dmg_returner())
 	if area is bullet or area.get_parent() is bullet:

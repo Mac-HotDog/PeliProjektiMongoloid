@@ -15,6 +15,14 @@ func add_dmg_numbers(value:String, start_pos:Vector3, height:float, spread:float
 	start_pos[1] += 1
 	label.global_position = start_pos
 	label.text = value
+	#print(int(value))
+	if int(value) < 0 and int(value) > -50:
+		label.modulate = Color(255,255,0,255)#keltainen
+	if int(value) <= -50 and int(value) > -100:
+		label.modulate = Color(255,165,0,255)#oranssi, ei toimi?
+	if int(value) <= -100:
+		label.modulate = Color(255,0,0,255)#punainen
+	#print(label.modulate)
 	ap.play("Rise and Fade")
 	
 	var tween = get_tree().create_tween()

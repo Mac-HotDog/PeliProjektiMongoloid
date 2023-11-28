@@ -31,7 +31,7 @@ func _ready():
 	health += 2000
 	SPEED = unit_speed
 	state_machine = anim_tree.get("parameters/playback")
-	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+	look_at(Vector3(player.global_position), Vector3.UP)
 	
 func change_health(value):
 	dmg_number = dmg_number_scene.instantiate()
@@ -76,8 +76,7 @@ func _process(delta):
 	knocked_func()#ehkä ei tarvi kutsua täällä?
 		
 	match state_machine.get_current_node():
-		#"GetUp":
-			#look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+
 		"Run":
 			# Navigation
 			nav_agent.set_target_position(player.global_transform.origin)
@@ -85,7 +84,7 @@ func _process(delta):
 			velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 			rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 		"Attack":
-			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+			look_at(Vector3(player.global_position), Vector3.UP)
 	
 	# Conditions
 	anim_tree.set("parameters/conditions/knocked", knocked_func())
@@ -114,7 +113,7 @@ func _hit_finished():#jos on
 		player.hit(true)
 		scratch.global_position = player.global_position
 		scratch.visible = true
-		scratch.global_position[1] = 1.3
+		scratch.global_position[1] = 1.7 # billboard päällä, ei suhteutettu kameraan
 		await get_tree().create_timer(0.5).timeout
 		scratch.visible = false
 
@@ -145,7 +144,7 @@ func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 
 	if spawner_source.get_parent() is Entity:
 		last_hitter = spawner_source.get_parent()
-	if area is autoattack or area.get_parent() is autoattack:
+	if area.get_parent() is autoattack and player.aa_target_returner() == self:
 		impactaudio.play()
 		change_health(-player.aa_dmg_returner())
 	if area is bullet or area.get_parent() is bullet:
