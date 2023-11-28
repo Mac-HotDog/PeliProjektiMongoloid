@@ -39,5 +39,5 @@ func _physics_process(delta):
 func _on_area_3d_area_entered(area):
 	if area.get_parent() is Enemy:
 		#print(player)
-		area.get_parent().knocked_up()
+		area.get_parent().knocked_up(cc_duration)
 		area.get_parent().change_health(-player.stomp_dmg_returner())

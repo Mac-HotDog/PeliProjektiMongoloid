@@ -18,9 +18,11 @@ var mana_regen: int = 1  # Mana regenerated per second
 var _regen_timer: float = 0  # Timer to keep track of regeneration interval
 
 var knockback = false#lippu move and collide ja animaatiolle
+var knockup = false#lippu move and collide ja animaatiolle
+var knockup_vector = Vector3.UP * 1.8
 var knockback_reset = true # lippu physprosessia varten?? templarille
 var kicked_back = false #lippu kick collision dmg
-var knockback_vector
+var knockback_vector#fukntiossa kicked
 var stunned = false #lippu lukolle
 
 # Basic stat modifying functions
@@ -68,8 +70,13 @@ func kicked(cc_duration): #cc_dur on vain stun dur eikä move_and_colliden
 	knockback = false
 	#SPEED = 4
 
-func knocked_up():
-	pass
+func knocked_up(cc_duration):
+	knockup_vector = Vector3.UP * 1.8
+	knockup = true
+	stunned = true
+	await get_tree().create_timer(cc_duration).timeout 
+	knockup = false
+	stunned = false
 
 # Called every physics frame
 func _physics_process(delta: float) -> void:
@@ -80,14 +87,20 @@ func _physics_process(delta: float) -> void:
 		self._regen_timer -= 1.0
 		regenerate_health()
 		regenerate_mana()
-	if knockback:
+	if knockback:#potku
 		#velocity 
 		var collision = move_and_collide(knockback_vector * delta * 2)
 		if collision:
 			var collateral = collision.get_collider()
 			if collateral is Enemy:
 				collateral.change_health(-player.kick_dmg_returner())
+	if knockup:
+		var collision = move_and_collide(knockup_vector * delta)
+		if global_position[1] >= 1.8:#tippuu takas alas, voi korvata painovoimalla kun se toimii
+			knockup_vector = knockup_vector * -1
 		
+
+
 func load_ability(name):
 	var scene = ResourceLoader.load("res://Scenes/Abilities/" + name + "/" + name + ".tscn")
 	var d = scene.instantiate()

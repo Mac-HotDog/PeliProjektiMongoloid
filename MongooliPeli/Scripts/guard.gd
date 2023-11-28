@@ -21,7 +21,7 @@ var ATTACK_RANGE = 9.0
 #@onready var manaBar = $ManaBar3D/SubViewport/ManaBar2D
 @onready var bar = $Resourcebar
 @onready var spear_timer = $TimerSpear
-@export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
+@export var dmg_number_scene = preload("res://Scenes/Levels/Others/dmg_number.tscn")
 var dmg_number
 @onready var impactaudio = $audioimpact
 @onready var deathaudio = $audiodeath

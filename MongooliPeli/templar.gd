@@ -22,7 +22,7 @@ var ATTACK_RANGE = 1.4
 @onready var anim_player = $AnimationPlayer
 @onready var bar = $Resourcebar
 @onready var dash_timer = $TimerDash
-@export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
+@export var dmg_number_scene = preload("res://Scenes/Levels/Others/dmg_number.tscn")
 var dmg_number
 
 #audio

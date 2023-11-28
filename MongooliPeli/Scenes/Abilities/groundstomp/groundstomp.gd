@@ -35,7 +35,8 @@ func execute(node):
 
 	stomp.global_position = spawnpoint
 	await get_tree().create_timer(1.5).timeout
-	stomp.reset_area()
-	stomp.queue_free()
+	if stomp != null:
+		stomp.reset_area()
+		stomp.queue_free()
 
 

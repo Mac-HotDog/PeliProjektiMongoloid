@@ -7,7 +7,7 @@ var arrow = preload("res://Scenes/level_nodes/arrow.tscn")
 
 
 func _on_area_3d_body_entered(body):
-	print("vittan")
+	#print("vittan")
 	await get_tree().create_timer(1).timeout
 	$AudioStreamPlayer3D.play()
 	#await get_tree().create_timer(startDelay).timeout

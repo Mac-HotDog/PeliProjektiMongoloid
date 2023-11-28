@@ -2,6 +2,13 @@ extends CharacterBody3D
 
 class_name Entity
 
+#dmg variables
+#var bullet_dmg = 30#returner funtiossa uusi kaava tälle
+#var autoattack_dmg = 15
+#var aoeslow_dmg = 7
+#var kick_dmg = 40
+#var stomp_dmg = 55
+
 var level = 1
 var exp
 var health: int = 100 + 20 * level
@@ -80,4 +87,5 @@ func load_ability(name):
 
 	add_child(d)
 	return d
+
 

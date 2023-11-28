@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bblotkfoiypbq"]
+[gd_scene load_steps=21 format=3 uid="uid://bblotkfoiypbq"]
 
 [ext_resource type="Script" path="res://Scripts/level1.gd" id="1_a68h3"]
 [ext_resource type="PackedScene" uid="uid://bi5qxaaga2sv1" path="res://Scenes/level_nodes/camera_3d.tscn" id="2_ruoua"]
@@ -7,15 +7,14 @@
 [ext_resource type="MeshLibrary" uid="uid://bstmew4bf2rfy" path="res://gridmapit/blockit4.tres" id="5_jouy5"]
 [ext_resource type="Shader" path="res://Scenes/level_nodes/SkyShader.gdshader" id="5_thx6e"]
 [ext_resource type="MeshLibrary" uid="uid://ddxhn8drrweel" path="res://gridmapit/lattiajaTappoLattiaa3.tres" id="6_mdtp4"]
-[ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Others/spawn_points.tscn" id="8_f14lp"]
+[ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Levels/Others/spawn_points.tscn" id="8_f14lp"]
 [ext_resource type="PackedScene" uid="uid://6l2yahiy036f" path="res://Scenes/level_nodes/marker.tscn" id="9_s7iy2"]
 [ext_resource type="PackedScene" uid="uid://m6luwgas8fcq" path="res://assetit/Models/kenttaPropit/piikit.tscn" id="10_0atoh"]
-[ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="11_e03hy"]
-[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Scenes/characters/Mannekiini.tscn" id="12_4yol8"]
-[ext_resource type="AudioStream" uid="uid://bmd6ftx18guvh" path="res://assetit/audio/Invisible - Star Music Visualization.wav" id="13_2vu7a"]
+[ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Levels/Others/Voitto Area.tscn" id="11_e03hy"]
+[ext_resource type="PackedScene" uid="uid://55v8l7afsxp2" path="res://Mannekiinirikki.tscn" id="12_4yol8"]
 [ext_resource type="PackedScene" uid="uid://drkktastme8my" path="res://Scenes/Levels/PauseMenu.tscn" id="14_msc26"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="15_ewvs6"]
-[ext_resource type="PackedScene" uid="uid://dwlrg7i1p0yga" path="res://Scenes/level_nodes/laava.tscn" id="16_k4vle"]
+[ext_resource type="PackedScene" uid="uid://dwlrg7i1p0yga" path="res://laava.tscn" id="16_k4vle"]
 [ext_resource type="PackedScene" uid="uid://dyalyehgjbgq6" path="res://Scenes/level_nodes/ui.tscn" id="17_qie8v"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_r6oif"]
@@ -792,7 +791,6 @@ skeleton = NodePath("../../laavaAllas1")
 environment = SubResource("Environment_erydq")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_2vu7a")
 
 [node name="Mannekiini" parent="." groups=["player"] instance=ExtResource("12_4yol8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.861883, 94)

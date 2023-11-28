@@ -14,10 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://dwyp8br1hgqho" path="res://timeTriggerAnsa4.tscn" id="13_eule1"]
 [ext_resource type="PackedScene" uid="uid://6q41od8hafh0" path="res://timeTriggerAnsa2.tscn" id="13_gutcs"]
 [ext_resource type="PackedScene" uid="uid://cyt847vhr7ivc" path="res://Scenes/level_nodes/arrowShooter.tscn" id="14_qkojq"]
-[ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Others/Voitto Area.tscn" id="15_qtpw8"]
+[ext_resource type="PackedScene" uid="uid://dd7k0ts45ud8h" path="res://Scenes/Levels/Others/Voitto Area.tscn" id="15_qtpw8"]
 [ext_resource type="PackedScene" uid="uid://pbtsb2x35cks" path="res://Scenes/level_nodes/arrowShooterPlate.tscn" id="17_8tfyk"]
 [ext_resource type="PackedScene" uid="uid://cq755s0vhaypf" path="res://Scenes/characters/Mannekiini.tscn" id="18_koi2j"]
-[ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Others/spawn_points.tscn" id="19_fvecq"]
+[ext_resource type="PackedScene" uid="uid://c26nl6tvm3gvo" path="res://Scenes/Levels/Others/spawn_points.tscn" id="19_fvecq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds5h3"]
 albedo_color = Color(0.0588235, 0.0745098, 0.0588235, 1)

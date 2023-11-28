@@ -19,6 +19,7 @@ extends Entity
 @onready var bullet_cast_sound = $audiot/audiobulletcast
 @onready var fireball_cast_sound =$audiot/audiofireballcast #nykyään lumimyrsky
 @onready var death_sound = $audiot/audiodeath
+@onready var stomp_sound = $audiot/audiostomp
 
 #dmg numbers
 var base_attack_dmg = 7
@@ -28,6 +29,7 @@ var attack_dmg = base_attack_dmg
 @export var aoeslow_dmg = 7
 @export var kick_dmg = 40
 @export var stomp_dmg = 55
+
 
 #ranges
 @export var aa_range = 8
@@ -39,7 +41,7 @@ var attack_dmg = base_attack_dmg
 @onready var dash_cast_sound = $audiot/audiodashcast
 
 # aa varten
-@onready var targetmeshinstance = preload("res://Scenes/HUD/redarrowsprite.tscn")
+@onready var targetmeshinstance = load("res://Scenes/HUD/redarrowsprite.tscn")
 @onready var targetmesh = targetmeshinstance.instantiate()
 @onready var autoattacktimer = $AutoAttackTimer # ei käytössä
 
@@ -126,7 +128,7 @@ var activeanimationplaying
 
 
 func _ready():
-	#navigationAgent.set_target_position(global_position)
+	health += 1000
 	exp = 0
 	add_child(inventory)
 	add_child(shop)
@@ -269,6 +271,7 @@ func play_animation(animation,condition):
 			anim_player.play(animation)
 		if animation == "RunSlide":
 			#anim_player.stop()
+			#look_at(transform.basis.z, Vector3.UP, true)
 			allow_run = false
 			allow_idle = false
 			anim_player.set_speed_scale(3)
@@ -300,7 +303,7 @@ func cast_ability(ability): #tänne vois laittaa kaikki skillit?
 		look_at(suunta, Vector3.UP,true)
 		play_animation("Kick",true)
 	if ability == "stomp":
-		#stomp.get_pos(Vector3.MODEL_FRONT)
+		look_at(suunta, Vector3.UP,true)
 		play_animation("Stomp",true)
 
 func _on_animation_player_animation_finished(anim_name):
@@ -427,8 +430,8 @@ func autoAttack():
 			keep_aa = false
 		if not target.die(): # punainen target nuoli
 			targetmesh.global_transform.origin = target.global_position
-			targetmesh.global_transform.origin.y = 4
-			targetmesh.global_transform.origin.z += -1
+			targetmesh.global_transform.origin.y = 3.5
+			targetmesh.global_transform.origin.z += 1
 			targetmesh.visible = true
 
 func runningLogic():
@@ -482,7 +485,7 @@ func dashJuttuja(delta):
 	dash_cast_sound.play()
 	var dash_vector = dash_direction * DASH_DISTANCE
 	var dash_speed = DASH_SPEED
-	#nav_target_pos = mouse_pos
+	nav_target_pos = null#??
 
 	if dash_progress < 1.0:
 		#print("h")
@@ -643,6 +646,7 @@ func cast_up_moment():#cast_up animaatop h hetki
 
 func stomp_moment():
 	stomp.execute(self)
+	stomp_sound.play()
 
 func kick_moment():
 	kick.execute(self)
@@ -681,6 +685,8 @@ func aoeslow_dmg_returner():
 #		return aoeslow_dmg
 #	if dmgsource == autoattack:
 #		return autoattack_dmg
+
+
 
 
 func _on_timer_timeoutq():

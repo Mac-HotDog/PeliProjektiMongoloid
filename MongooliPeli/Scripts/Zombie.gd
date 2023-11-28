@@ -9,11 +9,12 @@ var last_hitter #kuka teki dmg vikana
 
 #var SPEED = 4.0
 @export var ATTACK_RANGE = 2.0#enemmänkin targettaus range
-@export var dmg_number_scene = preload("res://Scenes/Others/dmg_number.tscn")
+@export var dmg_number_scene = preload("res://Scenes/Levels/Others/dmg_number.tscn")
 var dmg_number
 #@export var player_path := "/root/level1/Mannekiini"
 @export var gold_value = 15
 @export var exp_value = 10
+@export var unit_speed = 4
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_tree = $AnimationTree
 #@onready var bar = $HealthBar3D/SubViewport/HealthBar2D
@@ -21,13 +22,14 @@ var dmg_number
 @onready var bar = $Resourcebar
 @onready var deathaudio = $audiodeath
 @onready var impactaudio = $audioimpact
-var test
+@onready var scratch = $MeshInstance3Dscratch
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#player = get_node(player_path)
-	SPEED = 4
+	scratch.visible = false
+	health += 2000
+	SPEED = unit_speed
 	state_machine = anim_tree.get("parameters/playback")
 	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
@@ -58,7 +60,9 @@ func whendead():
 func _process(delta):
 	if die() and dead == false:
 		whendead()
+		
 
+		
 	velocity = Vector3.ZERO
 	
 	if bar:
@@ -67,9 +71,9 @@ func _process(delta):
 		bar.update_bar(health)
 #	if manaBar:
 #		manaBar.update_bar(mana)
+	
 
-
-	knocked_back_func()
+	knocked_func()#ehkä ei tarvi kutsua täällä?
 		
 	match state_machine.get_current_node():
 		#"GetUp":
@@ -84,18 +88,21 @@ func _process(delta):
 			look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
 	
 	# Conditions
-	anim_tree.set("parameters/conditions/knocked", knocked_back_func())
+	anim_tree.set("parameters/conditions/knocked", knocked_func())
 	anim_tree.set("parameters/conditions/attack", _target_in_range())
 	anim_tree.set("parameters/conditions/run", !_target_in_range())
 	anim_tree.set("parameters/conditions/die", die())
+
+	
 	
 	move_and_slide()
 
-func knocked_back_func():
-	if knockback:
+func knocked_func():#animaatioiden ehtoja varten
+	if knockback or knockup:
 		return true
 	else:
 		return false
+
 
 func _target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
@@ -105,7 +112,11 @@ func _hit_finished():#jos on
 	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 0.5:
 		#var dir = global_position.direction_to(player.global_position)#tutoriaalista
 		player.hit(true)
-		
+		scratch.global_position = player.global_position
+		scratch.visible = true
+		scratch.global_position[1] = 1.3
+		await get_tree().create_timer(0.5).timeout
+		scratch.visible = false
 
 func take_dot():
 	await get_tree().create_timer(0.5).timeout
@@ -150,4 +161,4 @@ func _on_area_3d_zombie_area_entered(area):#dmg alueiden classit vaihdettu
 func _on_area_3d_zombie_area_exited(area):
 	if area is aoeslow:
 		in_aoeslow = false
-		SPEED = 4
+		SPEED = unit_speed

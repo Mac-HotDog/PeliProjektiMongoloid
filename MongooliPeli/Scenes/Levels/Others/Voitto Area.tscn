@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dd7k0ts45ud8h"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/Others/Voitto Area.gd" id="1_gyejc"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_asdnn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mymb5"]
+albedo_color = Color(0.254902, 1, 0.388235, 0.364706)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iv51m"]
+material = SubResource("StandardMaterial3D_mymb5")
+
+[node name="spawnPoints" type="Node3D"]
+script = ExtResource("1_gyejc")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(6.36363, 0, 0, 0, 2.25964, 0, 0, 0, 5.25684, 0, 0, 0)
+shape = SubResource("CylinderShape3D_asdnn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_iv51m")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
