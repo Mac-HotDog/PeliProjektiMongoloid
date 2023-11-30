@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2tunvn8b8ajo"]
+
+[ext_resource type="MeshLibrary" uid="uid://dxh12cai15i4b" path="res://blockit12.tres" id="1_4gqep"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exgea"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tmr18"]
+material = SubResource("StandardMaterial3D_exgea")
+size = Vector3(300, 1, 300)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_b5j0j"]
+data = PackedVector3Array(-150, 0.5, 150, 150, 0.5, 150, -150, -0.5, 150, 150, 0.5, 150, 150, -0.5, 150, -150, -0.5, 150, 150, 0.5, -150, -150, 0.5, -150, 150, -0.5, -150, -150, 0.5, -150, -150, -0.5, -150, 150, -0.5, -150, 150, 0.5, 150, 150, 0.5, -150, 150, -0.5, 150, 150, 0.5, -150, 150, -0.5, -150, 150, -0.5, 150, -150, 0.5, -150, -150, 0.5, 150, -150, -0.5, -150, -150, 0.5, 150, -150, -0.5, 150, -150, -0.5, -150, 150, 0.5, 150, -150, 0.5, 150, 150, 0.5, -150, -150, 0.5, 150, -150, 0.5, -150, 150, 0.5, -150, -150, -0.5, 150, 150, -0.5, 150, -150, -0.5, -150, 150, -0.5, 150, 150, -0.5, -150, -150, -0.5, -150)
+
+[sub_resource type="Environment" id="Environment_cskuf"]
+background_mode = 2
+
+[node name="panunekalevel" type="Node3D"]
+
+[node name="fyysinen lattia" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="fyysinen lattia"]
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="fyysinen lattia/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_tmr18")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="fyysinen lattia/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("ConcavePolygonShape3D_b5j0j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cskuf")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_4gqep")
+cell_size = Vector3(1, 0.01, 1)
+collision_layer = 3
+collision_mask = 3
+data = {
+"cells": PackedInt32Array(65534, 0, 1048582, 65534, 65535, 1048587)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GridMap2lattia" type="GridMap" parent="."]
+mesh_library = ExtResource("1_4gqep")
+cell_size = Vector3(1, 0.1, 1)
