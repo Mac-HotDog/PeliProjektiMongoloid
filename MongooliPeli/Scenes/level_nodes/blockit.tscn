@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b30acdmuiy4h8"]
+[gd_scene load_steps=37 format=3 uid="uid://b30acdmuiy4h8"]
 
 [ext_resource type="PackedScene" uid="uid://cjqlnllg4thqc" path="res://assetit/Models/kenttaPropit/block_rounded_long.tscn" id="1_yr7nf"]
 [ext_resource type="PackedScene" uid="uid://dyo3yqepue686" path="res://assetit/Models/kenttaPropit/chest.tscn" id="2_q5pjh"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dc1n8vb43pxuh" path="res://assetit/Models/kenttaPropit/spikes_2.tscn" id="13_qw6mo"]
 [ext_resource type="PackedScene" uid="uid://dwumu8v7w4whw" path="res://assetit/Models/kenttaPropit/tree_pine.tscn" id="14_gs4vy"]
 [ext_resource type="PackedScene" uid="uid://c4cxufh35h1xj" path="res://assetit/Models/kenttaPropit/wall-half.glb" id="15_ij1ge"]
+[ext_resource type="PackedScene" uid="uid://ceqwrxcxn2lu7" path="res://assetit/Models/wall_tall_2.tscn" id="16_3mly8"]
 [ext_resource type="PackedScene" uid="uid://csd322js3bdlo" path="res://assetit/Models/kenttaPropit/wall-narrow.glb" id="16_dp288"]
 [ext_resource type="PackedScene" uid="uid://60ddfr3sfp87" path="res://assetit/Models/Trees/pine.glb" id="16_jp556"]
 [ext_resource type="PackedScene" uid="uid://yvpde6g4r5j7" path="res://assetit/Models/kenttaPropit/wall-opening.glb" id="17_8035e"]
@@ -347,6 +348,7 @@ visible = false
 visible = false
 
 [node name="wall" type="Node3D" parent="."]
+visible = false
 
 [node name="wall2" type="MeshInstance3D" parent="wall"]
 mesh = SubResource("ArrayMesh_k0ex6")
@@ -393,3 +395,5 @@ visible = false
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237255, 20.7185)
 visible = false
+
+[node name="wall_tall2" parent="." instance=ExtResource("16_3mly8")]

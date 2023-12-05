@@ -10,6 +10,8 @@ var dead = false
 var last_hitter #kuka teki dmg vikana
 #var SPEED = 4.0
 var ATTACK_RANGE = 9.0
+var escape_range = 7.5
+@export var unit_speed = 4
 @export var gold_value = 10
 @export var exp_value = 10
 
@@ -29,6 +31,7 @@ var dmg_number
 var spear = load_ability("spear")
 var spear_cd = 4.0
 
+var run_away = false #pelaaja liiän lähellä, kitee
 #func cast_spear():
 #	if spear_timer.time_left < 0.1:
 #		spear_timer.start(spear_cd)
@@ -37,7 +40,6 @@ var spear_cd = 4.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node(player_path)
-	SPEED = 4
 	state_machine = anim_tree.get("parameters/playback")
 	timer = Timer.new()  # create a new Timer
 	add_child(timer)  # add it as a child
@@ -91,42 +93,54 @@ func _process(delta):
 	#anim_tree.set("parameters/conditions/knocked", knock_back_func())
 	anim_tree.set("parameters/conditions/throw", allow_cast_spear())
 	anim_tree.set("parameters/conditions/death", die())
-	anim_tree.set("parameters/conditions/run", _target_not_in_range())
+	anim_tree.set("parameters/conditions/run", should_you_run())
 	
 	anim_tree.set("parameters/conditions/idle", allow_idle())
 
+	if global_position.distance_to(player.global_position) < escape_range:
+		var vektori = (global_position - player.global_position).normalized() * ATTACK_RANGE
+		#var to = self.direction_to(vektori)
+		nav_agent.set_target_position(global_position + vektori)
+		print("oma pos ", global_position)
+		print("nav pos ",nav_agent.get_target_position())
+		if nav_agent.is_target_reachable():
+			run_away = true
+	if global_position.distance_to(player.global_position) > escape_range:
+		run_away = false
 	
 	
 	match state_machine.get_current_node():
 		"Run":
 			# Navigation
-			await get_tree().create_timer(0.2).timeout
-			if _target_not_in_range():
-				#print(self.global_rotation)
-					
-				nav_agent.set_target_position(player.global_position)#transform.origin)
-				#nav_agent.set_path_desired_distance(ATTACK_RANGE)# kusee pathingia, tarvii paremman
-				#print(nav_agent.distance_to_target())
+			if !run_away:
+				await get_tree().create_timer(0.2).timeout#?
+				if should_you_run():
+					#print(self.global_rotation)
+						
+					nav_agent.set_target_position(player.global_position)#transform.origin)
+					var next_nav_point = nav_agent.get_next_path_position()
+					velocity = (next_nav_point - global_transform.origin).normalized() * unit_speed
+				
+					rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z), delta * 10.0)
+					var kohta = Vector3(player.global_position)
+					#look_at(kohta,Vector3.UP,true)
+	#				var direction = global_position.direction_to(player.global_position)
+			if run_away:
+				await get_tree().create_timer(0.2).timeout#?
+				#if nav_agent.is_target_reachable():
 				var next_nav_point = nav_agent.get_next_path_position()
-				velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
-			
+				velocity = (next_nav_point - global_transform.origin).normalized() * unit_speed
 				rotation.y = lerp_angle(rotation.y, atan2(velocity.x, + velocity.z), delta * 10.0)
-				var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
-				#look_at(kohta,Vector3.UP,true)
-#				var direction = global_position.direction_to(player.global_position)
-#				velocity = direction * 3
-#				move_and_slide()
 		"Throw":
 			if die():
 				return
-#			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
-#			look_at(kohta,Vector3.UP,true)
+
 
 
 			#cast_spear()
 			
 		"Idle":
-			spear.target_position(player.position)#pelaajan on helppo väistää keihäs jos tämä on idlessä
+			spear.target_position(player.position)#pelaajan on helppo väistää keihäs jos tämä on idles
 			var kohta = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 			look_at(kohta,Vector3.UP,true)
 			#rotation.y = lerp_angle(rotation.y, -player.global_position.z, delta * 10.0)
@@ -150,16 +164,22 @@ func _target_in_range():
 	var x = global_position.distance_to(player.global_position) < ATTACK_RANGE
 	return x
 	
-func _target_not_in_range():
+func should_you_run():
 	var x = global_position.distance_to(player.global_position) > ATTACK_RANGE
-	return x
+	if x or run_away:
+		return true
+	else:
+		return false
 	
+func target_too_close():
+	if global_position.distance_to(player.global_position) > ATTACK_RANGE:
+		pass
 #func allow_getting_pos():
 #	pass
 	
 func allow_cast_spear():
 	var in_range = global_position.distance_to(player.global_position) < ATTACK_RANGE
-	if in_range and spear_timer.time_left < 0.1 and not die():
+	if in_range and spear_timer.time_left < 0.1 and not die() and not run_away:
 		return true
 	else:
 		return false
@@ -228,7 +248,7 @@ func _on_area_3d_area_entered(area):
 func _on_area_3d_area_exited(area):
 	timer.stop()
 	if area is aoeslow:
-		SPEED = 4
+		SPEED = unit_speed
 	
 func _on_timer_timeout():
 	health += -5
